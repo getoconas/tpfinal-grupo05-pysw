@@ -11,6 +11,7 @@ import { ServicioComponent } from './components/servicio/servicio.component';
 import { PagoComponent } from './components/pago/pago.component';
 import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 import { NovedadComponent } from './components/novedad/novedad.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NovedadComponent } from './components/novedad/novedad.component';
     ServicioComponent,
     PagoComponent,
     AfiliadoComponent,
-    NovedadComponent
+    NovedadComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
