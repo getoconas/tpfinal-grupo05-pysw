@@ -13,6 +13,8 @@ import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 import { NovedadComponent } from './components/novedad/novedad.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
+import { NoticiaComponent } from './components/noticia/noticia.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { FooterComponent } from './components/footer/footer.component';
     AfiliadoComponent,
     NovedadComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    UsuarioComponent,
+    NoticiaComponent
   ],
   imports: [
     BrowserModule,
