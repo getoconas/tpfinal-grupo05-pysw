@@ -12,6 +12,7 @@ import { PagoComponent } from './components/pago/pago.component';
 import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 import { NovedadComponent } from './components/novedad/novedad.component';
 import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HeaderComponent } from './components/header/header.component';
     PagoComponent,
     AfiliadoComponent,
     NovedadComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
