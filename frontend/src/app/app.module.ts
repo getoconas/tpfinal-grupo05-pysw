@@ -9,6 +9,7 @@ import { NosotrosComponent } from './components/nosotros/nosotros.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { PagoComponent } from './components/pago/pago.component';
+import { AfiliadoComponent } from './components/afiliado/afiliado.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PagoComponent } from './components/pago/pago.component';
     NosotrosComponent,
     InicioComponent,
     ServicioComponent,
-    PagoComponent
+    PagoComponent,
+    AfiliadoComponent
   ],
   imports: [
     BrowserModule,
