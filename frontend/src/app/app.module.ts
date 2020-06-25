@@ -10,6 +10,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { PagoComponent } from './components/pago/pago.component';
 import { AfiliadoComponent } from './components/afiliado/afiliado.component';
+import { NovedadComponent } from './components/novedad/novedad.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AfiliadoComponent } from './components/afiliado/afiliado.component';
     InicioComponent,
     ServicioComponent,
     PagoComponent,
-    AfiliadoComponent
+    AfiliadoComponent,
+    NovedadComponent
   ],
   imports: [
     BrowserModule,
