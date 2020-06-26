@@ -6,7 +6,6 @@ const UsuarioSchema = new Schema({
     password: {type: String, required: true},
     activo: {type: Boolean, required: true},
     perfil: {type: String, required: true},
-    
 })
 
 module.exports = mongoose.model('Usuario', UsuarioSchema);
