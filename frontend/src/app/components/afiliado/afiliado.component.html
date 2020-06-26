@@ -1,1 +1,79 @@
-<p>afiliado works!</p>
+<div class="container mt-3">
+  <form class="card" action="" #afiliadoForm="ngForm">
+    <div class="card-header text-center h3">Gesti&oacute;n de Afiliados</div>
+    <div class="card-body">
+      <!-- Apellido -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4" for="">Apellido</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtApeliido" required [(ngModel)]="_afiliado.apellido" />
+      </div>
+
+      <!-- Nombre -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4" for="">Nombre/s</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtNombre" required [(ngModel)]="_afiliado.nombres" />
+      </div>
+
+      <!-- DNI -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4" for="">DNI</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtDni" required [(ngModel)]="_afiliado.dni" />
+      </div>
+
+      <!-- Email -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4" for="">Email</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required [(ngModel)]="_afiliado.email" />
+      </div>
+
+      <!-- Imagen -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4" for="">Imagen</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtImagen" required [(ngModel)]="_afiliado.imagen" />
+      </div>
+
+      <!-- Telefono -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4" for="">Tel&eacute;fono</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtTelefono" required [(ngModel)]="_afiliado.telefono" />
+      </div>
+
+      <!-- Botones -->
+      <div class="row form-group">
+        <button type="button" class="btn btn-success" [disabled]="!afiliadoForm.form.valid">Agregar</button>
+        <button type="button" class="btn btn-secondary">Modificar</button>
+      </div>
+    </div>
+  </form>
+
+  <h2 class="text-center mt-3">Informaci&oacute;n de Afiliados</h2>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Apellido</th>
+          <th>Nombre/s</th>
+          <th>DNI</th>
+          <th>Email</th>
+          <th>Imagen</th>
+          <th>Tel&eacute;fono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <button class="btn btn-primary">Seleccionar</button>
+            <button class="btn btn-danger">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
