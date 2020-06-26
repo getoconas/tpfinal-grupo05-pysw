@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule } from '@angular/forms'
+import { AlifeFileToBase64Module } from 'alife-file-to-base64';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +19,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
-import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { from } from 'rxjs';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    AlifeFileToBase64Module,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
