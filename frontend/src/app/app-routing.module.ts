@@ -6,7 +6,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { LoginComponent } from './components/login/login.component';
 import { NosotrosComponent } from './components/nosotros/nosotros.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
-import { Novedad } from './models/novedad';
+import { FooterComponent } from './components/footer/footer.component';
 import { NovedadComponent } from './components/novedad/novedad.component';
 import { PagoComponent } from './components/pago/pago.component';
 import { ServicioComponent } from './components/servicio/servicio.component';
@@ -16,6 +16,7 @@ import { HeaderComponent } from './components/header/header.component';
 
 const routes: Routes = [
   { path: 'header', component: HeaderComponent },
+  {path: 'footer', component: FooterComponent },
   { path: 'afiliado', component: AfiliadoComponent },
  { path: 'contacto', component: ContactoComponent },
  { path: 'inicio', component: InicioComponent },
