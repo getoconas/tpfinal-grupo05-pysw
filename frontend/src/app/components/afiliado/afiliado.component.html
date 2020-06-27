@@ -6,7 +6,7 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Apellido</label>
         <input class="form-control col-sm-12 col-md-8" type="text" id="apellido" name="txtApellido" required
-          minlength="3" pattern="[A-Za-z ]{1,254}" #txtApellido="ngModel" [(ngModel)]="_afiliado.apellido" />
+          minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtApellido="ngModel" [(ngModel)]="_afiliado.apellido" />
         <div *ngIf="txtApellido.invalid && (txtApellido.dirty || txtApellido.touched)" class="alert alert-danger">
           <div *ngIf="txtApellido.errors.required">
             El campo Apellido es requerido
@@ -24,7 +24,7 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Nombre/s</label>
         <input class="form-control col-sm-12 col-md-8" type="text" id="nombre" name="txtNombre" required minlength="3"
-          pattern="[A-Za-z ]{1,254}" #txtNombre="ngModel" [(ngModel)]="_afiliado.nombres" />
+          pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtNombre="ngModel" [(ngModel)]="_afiliado.nombres" />
         <div *ngIf="txtNombre.invalid && (txtNombre.dirty || txtNombre.touched)" class="alert alert-danger">
           <div *ngIf="txtNombre.errors.required">
             El campo Nombre es requerido
@@ -59,13 +59,13 @@
       <!-- Email -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4" for="">Email</label>
-        <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required email #txtEmail="ngModel"
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtEmail="ngModel"
           [(ngModel)]="_afiliado.email" />
         <div *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)" class="alert alert-danger">
           <div *ngIf="txtEmail.errors.required">
             El campo Email es requerido
           </div>
-          <div *ngIf="txtEmail.errors.email">
+          <div *ngIf="txtEmail.errors.pattern">
             Ingrese un email v&aacute;lido
           </div>
         </div>
