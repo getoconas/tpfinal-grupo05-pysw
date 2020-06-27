@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
@@ -17,7 +18,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
-import { from } from 'rxjs';
+import { LoginService } from './services/login.service';
+
 
 @NgModule({
   declarations: [
@@ -38,10 +40,11 @@ import { from } from 'rxjs';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,13 +1,11 @@
- <header>
+<header>
         <div class="row">
             <div class="col-md-2 bg-dark text-white">
                 <h5 class="">
                     Obra Social
                 </h5>
             </div>
-            <div class="col-md-10 bg-dark text-right">
-                         
-            </div>
+          
         </div>
         <div class="row bg-dark ">
             <nav class="navbar navbar-expand-lg navbar-light bg-info col-xs-12">
@@ -24,15 +22,17 @@
                       <a class="nav-link text-white" [routerLink]="['contacto']"> Contáctenos <span class="sr-only">(current)</span></a>
                     </li>                
                     <li class="nav-item">
-                      <a class="nav-link text-white" [routerLink]="['nostros']"> Nosotros <span class="sr-only">(current)</span></a>
+                      <a class="nav-link text-white" [routerLink]="['nosotros']"> Nosotros <span class="sr-only">(current)</span></a>
                     </li>                
-                    <li class="nav-item">
-                        <a class="nav-link text-white" [routerLink]="['novedad']"> Novedad <span class="sr-only">(current)</span></a>
-                    </li> 
-    
+                    <div class="col-12">
+                      <a *ngIf="!loginService.userLoggedIn" [routerLink]="['login']">Registrarse(Login)</a>
+                      <a *ngIf="loginService.userLoggedIn" [routerLink]="['login']" (click)="logout()">
+                          {{loginService.userLogged.usuario}} (logout)
+                      </a>    
+                    </div>
                   </ul>
                 </div>
               </nav>
         </div>
-    </header>
+</header>
     

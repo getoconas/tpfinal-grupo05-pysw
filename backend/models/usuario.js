@@ -7,5 +7,5 @@ const UsuarioSchema = new Schema({
     activo: {type: Boolean, required: true},
     perfil: {type: String, required: true},
 })
-
+//exporto objeto para que pueda ser usado en otros lugares
 module.exports = mongoose.model('Usuario', UsuarioSchema);
