@@ -11,7 +11,7 @@ app.use(cors({
 }))
 
 // Cargamos el modulo de direccionamiento de rutas para puntos
-/* routes */
+app.use('/api/afiliados', require('./routes/afiliado.routes'));
 
 // Setting
 app.set('port', process.env.PORT || 3000);
