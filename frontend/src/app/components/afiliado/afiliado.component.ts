@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Afiliado } from 'src/app/models/afiliado';
-import { AfiliadoService } from 'src/app/service/afiliado.service';
+import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { element } from 'protractor';
 
 @Component({
