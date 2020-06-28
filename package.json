@@ -1,0 +1,19 @@
+{
+  "name": "tpfinal-grupo05-pysw",
+  "version": "1.0.0",
+  "description": "Grupo 05 - TP Final - PySW",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getoconas/tpfinal-grupo05-pysw.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/getoconas/tpfinal-grupo05-pysw/issues"
+  },
+  "homepage": "https://github.com/getoconas/tpfinal-grupo05-pysw#readme"
+}

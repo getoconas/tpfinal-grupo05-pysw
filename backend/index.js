@@ -13,6 +13,8 @@ app.use(cors({
 // Cargamos el modulo de direccionamiento de rutas para puntos
 app.use('/api/afiliados', require('./routes/afiliado.routes'));
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
+app.use('/api/servicios', require('./routes/servicio.routes'));
+
 
 // Setting
 app.set('port', process.env.PORT || 3000);
