@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Servicio } from 'src/app/models/servicio';
 import { ServicioService } from 'src/app/services/servicio.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class ServicioComponent implements OnInit {
   _servicios: Array<Servicio>;
   _convertido: string;
 
-  constructor(private _servicioService: ServicioService) { 
+  constructor(private _servicioService: ServicioService,private toastr:ToastrService) { 
     this._servicio = new Servicio();
     this._servicio.activo=true;
     this._servicioAuxiliar = new Servicio();
@@ -81,20 +82,20 @@ export class ServicioComponent implements OnInit {
     this.limpiarCampos();
   }
 
-  /* Elimina un servicio 
+  /* Elimina un servicio */
   public eliminarServicio(servicio) {
     console.log(servicio);
     this._servicioService.deleteServicio(servicio._id).subscribe(
       (result) => {
         this.obtenerServicios();
-        alert("Servicio Eliminado");
+        this.toastr.info('Servicio Eliminado Exitosamente');
       },
       (error) => {
         console.log(error);
       }
     )
   }
-*/
+
   public auxiliarServicio(servicio) {
     this._servicioAuxiliar = servicio;
   }
@@ -108,16 +109,18 @@ export class ServicioComponent implements OnInit {
     this._servicio = tservicio;
   }
 
+  /*
+
   public eliminarServicio(servicio: Servicio){
     this._servicioService.deleteServicio(servicio).subscribe(
       (result)=>{
         this.obtenerServicios();
-        alert("Servicio eliminado");
+        this.toastr.info('Servicio Eliminado Exitosamente');
       }, 
       (error)=>{
         console.log(error);
       }
     );
-  }
+  }*/
 
 }
