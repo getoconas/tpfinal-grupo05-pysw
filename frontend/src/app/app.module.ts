@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+
 
 import { FormsModule } from '@angular/forms'
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
@@ -20,11 +20,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
-<<<<<<< HEAD
+
 import { LoginService } from './services/login.service';
 
-=======
->>>>>>> 88c6471dc7ee65a7180b5ecb1f003fd332e23063
+
+
 
 @NgModule({
   declarations: [
