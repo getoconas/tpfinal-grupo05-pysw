@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Afiliado } from 'src/app/models/afiliado';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
-import { element } from 'protractor';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-afiliado',
@@ -15,10 +15,11 @@ export class AfiliadoComponent implements OnInit {
   _afiliados: Array<Afiliado>;
   _convertido: string;
 
-  constructor(private _afiliadoService: AfiliadoService) { 
+  constructor(private _afiliadoService: AfiliadoService, private _toastr: ToastrService) { 
     this._afiliado = new Afiliado();
     this._afiliadoAuxiliar = new Afiliado();
     this._afiliados = new Array<Afiliado>();
+    this._convertido = "";
     this.obtenerAfiliados();
   }
 
@@ -43,7 +44,7 @@ export class AfiliadoComponent implements OnInit {
       (result) => {
         this.obtenerAfiliados();
         this._convertido = "";
-        alert('Afiliado Agregado');
+        this._toastr.success("Afiliado Agregado Correctamente");
       },
       (error) => {
         console.log(error);
@@ -67,8 +68,28 @@ export class AfiliadoComponent implements OnInit {
   }
 
   /* Modifica un afiliado */
-  public modificarAfiliado() {
+  public modificarAfiliado(afiliado) {
+    if (this._convertido != "") {
+      afiliado.imagen = this._convertido
+      this.modificarAfiliadoService(afiliado);
+    } else {
+      this.modificarAfiliadoService(afiliado);
+    }
+  }
 
+  /* Service de Modificar Afiliado */
+  public modificarAfiliadoService(afiliado) {
+    this._afiliadoService.updateAfiliado(afiliado).subscribe(
+      (result) => {
+        this.obtenerAfiliados();
+        this._afiliadoAuxiliar = new Afiliado();
+        this._convertido = "";
+        this._toastr.info("Afiliado Modificado Correctamente");
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   /* Elimina un afiliado */
@@ -77,7 +98,8 @@ export class AfiliadoComponent implements OnInit {
     this._afiliadoService.deleteAfiliado(afiliado._id).subscribe(
       (result) => {
         this.obtenerAfiliados();
-        alert("Afiliado Eliminado");
+        this._afiliadoAuxiliar = new Afiliado();
+        this._toastr.info("Afiliado Eliminado Correctamente");
       },
       (error) => {
         console.log(error);
