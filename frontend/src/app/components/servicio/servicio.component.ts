@@ -37,6 +37,16 @@ export class ServicioComponent implements OnInit {
     )
   }
 
+/*modifica un servicio*/
+  public modificarServicio(servicio) {
+    if (this._convertido != "") {
+      servicio.imagen = this._convertido
+      this.modificarServicioService(servicio);
+    } else {
+      this.modificarServicioService(servicio);
+    }
+  }
+
   /* Agrega un servicio */
   public agregarServicio() {
     this._servicio.imagen = this._convertido;
@@ -45,7 +55,7 @@ export class ServicioComponent implements OnInit {
       (result) => {
         this.obtenerServicios();
         this._convertido = "";
-        alert('Servicio Agregado');
+        this.toastr.info('Servicio Agregado Exitosamente');
       },
       (error) => {
         console.log(error);
@@ -69,11 +79,14 @@ export class ServicioComponent implements OnInit {
   }
 
   /* Modifica un servicio */
-  public modificarServicio() {
-    this._servicioService.updateServicio(this._servicio).subscribe(
+  public modificarServicioService(servicio) {
+    this._servicioService.updateServicio(servicio).subscribe(
       (result)=>{
         this.obtenerServicios();
-        alert("Servicios actualizado");
+        this._servicioAuxiliar = new Servicio();
+        this._convertido = "";
+        this.toastr.info('Servicio Modificado Exitosamente');
+
       },
       (error)=>{
         console.log(error);
@@ -108,19 +121,5 @@ export class ServicioComponent implements OnInit {
     Object.assign(tservicio,servicio);
     this._servicio = tservicio;
   }
-
-  /*
-
-  public eliminarServicio(servicio: Servicio){
-    this._servicioService.deleteServicio(servicio).subscribe(
-      (result)=>{
-        this.obtenerServicios();
-        this.toastr.info('Servicio Eliminado Exitosamente');
-      }, 
-      (error)=>{
-        console.log(error);
-      }
-    );
-  }*/
 
 }

@@ -24,9 +24,15 @@
         <!-- Imagen -->
         <div class="row form-group">
           <label class="col-sm-12 col-md-4" for="">Imagen</label>
+          <div class="col-sm-12 col-md-1">
+            <img  src="{{ _servicio.imagen }}" alt="" width="50px" height="50px">          
+          </div>
+          <div class="col-sm-12 col-md-7">
           <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64
             (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel"
             [(ngModel)]="_convertido" />
+          </div>        
+          
           <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="alert alert-danger">
             <div *ngIf="txtImagen.errors.required">
               El campo Imagen es requerido
@@ -44,7 +50,7 @@
         <!-- Botones -->
         <div class="form-group text-center">
           <button class="btn btn-success ml-2 mr-2" [disabled]="!servicioForm.form.valid" (click)="agregarServicio()"><i class="fas fa-save fal"></i> Guardar</button>
-          <button class="btn btn-secondary ml-2 mr-2" (click)="modificarServicio()" ><i class="fas fa-save fal"></i> Modificar</button>            
+          <button class="btn btn-secondary ml-2 mr-2" (click)="modificarServicio(_servicio)" ><i class="fas fa-save fal"></i> Modificar</button>            
           <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
         </div>
       </div>
