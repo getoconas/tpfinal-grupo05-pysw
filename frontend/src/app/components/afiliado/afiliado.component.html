@@ -5,8 +5,7 @@
       <!-- Apellido -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Apellido</label>
-        <input class="form-control col-sm-12 col-md-8" type="text" id="apellido" name="txtApellido" required
-          minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtApellido="ngModel" [(ngModel)]="_afiliado.apellido" />
+        <input class="form-control col-sm-12 col-md-8" type="text" id="apellido" name="txtApellido" required minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtApellido="ngModel" [(ngModel)]="_afiliado.apellido" />
         <div *ngIf="txtApellido.invalid && (txtApellido.dirty || txtApellido.touched)" class="alert alert-danger">
           <div *ngIf="txtApellido.errors.required">
             El campo Apellido es requerido
@@ -23,8 +22,7 @@
       <!-- Nombre -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Nombre/s</label>
-        <input class="form-control col-sm-12 col-md-8" type="text" id="nombre" name="txtNombre" required minlength="3"
-          pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtNombre="ngModel" [(ngModel)]="_afiliado.nombres" />
+        <input class="form-control col-sm-12 col-md-8" type="text" id="nombre" name="txtNombre" required minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtNombre="ngModel" [(ngModel)]="_afiliado.nombres" />
         <div *ngIf="txtNombre.invalid && (txtNombre.dirty || txtNombre.touched)" class="alert alert-danger">
           <div *ngIf="txtNombre.errors.required">
             El campo Nombre es requerido
@@ -59,8 +57,7 @@
       <!-- Email -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4" for="">Email</label>
-        <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtEmail="ngModel"
-          [(ngModel)]="_afiliado.email" />
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtEmail="ngModel" [(ngModel)]="_afiliado.email" />
         <div *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)" class="alert alert-danger">
           <div *ngIf="txtEmail.errors.required">
             El campo Email es requerido
@@ -74,9 +71,7 @@
       <!-- Imagen -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4" for="">Imagen</label>
-        <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64
-          (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel"
-          [(ngModel)]="_convertido" />
+        <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel" [(ngModel)]="_convertido" />
         <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="alert alert-danger">
           <div *ngIf="txtImagen.errors.required">
             El campo Imagen es requerido
@@ -87,8 +82,7 @@
       <!-- Telefono -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4" for="">Tel&eacute;fono</label>
-        <input class="form-control col-sm-12 col-md-8" type="text" name="txtTelefono" required minlength="7"
-          pattern="[0-9]{7,20}" #txtTelefono="ngModel" [(ngModel)]="_afiliado.telefono" />
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtTelefono" required minlength="7" pattern="[0-9]{7,20}" #txtTelefono="ngModel" [(ngModel)]="_afiliado.telefono" />
         <div *ngIf="txtTelefono.invalid && (txtTelefono.dirty || txtTelefono.touched)" class="alert alert-danger">
           <div *ngIf="txtTelefono.errors.required">
             El campo Tel&eacute;ono es requerido
@@ -103,10 +97,8 @@
       </div>
 
       <!-- Botones -->
-      <div class="row form-group">
-        <button type="button" class="btn btn-success" [disabled]="!afiliadoForm.form.valid"
-          (click)="agregarAfiliado()">Agregar</button>
-        <button type="button" class="btn btn-secondary">Modificar</button>
+      <div class="form-group text-center">
+        <button type="button" class="btn btn-success" [disabled]="!afiliadoForm.form.valid" (click)="agregarAfiliado()">Agregar</button>
       </div>
     </div>
   </form>
@@ -134,12 +126,131 @@
           <td><img src="{{ _afiliado.imagen }}" alt="" width="50px" height="50px"></td>
           <td>{{ _afiliado.telefono }}</td>
           <td>
-            <button class="btn btn-primary">Seleccionar</button>
+            <!-- Modificar -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificarModal" (click)="auxiliarAfiliado(_afiliado)">Modificar</button>
+            <!-- Modificar Modal -->
+            <div class="modal fade" id="modificarModal" tabindex="-1" role="dialog"
+              aria-labelledby="modificarModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modificarModalLabel">Modificar Afiliado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form #afiliadoModificarForm="ngForm">
+                  <div class="modal-body">
+                    <!-- Apellido -->
+                    <div class="row form-group">
+                      <label class="col-sm-12 col-md-4">Apellido</label>
+                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtApellido" required minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtApellido="ngModel" [(ngModel)]="_afiliadoAuxiliar.apellido" />
+                      <div *ngIf="txtApellido.invalid && (txtApellido.dirty || txtApellido.touched)" class="alert alert-danger">
+                        <div *ngIf="txtApellido.errors.required">
+                          El campo Apellido es requerido
+                        </div>
+                        <div *ngIf="txtApellido.errors.minlength">
+                          Se necesitan 3 caracteres m&iacute;nimo
+                        </div>
+                        <div *ngIf="txtApellido.errors.pattern">
+                          Solo se admiten letras
+                        </div>
+                      </div>
+                    </div>
+              
+                    <!-- Nombre -->
+                    <div class="row form-group">
+                      <label class="col-sm-12 col-md-4">Nombre/s</label>
+                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtNombre" required minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtNombre="ngModel" [(ngModel)]="_afiliadoAuxiliar.nombres" />
+                      <div *ngIf="txtNombre.invalid && (txtNombre.dirty || txtNombre.touched)" class="alert alert-danger">
+                        <div *ngIf="txtNombre.errors.required">
+                          El campo Nombre es requerido
+                        </div>
+                        <div *ngIf="txtNombre.errors.minlength">
+                          Se necesitan 3 caracteres m&iacute;nimo
+                        </div>
+                        <div *ngIf="txtNombre.errors.pattern">
+                          Solo se admiten letras
+                        </div>
+                      </div>
+                    </div>
+              
+                    <!-- DNI -->
+                    <div class="row form-group">
+                      <label class="col-sm-12 col-md-4">DNI</label>
+                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtDni" required minlength="7"  pattern="[0-9]{7,20}" #txtDni="ngModel" [(ngModel)]="_afiliadoAuxiliar.dni" />
+                      <div *ngIf="txtDni.invalid && (txtDni.dirty || txtDni.touched)" class="alert alert-danger">
+                        <div *ngIf="txtDni.errors.required">
+                          El campo DNI es requerido
+                        </div>
+                        <div *ngIf="txtDni.errors.minlength">
+                          Se necesitan 7 caracteres m&iacute;nimo
+                        </div>
+                        <div *ngIf="txtDni.errors.pattern">
+                          Solo se admiten numeros
+                        </div>
+                      </div>
+                    </div>
+              
+                    <!-- Email -->
+                    <div class="row form-group">
+                      <label class="col-sm-12 col-md-4" for="">Email</label>
+                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtEmail="ngModel" [(ngModel)]="_afiliadoAuxiliar.email" />
+                      <div *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)" class="alert alert-danger">
+                        <div *ngIf="txtEmail.errors.required">
+                          El campo Email es requerido
+                        </div>
+                        <div *ngIf="txtEmail.errors.pattern">
+                          Ingrese un email v&aacute;lido
+                        </div>
+                      </div>
+                    </div>
+              
+                    <!-- Imagen -->
+                    <div class="row form-group">
+                      <label class="col-sm-12 col-md-4" for="">Imagen</label>
+                      <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" #txtImagen="ngModel" [(ngModel)]="_convertido" />
+                      <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="alert alert-danger">
+                        <div *ngIf="txtImagen.errors.required">
+                          El campo Imagen es requerido
+                        </div>
+                      </div>
+                      <div class="rounded mx-auto d-block mt-2">
+                      Imagen Actual  <img  src="{{ _afiliadoAuxiliar.imagen }}" alt="" width="50px" height="50px">
+                      </div>
+                    </div>
+              
+                    <!-- Telefono -->
+                    <div class="row form-group">
+                      <label class="col-sm-12 col-md-4" for="">Tel&eacute;fono</label>
+                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtTelefono" required minlength="7" pattern="[0-9]{7,20}" #txtTelefono="ngModel" [(ngModel)]="_afiliadoAuxiliar.telefono" />
+                      <div *ngIf="txtTelefono.invalid && (txtTelefono.dirty || txtTelefono.touched)" class="alert alert-danger">
+                        <div *ngIf="txtTelefono.errors.required">
+                          El campo Tel&eacute;ono es requerido
+                        </div>
+                        <div *ngIf="txtTelefono.errors.minlength">
+                          Se necesitan 7 caracteres m&iacute;nimo
+                        </div>
+                        <div *ngIf="txtTelefono.errors.pattern">
+                          Solo se admiten numeros
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="modificarAfiliado(_afiliadoAuxiliar)" [disabled]="!afiliadoModificarForm.form.valid">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
             <!-- Eliminar -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarAfiliado(_afiliado)">Borrar</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal"
+              (click)="auxiliarAfiliado(_afiliado)">Borrar</button>
             <!-- Eliminar Modal -->
-            <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel"
-              aria-hidden="true">
+            <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -152,8 +263,9 @@
                     <h6>{{ _afiliadoAuxiliar.apellido }}, {{ _afiliadoAuxiliar.nombres }}</h6>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="eliminarAfiliado(_afiliadoAuxiliar)">Si</button>
-                    <button type="button" class="btn btn-secondary"  data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                      (click)="eliminarAfiliado(_afiliadoAuxiliar)" >Si</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                   </div>
                 </div>
               </div>
