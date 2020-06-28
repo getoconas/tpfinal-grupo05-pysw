@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~9.1.3",
+    "@angular/animations": "^9.1.11",
     "@angular/common": "~9.1.3",
     "@angular/compiler": "~9.1.3",
     "@angular/core": "~9.1.3",
@@ -22,6 +22,7 @@
     "alife-file-to-base64": "0.0.4",
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
+    "ngx-toastr": "^12.1.0",
     "node.js": "0.0.1-security",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.4",

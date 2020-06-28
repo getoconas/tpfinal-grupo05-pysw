@@ -1,14 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-
-
-
-
 import { FormsModule } from '@angular/forms'
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -23,8 +17,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
-
 import { LoginService } from './services/login.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -49,7 +44,13 @@ import { LoginService } from './services/login.service';
     HttpClientModule,
     FormsModule,
     AlifeFileToBase64Module,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,//required animations module
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    })//ToastrModule added
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]

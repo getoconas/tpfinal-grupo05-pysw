@@ -54,8 +54,8 @@
       </div>
       <!-- Botones -->
       <div class="form-group text-center">
-          <button class="btn btn-success ml-2 mr-2" [disabled]="!usuarioForm.form.valid" (click)="agregarUsuario()"><i class="fas fa-save fal"></i> Guardar</button>
-          <button class="btn btn-secondary ml-2 mr-2" (click)="modificarUsuario()" ><i class="fas fa-save fal"></i> Modificar</button>            
+          <button class="btn btn-success ml-2 mr-2" [disabled]="!usuarioForm.form.valid || editMode" (click)="agregarUsuario()"><i class="fas fa-save fal"></i> Guardar</button>
+          <button class="btn btn-secondary ml-2 mr-2" [disabled]="!editMode" (click)="modificarUsuario()" ><i class="fas fa-save fal"></i> Modificar</button>            
           <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
       </div>
   </div>
@@ -75,7 +75,7 @@
       <tbody>
         <tr *ngFor="let _usuario of _usuarios" >
           <th>{{ _usuario.usuario }}</th>
-          <td>***</td>
+          <td>*</td>
           <td>{{ _usuario.activo }}</td>
           <td>{{ _usuario.perfil }}</td>
           <td> 
