@@ -1,6 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> e3477e019bcee54ed62ce12ec7fc618f7d562a86
 
 import { FormsModule } from '@angular/forms'
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
