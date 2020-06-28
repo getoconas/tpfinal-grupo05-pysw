@@ -11,11 +11,13 @@ import { element } from 'protractor';
 export class AfiliadoComponent implements OnInit {
 
   _afiliado: Afiliado;
+  _afiliadoAuxiliar: Afiliado;
   _afiliados: Array<Afiliado>;
   _convertido: string;
 
   constructor(private _afiliadoService: AfiliadoService) { 
     this._afiliado = new Afiliado();
+    this._afiliadoAuxiliar = new Afiliado();
     this._afiliados = new Array<Afiliado>();
     this.obtenerAfiliados();
   }
@@ -33,12 +35,14 @@ export class AfiliadoComponent implements OnInit {
     )
   }
 
+  /* Agrega un afiliado */
   public agregarAfiliado() {
     this._afiliado.imagen = this._convertido;
     console.log(this._afiliado);
     this._afiliadoService.addAfiliado(this._afiliado).subscribe(
       (result) => {
         this.obtenerAfiliados();
+        this._convertido = "";
         alert('Afiliado Agregado');
       },
       (error) => {
@@ -52,26 +56,39 @@ export class AfiliadoComponent implements OnInit {
     this._afiliado = new Afiliado();
   }
 
-  public cambiarArchivo(file) {
+  /* Convierte una imagen a string */
+  public convertirArchivo(file) {
     if (file != null) {
       console.log("Archivo cambiado..", file);
       this._convertido = file[0].base64;
     } else {
       console.log("error");
     }
-    
   }
 
+  /* Modifica un afiliado */
   public modificarAfiliado() {
 
   }
 
-  public eliminarAfiliado() {
-    
+  /* Elimina un afiliado */
+  public eliminarAfiliado(afiliado) {
+    console.log(afiliado);
+    this._afiliadoService.deleteAfiliado(afiliado._id).subscribe(
+      (result) => {
+        this.obtenerAfiliados();
+        alert("Afiliado Eliminado");
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 
+  public auxiliarAfiliado(afiliado) {
+    this._afiliadoAuxiliar = afiliado;
+  }
 
   ngOnInit(): void {
   }
-
 }

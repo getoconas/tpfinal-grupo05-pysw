@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 
+
+
+
 import { FormsModule } from '@angular/forms'
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,8 +25,6 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { NoticiaComponent } from './components/noticia/noticia.component';
 
 import { LoginService } from './services/login.service';
-
-
 
 
 @NgModule({

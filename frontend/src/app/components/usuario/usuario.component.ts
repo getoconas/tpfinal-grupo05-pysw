@@ -13,6 +13,7 @@ export class UsuarioComponent implements OnInit {
 
   constructor(private _usuarioService: UsuarioService) { 
     this._usuario = new Usuario();
+    this._usuario.activo=true;
     this._usuarios = new Array<Usuario>();
     this.obtenerUsuarios();
   }
@@ -48,6 +49,7 @@ export class UsuarioComponent implements OnInit {
 
   public limpiarCampos() {
     this._usuario = new Usuario();
+    this._usuario.activo=true;
   }
 
   public seleccionarUsuario(usuario: Usuario) {
@@ -59,18 +61,19 @@ export class UsuarioComponent implements OnInit {
   public eliminarUsuario(usuario: Usuario){
     this._usuarioService.deleteUsuario(usuario).subscribe(
       (result)=>{
+        this.obtenerUsuarios();
         alert("Usuario eliminado");
       }, 
       (error)=>{
         console.log(error);
       }
     );
-    this.obtenerUsuarios();
   }
 
   public modificarUsuario(){
    this._usuarioService.updateUsuario(this._usuario).subscribe(
       (result)=>{
+        this.obtenerUsuarios();
         alert("Usuario actualizado");
       },
       (error)=>{
@@ -78,7 +81,6 @@ export class UsuarioComponent implements OnInit {
       }
     );
     this.limpiarCampos();
-    this.obtenerUsuarios();
   }
 
 }

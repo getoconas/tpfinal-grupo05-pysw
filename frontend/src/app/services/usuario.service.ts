@@ -8,7 +8,7 @@ import { Usuario } from '../models/usuario';
 })
 export class UsuarioService {
 
-  URL: string = "http://localhost:3000/api/usuarios";
+  URL: string = "http://localhost:3000/api/usuarios/";
 
   constructor(private _http: HttpClient) { }
 
@@ -30,12 +30,23 @@ export class UsuarioService {
   }
 
   /* Modificacion de Usuario */
-  public updateUsuario(_usuario: Usuario) {
-    return this._http.put(this.URL + "/" + _usuario._id, _usuario);
+  public updateUsuario(_usuario: Usuario) :Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json"
+      })
+    };
+    var body = JSON.stringify(_usuario);
+    return this._http.put(this.URL + _usuario._id , body , httpOptions );
   }
 
   /* Baja de Usuario */
-  public deleteUsuario(_id: any) {
-    return this._http.delete(this.URL + "/" + _id);
+  public deleteUsuario(_usuario: Usuario):Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+  
+      })
+    };
+    return this._http.delete( this.URL + _usuario._id , httpOptions );
   }
 }

@@ -1,68 +1,88 @@
-<div class="row">
-    <form class="col-md-10 offset-1" method="post" action=""  >
-        <h2 class="text-center"> GESTION DE USUARIOS </h2>
-        <div class="form-group row">
-            <label for="idusuario" class="col-md-4">Usuario</label>
-            <input id="idusuario" class="form-control form-control-sm col-md-8" required minlength="6"
-                type="text" name="usuario" 
-                [(ngModel)]="_usuario.usuario"/>
+<div class="container mt-3">
+  <form class="card" #usuarioForm="ngForm">
+      <div class="card-header text-center h3">GESTION DE USUARIOS</div>
+      <div class="card-body">
+  
+      <!-- Usuario -->
+      <div class="form-group row">
+          <label for="idusuario" class="col-md-4">Usuario</label>
+          <input id="idusuario" class="form-control form-control-sm col-md-8" required 
+              type="text" name="usuario" #txtUsuario="ngModel"
+              [(ngModel)]="_usuario.usuario"/>
+          <div *ngIf="txtUsuario.invalid && (txtUsuario.dirty || txtUsuario.touched)" class="alert alert-danger">
+            <div *ngIf="txtUsuario.errors.required">
+              El campo Usuario es requerido
+            </div>
+          </div>								  		
+      </div>
+
+      <!-- Password -->
+      <div class="form-group row">
+          <label for="idpassword" class="col-md-4">Password</label>
+          <input id="idpassword" class="form-control form-control-sm col-md-8" required
+               type="text" name="password" #txtPassword="ngModel"
+                [(ngModel)]="_usuario.password"/>
+          <div *ngIf="txtPassword.invalid && (txtPassword.dirty || txtPassword.touched)" class="alert alert-danger">
+            <div *ngIf="txtPassword.errors.required">
+            El campo Password es requerido
+            </div>
+          </div>
+      </div>
+
+      <!-- Perfil -->
+      <div class="form-group row">
+        <label for="idperfil" class="col-md-4">Perfil</label>
+        <select id="idperfil" class="form-control form-control-sm col-md-8" required
+             name="perfil" #txtPerfil="ngModel" [(ngModel)]="_usuario.perfil">
+           <option >Administrador</option>
+           <option >Administrativo</option>
+           <option >Socio</option>
+        </select>
+        <div *ngIf="txtPerfil.invalid && (txtPerfil.dirty || txtPerfil.touched)" class="alert alert-danger">
+          <div *ngIf="txtPerfil.errors.required">
+          El campo Perfil es requerido
+          </div>
         </div>
+      </div>  
+    
+      <!-- Activo -->
+      <div class="form-group row">
+          <label for="idactivo" class="col-md-4">Activo</label>
+          <input id="idactivo" class="form-control form-control-sm col-md-8"
+               type="checkbox" name="activo" 
+                 [(ngModel)]="_usuario.activo"/> 
+      </div>
+      <!-- Botones -->
+      <div class="form-group text-center">
+          <button class="btn btn-success ml-2 mr-2" [disabled]="!usuarioForm.form.valid" (click)="agregarUsuario()"><i class="fas fa-save fal"></i> Guardar</button>
+          <button class="btn btn-secondary ml-2 mr-2" (click)="modificarUsuario()" ><i class="fas fa-save fal"></i> Modificar</button>            
+          <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
+      </div>
+  </div>
+  </form>
 
-        <div class="form-group row">
-            <label for="idpassword" class="col-md-4">Password</label>
-            <input id="idpassword" class="form-control form-control-sm col-md-8" required
-                 type="text" name="password" 
-                  [(ngModel)]="_usuario.password"/>
-        </div>
-
-        <div class="form-group row">
-          <label for="idperfil" class="col-md-4">Perfil</label>
-          <select id="idperfil" class="form-control form-control-sm col-md-8" required
-               name="perfil" [(ngModel)]="_usuario.perfil">
-             <option >Administrador</option>
-             <option >Administrativo</option>
-             <option >Socio</option>
-          </select>
-
-        </div>  
-
-        <div class="form-group row">
-            <label for="idactivo" class="col-md-4">Activo</label>
-            <input id="idactivo" class="form-control form-control-sm col-md-8" required
-                 type="checkbox" name="activo" 
-                   [(ngModel)]="_usuario.activo"/> 
-        </div>
-        
-        <div class="form-group text-center">
-            <button class="btn btn-success ml-2 mr-2" (click)="agregarUsuario()"><i class="fas fa-save fal"></i> Guardar</button>
-            <button class="btn btn-secondary ml-2 mr-2" (click)="modificarUsuario()" ><i class="fas fa-save fal"></i> Modificar</button>            
-            <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
-        </div>
-    </form>
-
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Usuario</th>
-            <th scope="col">Password</th>
-            <th scope="col">Activo</th>
-            <th scope="col">Perfil</th>
-            <th >Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let _usuario of _usuarios" >
-            <th>{{ _usuario.usuario }}</th>
-            <td>*****</td>
-            <td>{{ _usuario.activo }}</td>
-            <td>{{ _usuario.perfil }}</td>
-            <td> 
-              <button class="btn btn-primary" (click)="seleccionarUsuario(_usuario)" >Seleccionar</button>
-              <button class="btn btn-danger" (click)="eliminarUsuario(_usuario)" >Borrar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-
+  <!-- Tabla -->
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Usuario</th>
+          <th scope="col">Password</th>
+          <th scope="col">Activo</th>
+          <th scope="col">Perfil</th>
+          <th >Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let _usuario of _usuarios" >
+          <th>{{ _usuario.usuario }}</th>
+          <td>***</td>
+          <td>{{ _usuario.activo }}</td>
+          <td>{{ _usuario.perfil }}</td>
+          <td> 
+            <button class="btn btn-primary" (click)="seleccionarUsuario(_usuario)" >Seleccionar</button>          
+            <button class="btn btn-danger" (click)="eliminarUsuario(_usuario)" >Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 </div>
