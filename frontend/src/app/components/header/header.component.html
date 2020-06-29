@@ -29,7 +29,7 @@
                           {{loginService.userLogged.usuario}} (logout)
                       </a>    
                     </div>
-                    <li>
+                    <li *ngIf="loginService.userLoggedIn && loginService.userLogged.perfil=='Administrador'">
                       <a class="nav-link text-white" [routerLink]="['usuario']"> Usuario <span class="sr-only">(current)</span></a>
 
                     </li> 
