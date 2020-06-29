@@ -32,7 +32,12 @@
                     <li *ngIf="loginService.userLoggedIn && loginService.userLogged.perfil=='Administrador'">
                       <a class="nav-link text-white" [routerLink]="['usuario']"> Usuario <span class="sr-only">(current)</span></a>
 
+                    </li>
+                    <li *ngIf="loginService.userLoggedIn && loginService.userLogged.perfil=='Socio'">
+                      <a class="nav-link text-white" [routerLink]="['novedad']"> Novedades <span class="sr-only">(current)</span></a>
+
                     </li> 
+                   
                     <li class="nav-item">
                       <a class="nav-link text-white" [routerLink]="['servicio']"> Servicio <span class="sr-only">(current)</span></a>
                     </li>                         
