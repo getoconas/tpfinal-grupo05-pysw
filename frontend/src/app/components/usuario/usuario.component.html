@@ -6,12 +6,15 @@
       <!-- Usuario -->
       <div class="form-group row">
           <label for="idusuario" class="col-md-4">Usuario</label>
-          <input id="idusuario" class="form-control form-control-sm col-md-8" required 
-              type="text" name="usuario" #txtUsuario="ngModel"
+          <input id="idusuario" class="form-control form-control-sm col-md-8" required pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              type="text" name="usuario" #txtUsuario="ngModel" placeholder="email@dominio.com"
               [(ngModel)]="_usuario.usuario"/>
           <div *ngIf="txtUsuario.invalid && (txtUsuario.dirty || txtUsuario.touched)" class="alert alert-danger">
             <div *ngIf="txtUsuario.errors.required">
               El campo Usuario es requerido
+            </div>
+            <div *ngIf="txtUsuario.errors.pattern">
+              El Usuario debe ser un email
             </div>
           </div>								  		
       </div>
@@ -20,7 +23,7 @@
       <div class="form-group row">
           <label for="idpassword" class="col-md-4">Password</label>
           <input id="idpassword" class="form-control form-control-sm col-md-8" required
-               type="text" name="password" #txtPassword="ngModel"
+               type="password" name="password" #txtPassword="ngModel"
                 [(ngModel)]="_usuario.password"/>
           <div *ngIf="txtPassword.invalid && (txtPassword.dirty || txtPassword.touched)" class="alert alert-danger">
             <div *ngIf="txtPassword.errors.required">
@@ -60,7 +63,8 @@
       </div>
   </div>
   </form>
-
+  
+  <h2 class="text-center mt-3">Informaci&oacute;n de Usuarios</h2>
   <!-- Tabla -->
   <table class="table">
       <thead>
@@ -76,7 +80,7 @@
         <tr *ngFor="let _usuario of _usuarios" >
           <th>{{ _usuario.usuario }}</th>
           <td>*</td>
-          <td>{{ _usuario.activo }}</td>
+          <td><input type="checkbox" [checked]="_usuario.activo"/> </td>
           <td>{{ _usuario.perfil }}</td>
           <td> 
             <button class="btn btn-primary" (click)="seleccionarUsuario(_usuario)" >Seleccionar</button>          

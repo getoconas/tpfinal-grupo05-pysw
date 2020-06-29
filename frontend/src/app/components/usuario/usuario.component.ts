@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-usuario',
@@ -13,7 +15,11 @@ export class UsuarioComponent implements OnInit {
   _usuarios: Array<Usuario>;
   editMode:boolean=false;
 
-  constructor(private _usuarioService: UsuarioService, private toastr:ToastrService) { 
+  constructor(private _usuarioService: UsuarioService, private toastr:ToastrService, private router:Router, private loginService: LoginService) { 
+    //validacio por ruta
+    if (!loginService.userLoggedIn) {
+      this.router.navigateByUrl('/login');
+    }
     this._usuario = new Usuario();
     this._usuario.activo=true;
     this._usuarios = new Array<Usuario>();
@@ -37,16 +43,26 @@ export class UsuarioComponent implements OnInit {
   }
 
   public agregarUsuario() {
-    this._usuarioService.addUsuario(this._usuario).subscribe(
-      (result) => {
-        this.obtenerUsuarios();
-        this.toastr.success('Usuario Agregado Exitosamente');
-      },
-      (error) => {
-        console.log(error);
+    var _existeUsuario: boolean = false;
+    for (var i in this._usuarios) {
+      if (this._usuarios[i].usuario == this._usuario.usuario) {
+        _existeUsuario = true;
       }
-    )
-    this.limpiarCampos();
+    }
+    if (_existeUsuario) {
+      this.toastr.error("Usuario repetido");
+    } else{
+          this._usuarioService.addUsuario(this._usuario).subscribe(
+            (result) => {
+              this.obtenerUsuarios();
+              this.toastr.success('Usuario Agregado Exitosamente');
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
+          this.limpiarCampos();
+    }
   }
 
   public limpiarCampos() {
