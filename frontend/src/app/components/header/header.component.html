@@ -37,6 +37,12 @@
                       <a class="nav-link text-white" [routerLink]="['novedad']"> Novedades <span class="sr-only">(current)</span></a>
 
                     </li> 
+                    <li *ngIf="loginService.userLoggedIn && loginService.userLogged.perfil=='Administrativo'">
+                      <a class="nav-link text-white" [routerLink]="['afiliado']"> Afiliado <span class="sr-only">(current)</span></a>
+                      <a class="nav-link text-white" [routerLink]="['servicio']"> Servicios <span class="sr-only">(current)</span></a>
+                      <a class="nav-link text-white" [routerLink]="['pago']"> Pagos <span class="sr-only">(current)</span></a>
+
+                    </li>
                    
                     <li class="nav-item">
                       <a class="nav-link text-white" [routerLink]="['servicio']"> Servicio <span class="sr-only">(current)</span></a>
