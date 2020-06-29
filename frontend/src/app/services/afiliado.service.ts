@@ -37,5 +37,4 @@ export class AfiliadoService {
   public deleteAfiliado(_id: any) {
     return this._http.delete(this.URL + "/" + _id);
   }
-
 }

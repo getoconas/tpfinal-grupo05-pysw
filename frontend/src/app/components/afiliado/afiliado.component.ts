@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Afiliado } from 'src/app/models/afiliado';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { ToastrService } from 'ngx-toastr';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-afiliado',
@@ -38,8 +39,22 @@ export class AfiliadoComponent implements OnInit {
 
   /* Agrega un afiliado */
   public agregarAfiliado() {
+    var _banderaControl: boolean = false;
+    for (var i in this._afiliados) {
+      if (this._afiliados[i].dni == this._afiliado.dni) {
+        _banderaControl = true;
+      }
+    }
+    if (_banderaControl) {
+      this._toastr.error("DNI repetido");
+    } else {
+      this.agregarAfiliadoService(this._afiliado); 
+    }
+  }
+  
+  /* Service de Agregar Afiliado */ 
+  public agregarAfiliadoService(_afiliado) {
     this._afiliado.imagen = this._convertido;
-    console.log(this._afiliado);
     this._afiliadoService.addAfiliado(this._afiliado).subscribe(
       (result) => {
         this.obtenerAfiliados();
@@ -49,7 +64,7 @@ export class AfiliadoComponent implements OnInit {
       (error) => {
         console.log(error);
       }
-    )
+    );
     this.limpiarCampos();
   }
 
