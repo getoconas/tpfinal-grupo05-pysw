@@ -1,1 +1,56 @@
-<p>pago works!</p>
+<div class="container mt-3">
+  <form class="card" #pagoForm="ngForm">
+    <div class="card-header text-center h3">Gesti&oacute;n de Pagos</div>
+    <div class="card-body">
+      <!-- Afiliado -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4">Afiliado</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" />
+      </div>
+      <!-- Monto -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4">Monto</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" />
+      </div>
+      <!-- Año -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md 4">Año</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" />
+      </div>
+      <!-- Mes -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md-4">Mes</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" />
+      </div>
+
+      <!-- Botones -->
+      <div class="form-group text-center">
+        <button type="button" class="btn btn-success">Agregar</button>
+      </div>
+    </div>
+  </form>
+
+  <h2 class="text-center mt-3">Informaci&oacute;n de Pagos</h2>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Afiliado</th>
+          <th>Fecha</th>
+          <th>Monto</th>
+          <th>Mes</th>
+          <th>Año</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
