@@ -15,13 +15,13 @@ export class LoginService {
   constructor(private _http:HttpClient) { }
 
 
-  public login(username: string, password: string):Observable<any> {
+  public login(usuario: string, password: string):Observable<any> {
     const httpOption = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       }) 
     } 
-    let body = JSON.stringify({ username: username, password: password });
+    let body = JSON.stringify({ usuario: usuario, password: password });
     return this._http.post('http://localhost:3000/api/usuarios/login', body, httpOption);
   }
 
