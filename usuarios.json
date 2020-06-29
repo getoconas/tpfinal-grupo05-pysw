@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "5ef95948b23c9f1ae80277b2"
+  },
+  "activo": true,
+  "usuario": "administrador@unjuweb.com",
+  "password": "11111",
+  "perfil": "Administrador",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ef95966b23c9f1ae80277b3"
+  },
+  "activo": true,
+  "usuario": "administrativo@unjuweb.com",
+  "password": "22222",
+  "perfil": "Administrativo",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5ef95979b23c9f1ae80277b4"
+  },
+  "activo": true,
+  "usuario": "socio@unjuweb.com",
+  "password": "33333",
+  "perfil": "Socio",
+  "__v": 0
+}]
