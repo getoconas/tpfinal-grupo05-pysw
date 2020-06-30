@@ -14,6 +14,7 @@ app.use(cors({
 app.use('/api/afiliados', require('./routes/afiliado.routes'));
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
 app.use('/api/servicios', require('./routes/servicio.routes'));
+app.use('/api/pagos', require('./routes/pagos.routes'));
 
 
 // Setting

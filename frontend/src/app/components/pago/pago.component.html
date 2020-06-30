@@ -5,7 +5,11 @@
       <!-- Afiliado -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Afiliado</label>
-        <input class="form-control col-sm-12 col-md-8" type="text" />
+        <!-- Carga la lista de la base de datos -->
+        <select name="cmbAfiliado" class="form-control col-sm-12 col-md-8" required>
+          <option value="{{item._id}}" *ngFor="let item of _afiliados"> {{item.dni}} - {{ item.apellido }}, {{ item.nombres }} </option>
+        </select>
+        <!--<input class="form-control col-sm-12 col-md-8" type="text" />-->
       </div>
       <!-- Monto -->
       <div class="row form-group">

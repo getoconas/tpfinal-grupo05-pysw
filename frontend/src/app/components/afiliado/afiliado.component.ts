@@ -13,6 +13,7 @@ export class AfiliadoComponent implements OnInit {
   _afiliado: Afiliado;
   _afiliadoAuxiliar: Afiliado;
   _afiliados: Array<Afiliado>;
+  _afiliadosAuxiliar: Array<Afiliado>;
   _convertido: string;
   _dniModificar: number;
 
@@ -20,6 +21,7 @@ export class AfiliadoComponent implements OnInit {
     this._afiliado = new Afiliado();
     this._afiliadoAuxiliar = new Afiliado();
     this._afiliados = new Array<Afiliado>();
+    this._afiliadosAuxiliar = new Array<Afiliado>();
     this._convertido = "";
     this.obtenerAfiliados();
   }
@@ -33,6 +35,7 @@ export class AfiliadoComponent implements OnInit {
           var _afi: Afiliado = new Afiliado();
           Object.assign(_afi, element);
           this._afiliados.push(_afi);
+          this._afiliadosAuxiliar.push(_afi);
         })
       }
     )
@@ -85,21 +88,28 @@ export class AfiliadoComponent implements OnInit {
 
   /* Modifica un afiliado */
   public modificarAfiliado(afiliado) {
+    this.validarImagen(afiliado);
+    /*console.log(afiliado);
     if (this._dniModificar == afiliado.dni) {
+      console.log(this._dniModificar + " - " + afiliado.dni);
       this.validarImagen(afiliado);
     } else {
+      console.log("Otro DNI: " + afiliado.dni);
       var _existeDni: boolean = false;
-      for (var i in this._afiliados) {
-        if (this._afiliados[i].dni == afiliado.dni) {
+      for (var i in this._afiliadosAuxiliar) {
+        if (this._afiliadosAuxiliar[i].dni == afiliado.dni) {
+          console.log(this._afiliadosAuxiliar[i].dni);
+          console.log("Dentro de IF");
           _existeDni = true;
         }
       }
       if (_existeDni) {
         this._toastr.error("DNI repetido. No se pudo realizar la operación.");
       } else {
+        console.log("OKAS");
         this.validarImagen(afiliado);
       }
-    }
+    }*/
   }
 
   /* Valida si hubo un cambio de imagen */
