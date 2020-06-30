@@ -178,7 +178,7 @@
                     <!-- DNI -->
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4">DNI</label>
-                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtDni" required minlength="7"  pattern="[0-9]{7,20}" #txtDni="ngModel" [(ngModel)]="_afiliadoAuxiliar.dni" />
+                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtDni" required minlength="7"  pattern="[0-9]{7,20}" #txtDni="ngModel" [(ngModel)]="_dniModificar" />
                       <div *ngIf="txtDni.invalid && (txtDni.dirty || txtDni.touched)" class="alert alert-danger">
                         <div *ngIf="txtDni.errors.required">
                           El campo DNI es requerido
