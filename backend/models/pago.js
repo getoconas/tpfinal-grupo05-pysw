@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Afiliado = require('./afiliado');
 const {Schema} = mongoose;
 
 const PagoSchema = new Schema({
