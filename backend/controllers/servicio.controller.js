@@ -4,7 +4,7 @@ const servicioCtrl = {}
 
 // Listado de Servicios
 servicioCtrl.getServicios = async(req, res) => {
-  const servicios = await Servicio.find();
+  const servicios = await Servicio.find().populate("afiliadosInsc");
   res.json(servicios);
 }
 

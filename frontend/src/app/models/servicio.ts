@@ -5,7 +5,7 @@ export class Servicio {
     nombre: string;
     imagen: string;
     activo: boolean;
-  //  afiliadosInsc: Array<Afiliado> = new Array<Afiliado>();
+    afiliadosInsc: Array<Afiliado> = new Array<Afiliado>();
 
     Servicio(_id?: string, nombre?: string, imagen?: string, activo?: boolean){
         this._id = _id;

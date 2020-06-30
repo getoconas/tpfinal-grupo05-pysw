@@ -47,13 +47,40 @@
           <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption"  [(ngModel)]="_servicio.activo" value="false" > No
         </div>
 
+        <!-- Afiliados -->
+        <div class="form-group row">
+          <label for="idafiliado" class="col-md-4">Afiliados</label>
+             <select id="idafiliado" class="form-control form-control-sm col-md-8" required
+             name="afiliado" #afiliado="ngModel"
+             [(ngModel)] = "afiliadoaux">
+             <option *ngFor="let afiliado of afiliados" [ngValue]="afiliado">{{afiliado.dni}}-{{afiliado.nombres}}</option>
+             </select>
+             <button class="btn btn-secondary ml-2 mr-2" (click)="agregarAfiliado(afiliadoaux)" ><i class="fas fa-brush"></i> Agregar Afiliado</button>
+        </div>
+
+       
+
+        <!-- Afiliados del servicio -->
+        <div class="form-group row">
+          <label for="idlista" class="col-md-4">Afiliados del servicio</label>
+             <select id="idlista" class="form-control form-control-sm col-md-8"
+             name="lista">
+             <option *ngFor="let af of _servicio.afiliadosInsc" [ngValue]="af">{{af.dni}}-{{af.nombres}}</option>
+             </select>
+        </div>
+
         <!-- Botones -->
         <div class="form-group text-center">
           <button class="btn btn-success ml-2 mr-2" [disabled]="!servicioForm.form.valid" (click)="agregarServicio()"><i class="fas fa-save fal"></i> Guardar</button>
           <button class="btn btn-secondary ml-2 mr-2" (click)="modificarServicio(_servicio)" ><i class="fas fa-save fal"></i> Modificar</button>            
           <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
+          
         </div>
       </div>
+    </form>
+
+    <form action="">
+      
     </form>
   
     <h2 class="text-center mt-3">Informaci&oacute;n de Servicios</h2>
