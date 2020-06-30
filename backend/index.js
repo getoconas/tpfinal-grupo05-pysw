@@ -10,10 +10,11 @@ app.use(cors({
   origin: 'http://localhost:4200'
 }))
 
-// Cargamos el modulo de direccionamiento de rutas para puntos
+// Cargamos el modulo de direccionamiento de rutas
 app.use('/api/afiliados', require('./routes/afiliado.routes'));
 app.use('/api/usuarios', require('./routes/usuarios.routes'));
 app.use('/api/servicios', require('./routes/servicio.routes'));
+app.use('/api/pagos', require('./routes/pagos.routes'));
 
 
 // Setting

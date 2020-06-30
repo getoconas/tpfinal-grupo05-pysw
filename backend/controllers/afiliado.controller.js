@@ -1,5 +1,4 @@
 const Afiliado = require('../models/afiliado');
-const afiliado = require('../models/afiliado');
 
 const afiliadoCtrl = {}
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Afiliado } from 'src/app/models/afiliado';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { ToastrService } from 'ngx-toastr';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-afiliado',
@@ -15,8 +14,10 @@ export class AfiliadoComponent implements OnInit {
   _afiliadoAuxiliar: Afiliado;
   _afiliados: Array<Afiliado>;
   _convertido: string;
+  _dniModificarOriginal: number;
+  _dniModificar: number;
 
-  constructor(private _afiliadoService: AfiliadoService, private _toastr: ToastrService) { 
+  constructor(private _afiliadoService: AfiliadoService, private _toastr: ToastrService) {
     this._afiliado = new Afiliado();
     this._afiliadoAuxiliar = new Afiliado();
     this._afiliados = new Array<Afiliado>();
@@ -24,6 +25,7 @@ export class AfiliadoComponent implements OnInit {
     this.obtenerAfiliados();
   }
 
+  /* Obtiene una lista de afiliados */
   public obtenerAfiliados() {
     this._afiliadoService.getAfiliados().subscribe(
       (result) => {
@@ -39,20 +41,20 @@ export class AfiliadoComponent implements OnInit {
 
   /* Agrega un afiliado */
   public agregarAfiliado() {
-    var _banderaControl: boolean = false;
+    var _existeDni: boolean = false;
     for (var i in this._afiliados) {
       if (this._afiliados[i].dni == this._afiliado.dni) {
-        _banderaControl = true;
+        _existeDni = true;
       }
     }
-    if (_banderaControl) {
+    if (_existeDni) {
       this._toastr.error("DNI repetido");
     } else {
-      this.agregarAfiliadoService(this._afiliado); 
+      this.agregarAfiliadoService(this._afiliado);
     }
   }
-  
-  /* Service de Agregar Afiliado */ 
+
+  /* Service de Agregar Afiliado */
   public agregarAfiliadoService(_afiliado) {
     this._afiliado.imagen = this._convertido;
     this._afiliadoService.addAfiliado(this._afiliado).subscribe(
@@ -84,6 +86,27 @@ export class AfiliadoComponent implements OnInit {
 
   /* Modifica un afiliado */
   public modificarAfiliado(afiliado) {
+    if (this._dniModificar == this._dniModificarOriginal) {
+      afiliado.dni = this._dniModificar;
+      this.validarImagen(afiliado);
+    } else {
+      var _existeDni: boolean = false;
+      for (var i in this._afiliados) {
+        if (this._afiliados[i].dni == this._dniModificar) {
+          _existeDni = true;
+        }
+      }
+      if (_existeDni) {
+        this._toastr.error("DNI repetido. No se pudo realizar la operación.");
+      } else {
+        afiliado.dni = this._dniModificar;
+        this.validarImagen(afiliado);
+      }
+    }
+  }
+
+  /* Valida si hubo un cambio de imagen */
+  public validarImagen(afiliado) {
     if (this._convertido != "") {
       afiliado.imagen = this._convertido
       this.modificarAfiliadoService(afiliado);
@@ -123,6 +146,8 @@ export class AfiliadoComponent implements OnInit {
   }
 
   public auxiliarAfiliado(afiliado) {
+    this._dniModificarOriginal = afiliado.dni;
+    this._dniModificar = afiliado.dni;
     this._afiliadoAuxiliar = afiliado;
   }
 

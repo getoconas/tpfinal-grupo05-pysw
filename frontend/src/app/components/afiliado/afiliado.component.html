@@ -178,7 +178,7 @@
                     <!-- DNI -->
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4">DNI</label>
-                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtDni" required minlength="7"  pattern="[0-9]{7,20}" #txtDni="ngModel" [(ngModel)]="_afiliadoAuxiliar.dni" />
+                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtDni" required minlength="7"  pattern="[0-9]{7,20}" #txtDni="ngModel" [(ngModel)]="_dniModificar" />
                       <div *ngIf="txtDni.invalid && (txtDni.dirty || txtDni.touched)" class="alert alert-danger">
                         <div *ngIf="txtDni.errors.required">
                           El campo DNI es requerido
@@ -238,7 +238,7 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="modificarAfiliado(_afiliadoAuxiliar)" [disabled]="!afiliadoModificarForm.form.valid">Guardar</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" (click)="modificarAfiliado(_afiliadoAuxiliar)" [disabled]="!afiliadoModificarForm.form.valid">Guardar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                   </div>
                   </form>
@@ -247,8 +247,7 @@
             </div>
 
             <!-- Eliminar -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal"
-              (click)="auxiliarAfiliado(_afiliado)">Borrar</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarAfiliado(_afiliado)">Borrar</button>
             <!-- Eliminar Modal -->
             <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -263,8 +262,7 @@
                     <h6>{{ _afiliadoAuxiliar.apellido }}, {{ _afiliadoAuxiliar.nombres }}</h6>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"
-                      (click)="eliminarAfiliado(_afiliadoAuxiliar)" >Si</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="eliminarAfiliado(_afiliadoAuxiliar)" >Si</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                   </div>
                 </div>
