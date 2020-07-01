@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Afiliado } from 'src/app/models/afiliado';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-afiliado',
@@ -17,7 +19,12 @@ export class AfiliadoComponent implements OnInit {
   _dniModificarOriginal: number;
   _dniModificar: number;
 
-  constructor(private _afiliadoService: AfiliadoService, private _toastr: ToastrService) {
+  constructor(private _afiliadoService: AfiliadoService, private _toastr: ToastrService, private router:Router, private loginService: LoginService) {
+    //validacion por ruta
+    if (!loginService.userLoggedIn) {
+      this.router.navigateByUrl('/login');
+    }
+    
     this._afiliado = new Afiliado();
     this._afiliadoAuxiliar = new Afiliado();
     this._afiliados = new Array<Afiliado>();

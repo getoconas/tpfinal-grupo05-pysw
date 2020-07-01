@@ -4,6 +4,8 @@ import { Afiliado } from 'src/app/models/afiliado';
 import { Pago } from 'src/app/models/pago';
 import { PagoService } from 'src/app/services/pago.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-pago',
@@ -16,7 +18,12 @@ export class PagoComponent implements OnInit {
   _pagos: Array<Pago>;
   _afiliados: Array<Afiliado>;
 
-  constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _toastr: ToastrService) { 
+  constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _toastr: ToastrService, private router:Router, private loginService: LoginService) { 
+    //validacion por ruta
+    if (!loginService.userLoggedIn) {
+      this.router.navigateByUrl('/login');
+    }
+    
     this._pago = new Pago();
     this._pagos = new Array<Pago>();
     this._afiliados = new Array<Afiliado>();
