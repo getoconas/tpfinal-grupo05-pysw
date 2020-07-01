@@ -4,7 +4,7 @@ const pagoCtrl = {}
 
 // Listado de Pagos
 pagoCtrl.getPagos = async(req, res) => {
-  const pagos = await Pago.find();
+  const pagos = await Pago.find().populate("afiliado");
   res.json(pagos);
 }
 
