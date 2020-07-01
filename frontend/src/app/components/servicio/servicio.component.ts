@@ -181,10 +181,21 @@ luego llama a modificarServicioService para completar la accion*/
 
   }
 
-  /*Asigna el afiliado seleccionado a la lista de afiliados de dicho servicio */
+  /*Controla que no hayan repetidos y Asigna el afiliado seleccionado 
+  a la lista de afiliados de dicho servicio */
   agregarAfiliado(afiliadoaux){
-    this._servicio.afiliadosInsc.push(this.afiliadoaux);
-    
+
+    var _banderaControl: boolean = false;
+      for (var i in this._servicio.afiliadosInsc) {
+        if (this._servicio.afiliadosInsc[i].dni == this.afiliadoaux.dni) {
+          _banderaControl = true;
+        }
+      }
+      if (_banderaControl) {
+        this.toastr.error("El afiliado ya cuenta con el servicio");
+      } else {
+        this._servicio.afiliadosInsc.push(this.afiliadoaux);     
+      }
   }
 
  

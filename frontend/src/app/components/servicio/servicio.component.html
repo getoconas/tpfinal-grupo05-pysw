@@ -1,6 +1,34 @@
 <div class="container mt-3">
+  <div class="card-header titulo text-center h3">Servicios</div>
+  <br>
+  <div id="div1" class="table-responsive">
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Imagen</th>
+          <th>Activo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let _servicio of _servicios" >
+          <th>{{ _servicio.nombre }}</th>
+          <td><img src="{{ _servicio.imagen }}" alt="" width="50px" height="50px"></td>
+          <td>{{ _servicio.activo }}</td>
+          <td> 
+            <button class="btn btn-primary" (click)="seleccionarServicio(_servicio)" >Seleccionar</button>          
+            <button class="btn btn-danger" (click)="eliminarServicio(_servicio)" >Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br><br>
+
     <form class="card" #servicioForm="ngForm">
-      <div class="card-header text-center h3">Gesti&oacute;n de Servicios</div>
+      <div class="card-header text-center titulo h3">Gestionar Servicios</div>
+      <br>
       <div class="card-body">
         
         <!-- Nombre -->
@@ -43,68 +71,61 @@
         <!-- Activo -->
         <div class="form-group row">
           <label class="col-sm-12 col-md-4" for="idoption">Activo</label>
-          <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption"  [(ngModel)]="_servicio.activo" value="true" > Si
-          <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption"  [(ngModel)]="_servicio.activo" value="false" > No
+          <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption"  [(ngModel)]="_servicio.activo" value="true"> Si
+          <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption"  [(ngModel)]="_servicio.activo" value="false"> No
         </div>
 
-        <!-- Afiliados -->
-        <div class="form-group row">
-          <label for="idafiliado" class="col-md-4">Afiliados</label>
-             <select id="idafiliado" class="form-control form-control-sm col-md-8" required
-             name="afiliado" #afiliado="ngModel"
-             [(ngModel)] = "afiliadoaux">
-             <option *ngFor="let afiliado of afiliados" [ngValue]="afiliado">{{afiliado.dni}}-{{afiliado.nombres}}</option>
-             </select>
-             <button class="btn btn-secondary ml-2 mr-2" (click)="agregarAfiliado(afiliadoaux)" ><i class="fas fa-brush"></i> Agregar Afiliado</button>
-        </div>
-
-       
-
-        <!-- Afiliados del servicio -->
-        <div class="form-group row">
-          <label for="idlista" class="col-md-4">Afiliados del servicio</label>
-             <select id="idlista" class="form-control form-control-sm col-md-8"
-             name="lista">
-             <option *ngFor="let af of _servicio.afiliadosInsc" [ngValue]="af">{{af.dni}}-{{af.nombres}}</option>
-             </select>
-        </div>
-
-        <!-- Botones -->
-        <div class="form-group text-center">
+         <!-- Botones -->
+         <div class="form-group text-center">
           <button class="btn btn-success ml-2 mr-2" [disabled]="!servicioForm.form.valid" (click)="agregarServicio()"><i class="fas fa-save fal"></i> Guardar</button>
           <button class="btn btn-secondary ml-2 mr-2" (click)="modificarServicio(_servicio)" ><i class="fas fa-save fal"></i> Modificar</button>            
           <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
           
         </div>
+        <br><br>
+        <!-- Afiliados -->
+        <div class="card-subtitle subtitulo text-center h4">Agregar Afiliado</div>
+        <br><br>
+        <div class="form-group row" >
+              <select id="idafiliado" class=" row form-control form-control-sm col-md-8"
+                name="afiliado" #afiliado="ngModel"
+                [(ngModel)] = "afiliadoaux">
+                <option *ngFor="let afiliado of afiliados" [ngValue]="afiliado">{{afiliado.dni}}-{{afiliado.nombres}}-{{afiliado.apellido}}</option> 
+              </select>
+              <br>
+        </div>
+        <div class="col text-center" >
+          <button  class="btn btn-secondary ml-2 mr-2 col-md-4" (click)="agregarAfiliado(afiliadoaux)" ><i class="fas fa-brush"></i> Agregar</button>
+        </div>
+        
+       <br><br>
+        <!-- Afiliados del servicio -->
+        
+        <div class="card-subtitle subtitulo text-center h4">Afiliados del Servicio</div>
+        <br>
+        <div id="div2" class="table-responsive">
+          <table class="table text-center">
+            <thead>
+              <tr>
+                <th>DNI</th>
+                <th>Nombre/s</th>
+                <th>Apellido</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let af of _servicio.afiliadosInsc">
+                <th>{{af.dni}}</th>
+                <td>{{af.nombres}}</td>
+                <td>{{af.apellido}}</td>
+                <td>           
+                  <button class="btn btn-danger" (click)="borrarAfiliado(af)" >Borrar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
       </div>
-    </form>
-
-    <form action="">
-      
-    </form>
-  
-    <h2 class="text-center mt-3">Informaci&oacute;n de Servicios</h2>
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Nombre/s</th>
-            <th>Imagen</th>
-            <th>Activo</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let _servicio of _servicios" >
-            <th>{{ _servicio.nombre }}</th>
-            <td><img src="{{ _servicio.imagen }}" alt="" width="50px" height="50px"></td>
-            <td>{{ _servicio.activo }}</td>
-            <td> 
-              <button class="btn btn-primary" (click)="seleccionarServicio(_servicio)" >Seleccionar</button>          
-              <button class="btn btn-danger" (click)="eliminarServicio(_servicio)" >Borrar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      </div>
+    </form> 
+   
   </div>
