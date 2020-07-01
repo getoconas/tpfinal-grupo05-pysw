@@ -3,6 +3,7 @@ import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { Afiliado } from 'src/app/models/afiliado';
 import { Pago } from 'src/app/models/pago';
 import { PagoService } from 'src/app/services/pago.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-pago',
@@ -15,26 +16,28 @@ export class PagoComponent implements OnInit {
   _pagos: Array<Pago>;
   _afiliados: Array<Afiliado>;
 
-  constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService) { 
+  constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _toastr: ToastrService) { 
     this._pago = new Pago();
     this._pagos = new Array<Pago>();
     this._afiliados = new Array<Afiliado>();
     this.listarAfiiados();
+    this.listarPagos();
   }
 
   /* Agregar Pago */
   public agregarPago() {
     this._pago.fecha = new Date();
     console.log(this._pago);
-    /*this._pagoService.addPago(this._pago).subscribe(
+    this._pagoService.addPago(this._pago).subscribe(
       (result) => {
         this.listarPagos();
         this.limpiarPago();
+        this._toastr.success("Pago Realizado Correctamente");
       },
       (error) => {
         console.log(error);
       }
-    )*/
+    )
   }
 
   /* Obtiene lista de afiliados */
