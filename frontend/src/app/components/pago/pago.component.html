@@ -6,30 +6,60 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Afiliado</label>
         <!-- Carga la lista de la base de datos -->
-        <select name="cmbAfiliado" class="form-control col-sm-12 col-md-8" required>
+        <select name="cmbAfiliado" class="form-control col-sm-12 col-md-8" required [(ngModel)]="_pago.afiliado">
           <option value="{{item._id}}" *ngFor="let item of _afiliados"> {{item.dni}} - {{ item.apellido }}, {{ item.nombres }} </option>
         </select>
-        <!--<input class="form-control col-sm-12 col-md-8" type="text" />-->
       </div>
       <!-- Monto -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Monto</label>
-        <input class="form-control col-sm-12 col-md-8" type="text" />
-      </div>
-      <!-- Año -->
-      <div class="row form-group">
-        <label class="col-sm-12 col-md 4">Año</label>
-        <input class="form-control col-sm-12 col-md-8" type="text" />
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtMonto" [(ngModel)]="_pago.monto" required pattern="(^[1-9][0-9]*.[0-9][0-9]|^[1-9][0-9]*$|^[1-9][0-9]*.[0-9])" #txtMonto="ngModel" />
+        <div *ngIf="txtMonto.invalid && (txtMonto.dirty || txtMonto.touched)" class="alert alert-danger">
+          <div *ngIf="txtMonto.errors.required">
+            El campo Monto es requerido
+          </div>
+          <div *ngIf="txtMonto.errors.pattern">
+            Solo se admiten precios mayores a ceros y hasta dos decimales
+          </div>
+        </div>
       </div>
       <!-- Mes -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Mes</label>
-        <input class="form-control col-sm-12 col-md-8" type="text" />
+        <select name="cmbMes" class="form-control col-sm-12 col-md-8" required [(ngModel)]="_pago.mes">
+          <option value="1">Enero</option>
+          <option value="2">Febrero</option>
+          <option value="3">Marzo</option>
+          <option value="4">Abril</option>
+          <option value="5">Mayo</option>
+          <option value="6">Junio</option>
+          <option value="7">Julio</option>
+          <option value="8">Agosto</option>
+          <option value="9">Septiembre</option>
+          <option value="10">Octubre</option>
+          <option value="11">Noviembre</option>
+          <option value="12">Diciembre</option>
+        </select>
       </div>
-
+      <!-- Año -->
+      <div class="row form-group">
+        <label class="col-sm-12 col-md 4">Año</label>
+        <input class="form-control col-sm-12 col-md-8" type="text" name="txtAnio" [(ngModel)]="_pago.anio" required pattern="[2-9][0-9][0-9][0-9]" minlength="4" maxlength="4" #txtAnio="ngModel" />
+        <div *ngIf="txtAnio.invalid && (txtAnio.dirty || txtAnio.touched)" class="alert alert-danger">
+          <div *ngIf="txtAnio.errors.required">
+            El campo Año es requerido
+          </div>
+          <div *ngIf="txtAnio.errors.minlength">
+            El campo Año debe ser de 4 caracteres
+          </div>
+          <div *ngIf="txtAnio.errors.pattern">
+            Ingrese un año v&aacute;lido, mayor o igual a 2000
+          </div>
+        </div>
+      </div>
       <!-- Botones -->
       <div class="form-group text-center">
-        <button type="button" class="btn btn-success">Agregar</button>
+        <button type="button" class="btn btn-success" [disabled]="!pagoForm.form.valid" (click)="agregarPago()">Agregar</button>
       </div>
     </div>
   </form>
@@ -47,12 +77,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr *ngFor="let pago of _pagos">
+          <td>{{ pago.afiliado.dni }} - {{ pago.afiliado.apellido }}, {{ pago.afiliado.nombres }}</td>
+          <td>{{ pago.fecha | date:"dd-MM-yyyy" }}</td>
+          <td>{{ pago.monto }}</td>
+          <td>{{ pago.mes }}</td>
+          <td>{{ pago.anio }}</td>
         </tr>
       </tbody>
     </table>
