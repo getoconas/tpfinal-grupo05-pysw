@@ -4,6 +4,8 @@ import { ServicioService } from 'src/app/services/servicio.service';
 import { ToastrService } from 'ngx-toastr';
 import { Afiliado } from 'src/app/models/afiliado';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 
 @Component({
@@ -21,7 +23,12 @@ export class ServicioComponent implements OnInit {
   afiliadoslista: Array<Afiliado>;
   afiliadoaux:Afiliado;
 
-  constructor(private _servicioService: ServicioService,private toastr:ToastrService,private afiliadoService: AfiliadoService) { 
+  constructor(private _servicioService: ServicioService,private toastr:ToastrService,private afiliadoService: AfiliadoService, private router:Router, private loginService: LoginService) { 
+     //validacion por ruta
+     if (!loginService.userLoggedIn) {
+      this.router.navigateByUrl('/login');
+    }
+    
     this._servicio = new Servicio();
     this._servicio.activo=true;
     this._servicioAuxiliar = new Servicio();
