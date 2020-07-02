@@ -65,6 +65,7 @@ usuarioCtrl.loginUsuario = async (req, res)=>{
           res.json({
               status: 1,
               message: "success",
+              _id: user.id,
               usuario: user.usuario,
               activo: user.activo,
               perfil: user.perfil });
