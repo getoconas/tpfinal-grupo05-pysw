@@ -1,1 +1,103 @@
-<p>noticia works!</p>
+<div class="container mt-3">
+    <form class="card" #noticiaForm="ngForm">
+        <div class="card-header text-center h3">GESTION DE NOTICIAS</div>
+        <div class="card-body">
+    
+        <!-- titulo -->
+        <div class="form-group row">
+            <label for="idtitulo" class="col-md-4">Titulo</label>
+            <input id="idtitulo" class="form-control form-control-sm col-md-8" required 
+                type="text" name="titulo" #txtTitulo="ngModel"
+                [(ngModel)]="_noticia.titulo"/>
+            <div *ngIf="txtTitulo.invalid && (txtTitulo.dirty || txtTitulo.touched)" class="alert alert-danger">
+              <div *ngIf="txtTitulo.errors.required">
+                El campo Titulo es requerido
+              </div>
+            </div>								  		
+        </div>
+
+         <!-- descripcion -->
+         <div class="form-group row">
+            <label for="iddescripcion" class="col-md-4">Descripcion</label>
+            <input id="iddescripcion" class="form-control form-control-sm col-md-8" required 
+                type="text" name="descripcion" #txtDescripcion="ngModel"
+                [(ngModel)]="_noticia.descripcion"/>
+            <div *ngIf="txtDescripcion.invalid && (txtDescripcion.dirty || txtDescripcion.touched)" class="alert alert-danger">
+              <div *ngIf="txtDescripcion.errors.required">
+                El campo Descripcion es requerido
+              </div>
+            </div>								  		
+        </div>
+
+        <!-- Fecha -->
+      <div class="form-group row">
+        <label for="idfecha" class="col-md-4">Fecha</label>
+        <input id="idfecha" class="form-control form-control-sm col-md-8" required           
+        type="datetime-local" name="fecha" #txtFecha="ngModel"
+            [(ngModel)]="_noticia.fecha"/>
+        <div *ngIf="txtFecha.invalid && (txtFecha.dirty || txtFecha.touched)" class="alert alert-danger">
+          <div *ngIf="txtFecha.errors.required">
+            El campo Fecha es requerido
+          </div>
+      </div>								  		
+    </div>
+
+     <!-- Imagen -->
+     <div class="row form-group">
+        <label class="col-sm-12 col-md-4" for="">Imagen</label>
+        <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel" [(ngModel)]="_convertido" />
+        <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="alert alert-danger">
+          <div *ngIf="txtImagen.errors.required">
+            El campo Imagen es requerido
+          </div>
+        </div>
+      </div>
+
+         <!-- Vigente -->
+        <div class="form-group row">
+            <label for="idvigente" class="col-md-4">Vigente</label>
+            <input id="idvigente" class="form-control form-control-sm col-md-8"
+                 type="checkbox" name="vigente" 
+                   [(ngModel)]="_noticia.vigente"/> 
+        </div>  
+
+              
+        <!-- Botones -->
+        <div class="form-group text-center">
+            <button class="btn btn-success ml-2 mr-2" [disabled]="!noticiaForm.form.valid || editMode" (click)="agregarNoticia()"><i class="fas fa-save fal"></i> Guardar</button>
+            <button class="btn btn-secondary ml-2 mr-2" [disabled]="!editMode" (click)="modificarNoticia()" ><i class="fas fa-save fal"></i> Modificar</button>            
+            <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
+        </div>
+    </div>
+    </form>
+    
+    <h2 class="text-center mt-3">Informaci&oacute;n de Noticia</h2>
+    <!-- Tabla -->
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Titulo</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Imagen</th>
+            <th scope="col">Vigente</th>
+            <th >Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let _noticia of _noticias" >
+            <td>{{ _noticia.titulo }}</td>
+            <td>{{ _noticia.descripcion }}</td>
+            <td>{{ _noticia.fecha }}</td>
+            <td>{{ _noticia.usuario.usuario }}</td>
+            <td><img src="{{ _noticia.imagen }}" alt="" width="50px" height="50px"></td>
+            <td><input type="checkbox" [checked]="_noticia.vigente"/> </td>
+            <td> 
+              <button class="btn btn-primary" (click)="seleccionarNoticia(_noticia)" >Seleccionar</button>          
+              <button class="btn btn-danger" (click)="eliminarNoticia(_noticia)" >Borrar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
