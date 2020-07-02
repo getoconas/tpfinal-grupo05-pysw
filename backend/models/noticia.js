@@ -8,6 +8,7 @@ const NoticiaSchema = new Schema({
     fecha: {type: Date, required: true},
     usuario: {type: Schema.Types.ObjectId, ref: Usuario},
     vigente: {type: Boolean, required: true},
+    imagen: {type: String, required: true},
 })
 
 module.exports = mongoose.model('Noticia', NoticiaSchema);
