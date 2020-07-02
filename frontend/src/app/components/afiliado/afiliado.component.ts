@@ -4,6 +4,10 @@ import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { PagoService } from 'src/app/services/pago.service';
+import { Pago } from 'src/app/models/pago';
+import { ServicioService } from 'src/app/services/servicio.service';
+import { Servicio } from 'src/app/models/servicio';
 
 @Component({
   selector: 'app-afiliado',
@@ -15,14 +19,17 @@ export class AfiliadoComponent implements OnInit {
   _afiliado: Afiliado;
   _afiliadoAuxiliar: Afiliado;
   _afiliados: Array<Afiliado>;
+  _pagos: Array<Pago>;
+  _servicios: Array<Servicio>;
+
   _convertido: string;
   _dniModificarOriginal: number;
   _dniModificar: number;
 
-  constructor(private _afiliadoService: AfiliadoService, private _toastr: ToastrService, private router:Router, private loginService: LoginService) {
-    //validacion por ruta
-    if (!loginService.userLoggedIn) {
-      this.router.navigateByUrl('/login');
+  constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _servicioService: ServicioService, private _toastr: ToastrService, private _router: Router, private _loginService: LoginService) {
+    // Validacion por ruta
+    if (!_loginService.userLoggedIn) {
+      this._router.navigateByUrl('/login');
     }
     
     this._afiliado = new Afiliado();
@@ -30,6 +37,8 @@ export class AfiliadoComponent implements OnInit {
     this._afiliados = new Array<Afiliado>();
     this._convertido = "";
     this.obtenerAfiliados();
+    this.listarPagos();
+    this.obtenerServicios();
   }
 
   /* Obtiene una lista de afiliados */
@@ -75,10 +84,6 @@ export class AfiliadoComponent implements OnInit {
       }
     );
     this.limpiarCampos();
-  }
-
-  public limpiarCampos() {
-    this._afiliado = new Afiliado();
   }
 
   /* Convierte una imagen a string */
@@ -139,7 +144,30 @@ export class AfiliadoComponent implements OnInit {
 
   /* Elimina un afiliado */
   public eliminarAfiliado(afiliado) {
-    console.log(afiliado);
+    var _existePago = false;
+    var _existeServicio = false;
+
+    for (var i in this._pagos) {
+      if (this._pagos[i].afiliado._id == afiliado._id) {
+        _existePago = true;
+      }
+    }
+    for(var j in this._servicios) {
+      for (var k in this._servicios[j].afiliadosInsc) {
+        if (this._servicios[j].afiliadosInsc[k]._id == afiliado._id) {
+          _existeServicio = true;
+        }
+      }
+    }
+    if (_existePago || _existeServicio) {
+      this._toastr.error("NO se puede eliminar el afiliado");
+    } else {
+      this.eliminarServiceAfiliado(afiliado);
+    }
+  }
+
+  /* Service de Eliminar Afiliado */
+  public eliminarServiceAfiliado(afiliado) {
     this._afiliadoService.deleteAfiliado(afiliado._id).subscribe(
       (result) => {
         this.obtenerAfiliados();
@@ -150,6 +178,44 @@ export class AfiliadoComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  /* Obtiene lista de pagos */
+  public listarPagos() {
+    this._pagoService.getPagos().subscribe(
+      (result) => {
+        this._pagos = new Array<Pago>();
+        result.forEach(element => {
+          var _pay: Pago = new Pago();
+          Object.assign(_pay, element);
+          this._pagos.push(_pay);
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
+  /* Obtiene lista de servicios */
+  public obtenerServicios() {
+    this._servicioService.getServicios().subscribe(
+      (result) => {
+        this._servicios = new Array<Servicio>();  
+        result.forEach(element => {
+          var _ser: Servicio = new Servicio();
+          Object.assign(_ser, element);
+          this._servicios.push(_ser);
+        })
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
+  }
+
+  public limpiarCampos() {
+    this._afiliado = new Afiliado();
   }
 
   public auxiliarAfiliado(afiliado) {

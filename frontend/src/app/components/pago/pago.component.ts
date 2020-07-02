@@ -18,9 +18,9 @@ export class PagoComponent implements OnInit {
   _pagos: Array<Pago>;
   _afiliados: Array<Afiliado>;
 
-  constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _toastr: ToastrService, private router:Router, private loginService: LoginService) { 
-    //validacion por ruta
-    if (!loginService.userLoggedIn) {
+  constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _toastr: ToastrService, private router:Router, private _loginService: LoginService) { 
+    // Validacion por ruta  
+    if (!_loginService.userLoggedIn) {
       this.router.navigateByUrl('/login');
     }
     
@@ -68,7 +68,6 @@ export class PagoComponent implements OnInit {
   public listarPagos() {
     this._pagoService.getPagos().subscribe(
       (result) => {
-        console.log(result);
         this._pagos = new Array<Pago>();
         result.forEach(element => {
           var _pay: Pago = new Pago();
