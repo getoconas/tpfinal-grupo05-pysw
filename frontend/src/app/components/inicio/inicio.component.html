@@ -1,6 +1,6 @@
 <div class="card-deck">
-    <div class="card" *ngFor="let _noticia of _noticias">
-      <img src="../../../assets/image/enfoqueInternacional.PNG" class="card-img-top" alt="...">
+    <div class="card"  *ngFor="let _noticia of _noticias">
+      <img [src]="_noticia.imagen" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{_noticia.titulo}}</h5>
         <p class="card-text">{{_noticia.descripcion}}</p>
