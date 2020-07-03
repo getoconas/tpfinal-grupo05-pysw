@@ -95,7 +95,7 @@
               <br>
         </div>
         <div class="col text-center" >
-          <button  class="btn btn-secondary ml-2 mr-2 col-md-4" (click)="agregarAfiliado(afiliadoaux)" ><i class="fas fa-brush"></i> Agregar</button>
+          <button  [disabled]="!afiliado.dirty" class="btn btn-secondary ml-2 mr-2 col-md-4" (click)="agregarAfiliado(afiliadoaux)" >Agregar</button>
         </div>
         
        <br><br>
