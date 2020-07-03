@@ -8,6 +8,7 @@ import { PagoService } from 'src/app/services/pago.service';
 import { Pago } from 'src/app/models/pago';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Servicio } from 'src/app/models/servicio';
+import * as printJS from 'print-js';
 
 @Component({
   selector: 'app-afiliado',
@@ -212,6 +213,21 @@ export class AfiliadoComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  /* Imprime una lista de afiliados */
+  public imprimirAfiliados() {
+    console.log(this._afiliados);
+    printJS({
+      printable: this._afiliados, 
+      properties: [
+        { field: 'dni', displayName: 'DNI' },
+        { field: 'apellido', displayName: 'Apellido' },
+        { field: 'nombres', displayName: 'Nombre' }, 
+        { field: 'telefono', displayName: 'Telefono' }
+      ],
+      header: '<h3 class="text-center">Listado de Afiliados</h3>',
+      type: 'json'});
   }
 
   public limpiarCampos() {

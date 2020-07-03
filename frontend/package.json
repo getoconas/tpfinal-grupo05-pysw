@@ -26,6 +26,7 @@
     "ngx-toastr": "^12.1.0",
     "node.js": "0.0.1-security",
     "popper.js": "^1.16.1",
+    "print-js": "^1.0.63",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
