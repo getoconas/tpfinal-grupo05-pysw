@@ -29,6 +29,7 @@ export class UsuarioComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /* Obtiene una lista de usuarios */
   public obtenerUsuarios() {
     this._usuarioService.getUsuarios().subscribe(
       (result) => {
@@ -42,6 +43,7 @@ export class UsuarioComponent implements OnInit {
     )
   }
 
+  /* Agrega un usuario */
   public agregarUsuario() {
     var _existeUsuario: boolean = false;
     for (var i in this._usuarios) {
@@ -52,16 +54,16 @@ export class UsuarioComponent implements OnInit {
     if (_existeUsuario) {
       this.toastr.error("Usuario repetido");
     } else{
-          this._usuarioService.addUsuario(this._usuario).subscribe(
-            (result) => {
-              this.obtenerUsuarios();
-              this.toastr.success('Usuario Agregado Exitosamente');
-            },
-            (error) => {
-              console.log(error);
-            }
-          )
-          this.limpiarCampos();
+      this._usuarioService.addUsuario(this._usuario).subscribe(
+        (result) => {
+          this.obtenerUsuarios();
+          this.toastr.success('Usuario Agregado Correctamente');
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+      this.limpiarCampos();
     }
   }
 
@@ -78,23 +80,25 @@ export class UsuarioComponent implements OnInit {
     this._usuario = tusuario;
   }
 
-  public eliminarUsuario(usuario: Usuario){
+  /* Elimina un usuario */
+  public eliminarUsuario(usuario: Usuario) {
     this._usuarioService.deleteUsuario(usuario).subscribe(
-      (result)=>{
+      (result) => {
         this.obtenerUsuarios();
-        this.toastr.info('Usuario Eliminado Exitosamente');
+        this.toastr.info('Usuario Eliminado Correctamente');
       }, 
-      (error)=>{
+      (error) => {
         console.log(error);
       }
     );
   }
 
+  /* Modifica un usuario */
   public modificarUsuario(){
    this._usuarioService.updateUsuario(this._usuario).subscribe(
       (result)=>{
         this.obtenerUsuarios();
-        this.toastr.success('Usuario Modificado Exitosamente');
+        this.toastr.success('Usuario Modificado Correctamente');
       },
       (error)=>{
         console.log(error);
