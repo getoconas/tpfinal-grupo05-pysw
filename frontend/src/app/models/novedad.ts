@@ -4,9 +4,9 @@ export class Novedad {
     _id: string;
     usuario: Usuario;
     texto: string;
-    estado: string;
+    estado: boolean;
 
-    Novedad(_id?: string, usuario?: Usuario, texto?: string, estado?: string){
+    Novedad(_id?: string, usuario?: Usuario, texto?: string, estado?: boolean){
         this._id = _id;
         this.usuario = new Usuario();
         this.texto = texto;
