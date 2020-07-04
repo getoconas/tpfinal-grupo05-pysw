@@ -2,3 +2,6 @@
  background-color: burlywood;
  text-align: right;
 }
+#navbarNavDropdown li a:hover{
+    background-color: #eeeeee;
+    color: black !important;}
