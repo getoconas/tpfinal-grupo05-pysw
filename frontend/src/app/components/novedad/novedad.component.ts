@@ -4,6 +4,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { Novedad } from 'src/app/models/novedad';
 import { NovedadService } from 'src/app/services/novedad.service';
 import { ToastrService } from 'ngx-toastr';
+import { Usuario } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-novedad',
@@ -41,6 +42,24 @@ export class NovedadComponent implements OnInit {
         })
       }
     )
+  }
+
+  public agregarNovedad() {
+    this._novedad.usuario = new Usuario();
+    this._novedad.usuario= this.loginService.userLogged; //captura el perfil del usuario logueado
+    
+    if (this._novedad.usuario.perfil=="socio") {
+          this._novedadService.addNovedad(this._novedad).subscribe(
+            (result) => {
+              this.obtenerNovedades();
+              this.toastr.success('Novedad Agregada Exitosamente');
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
+          this.limpiarCampos();
+    } 
   }
 
 }
