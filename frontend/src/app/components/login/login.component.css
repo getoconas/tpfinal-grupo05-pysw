@@ -10,9 +10,14 @@
     text-align: center;
     font: oblique bold 120% cursive;
     font-size: 22pt;
-    background-color:#ccff99;
+    
 }
 .form-control{
     text-align: center;
+    padding-left: 54px;
 }
 
+.login{
+    width: 100Px;
+    right: 200px;
+}
