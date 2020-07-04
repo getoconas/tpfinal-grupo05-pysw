@@ -1,1 +1,23 @@
-<p>novedad works!</p>
+<div class="container mt-3">
+    <form class="card" #novedad1Form="ngForm">
+        <div class="card-header text-center h3">GESTION DE NOVEDAD</div>
+            <div class="card-body">
+            <!-- descripcion -->
+            <div class="form-group row">
+                <label for="iddescripcion" class="col-md-4">Descripcion</label>
+                <input id="iddescripcion" class="form-control form-control-sm col-md-8" required 
+                    type="text" name="descripcion" #txtDescripcion="ngModel"
+                    [(ngModel)]="_novedad.texto"/>
+                <div *ngIf="txtDescripcion.invalid && (txtDescripcion.dirty || txtDescripcion.touched)" class="alert alert-danger">
+                <div *ngIf="txtDescripcion.errors.required">
+                    El campo Descripcion es requerido
+                </div>
+                </div>								  		
+            </div>      						  		
+            <!-- Botones -->
+            <div class="form-group text-center">
+                <button class="btn btn-success ml-2 mr-2" [disabled]="!novedad1Form.form.valid" (click)="agregarNovedad()"><i class="fas fa-save fal"></i> Enviar </button>
+            </div>
+        </div>
+    </form>
+  </div>
