@@ -62,4 +62,8 @@ export class NovedadComponent implements OnInit {
     } 
   }
 
+  public limpiarCampos() {
+    this._novedad = new Novedad();   
+  }
+
 }
