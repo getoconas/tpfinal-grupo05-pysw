@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     private loginService:LoginService) { }
 
   ngOnInit(): void {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';      
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inicio';      
   }
 
 
