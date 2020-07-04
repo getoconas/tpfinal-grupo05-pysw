@@ -6,7 +6,7 @@ export class Pago {
   fecha: Date;
   monto: number;
   anio: number;
-  mes: number;
+  mes: string;
 
   constructor() {
     
