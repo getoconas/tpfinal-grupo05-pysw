@@ -16,6 +16,7 @@ app.use('/api/usuarios', require('./routes/usuarios.routes'));
 app.use('/api/servicios', require('./routes/servicio.routes'));
 app.use('/api/pagos', require('./routes/pagos.routes'));
 app.use('/api/noticias', require('./routes/noticias.routes'));
+app.use('/api/novedades', require('./routes/novedad.routes'));
 
 
 // Setting
