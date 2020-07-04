@@ -72,4 +72,19 @@ export class NovedadComponent implements OnInit {
     this._novedad = tnovedad;
   }
 
+  public eliminarNovedad(novedad: Novedad){
+    this._novedadService.deleteNovedad(novedad).subscribe(
+      (result)=>{
+        this.obtenerNovedades();
+        this.toastr.info('Novedad Eliminada Exitosamente');
+      }, 
+      (error)=>{
+        console.log(error);
+      }
+    );
+  }
+
+
+  
+
 }
