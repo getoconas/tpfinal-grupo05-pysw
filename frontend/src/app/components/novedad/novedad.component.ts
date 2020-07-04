@@ -66,4 +66,10 @@ export class NovedadComponent implements OnInit {
     this._novedad = new Novedad();   
   }
 
+  public seleccionarNovedad(novedad: Novedad) {
+    var tnovedad = new Novedad();
+    Object.assign(tnovedad,novedad);
+    this._novedad = tnovedad;
+  }
+
 }
