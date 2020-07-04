@@ -3,3 +3,16 @@
     background: linear-gradient(to bottom, #cc99ff 0%, #ccffff 100%);
 }
 
+.label{
+    font-size: 26pt;
+}
+.card-header{
+    text-align: center;
+    font: oblique bold 120% cursive;
+    font-size: 22pt;
+    background-color:#ccff99;
+}
+.form-control{
+    text-align: center;
+}
+
