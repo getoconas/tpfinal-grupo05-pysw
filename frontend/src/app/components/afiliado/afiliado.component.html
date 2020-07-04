@@ -1,12 +1,12 @@
 <div class="container mt-3">
-  <form class="card" #afiliadoForm="ngForm">
+  <form class="card" #afiliadoForm="ngForm" class="was-validated">
     <div class="card-header text-center h3">Gesti&oacute;n de Afiliados</div>
     <div class="card-body">
       <!-- Apellido -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Apellido</label>
         <input class="form-control col-sm-12 col-md-8" type="text" id="apellido" name="txtApellido" required minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtApellido="ngModel" [(ngModel)]="_afiliado.apellido" />
-        <div *ngIf="txtApellido.invalid && (txtApellido.dirty || txtApellido.touched)" class="alert alert-danger">
+        <div *ngIf="txtApellido.invalid && (txtApellido.dirty || txtApellido.touched)" class="invalid-feedback">
           <div *ngIf="txtApellido.errors.required">
             El campo Apellido es requerido
           </div>
@@ -23,7 +23,7 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Nombre/s</label>
         <input class="form-control col-sm-12 col-md-8" type="text" id="nombre" name="txtNombre" required minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtNombre="ngModel" [(ngModel)]="_afiliado.nombres" />
-        <div *ngIf="txtNombre.invalid && (txtNombre.dirty || txtNombre.touched)" class="alert alert-danger">
+        <div *ngIf="txtNombre.invalid && (txtNombre.dirty || txtNombre.touched)" class="invalid-feedback">
           <div *ngIf="txtNombre.errors.required">
             El campo Nombre es requerido
           </div>
@@ -41,7 +41,7 @@
         <label class="col-sm-12 col-md-4">DNI</label>
         <input class="form-control col-sm-12 col-md-8" type="text" name="txtDni" required minlength="7"
           pattern="[0-9]{7,20}" #txtDni="ngModel" [(ngModel)]="_afiliado.dni" />
-        <div *ngIf="txtDni.invalid && (txtDni.dirty || txtDni.touched)" class="alert alert-danger">
+        <div *ngIf="txtDni.invalid && (txtDni.dirty || txtDni.touched)" class="invalid-feedback">
           <div *ngIf="txtDni.errors.required">
             El campo DNI es requerido
           </div>
@@ -58,7 +58,7 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4" for="">Email</label>
         <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtEmail="ngModel" [(ngModel)]="_afiliado.email" />
-        <div *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)" class="alert alert-danger">
+        <div *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)" class="invalid-feedback">
           <div *ngIf="txtEmail.errors.required">
             El campo Email es requerido
           </div>
@@ -72,7 +72,7 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4" for="">Imagen</label>
         <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel" [(ngModel)]="_convertido" />
-        <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="alert alert-danger">
+        <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="invalid-feedback">
           <div *ngIf="txtImagen.errors.required">
             El campo Imagen es requerido
           </div>
@@ -83,7 +83,7 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4" for="">Tel&eacute;fono</label>
         <input class="form-control col-sm-12 col-md-8" type="text" name="txtTelefono" required minlength="7" pattern="[0-9]{7,20}" #txtTelefono="ngModel" [(ngModel)]="_afiliado.telefono" />
-        <div *ngIf="txtTelefono.invalid && (txtTelefono.dirty || txtTelefono.touched)" class="alert alert-danger">
+        <div *ngIf="txtTelefono.invalid && (txtTelefono.dirty || txtTelefono.touched)" class="invalid-feedback">
           <div *ngIf="txtTelefono.errors.required">
             El campo Tel&eacute;ono es requerido
           </div>
@@ -98,7 +98,7 @@
 
       <!-- Botones -->
       <div class="form-group text-center">
-        <button type="button" class="btn btn-success" [disabled]="!afiliadoForm.form.valid" (click)="agregarAfiliado()">Agregar</button>
+        <button type="button" class="btn btn-success" [disabled]="!afiliadoForm.form.valid" (click)="agregarAfiliado()"><i class="fas fa-save fal"></i>&nbsp;Agregar Afiliado</button>
       </div>
     </div>
   </form>
@@ -139,13 +139,13 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form #afiliadoModificarForm="ngForm">
+                  <form #afiliadoModificarForm="ngForm" class="was-validated">
                   <div class="modal-body">
                     <!-- Apellido -->
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4">Apellido</label>
                       <input class="form-control col-sm-12 col-md-8" type="text" name="txtApellido" required minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtApellido="ngModel" [(ngModel)]="_afiliadoAuxiliar.apellido" />
-                      <div *ngIf="txtApellido.invalid && (txtApellido.dirty || txtApellido.touched)" class="alert alert-danger">
+                      <div *ngIf="txtApellido.invalid && (txtApellido.dirty || txtApellido.touched)" class="invalid-feedback">
                         <div *ngIf="txtApellido.errors.required">
                           El campo Apellido es requerido
                         </div>
@@ -162,7 +162,7 @@
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4">Nombre/s</label>
                       <input class="form-control col-sm-12 col-md-8" type="text" name="txtNombre" required minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtNombre="ngModel" [(ngModel)]="_afiliadoAuxiliar.nombres" />
-                      <div *ngIf="txtNombre.invalid && (txtNombre.dirty || txtNombre.touched)" class="alert alert-danger">
+                      <div *ngIf="txtNombre.invalid && (txtNombre.dirty || txtNombre.touched)" class="invalid-feedback">
                         <div *ngIf="txtNombre.errors.required">
                           El campo Nombre es requerido
                         </div>
@@ -179,7 +179,7 @@
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4">DNI</label>
                       <input class="form-control col-sm-12 col-md-8" type="text" name="txtDni" required minlength="7"  pattern="[0-9]{7,20}" #txtDni="ngModel" [(ngModel)]="_dniModificar" />
-                      <div *ngIf="txtDni.invalid && (txtDni.dirty || txtDni.touched)" class="alert alert-danger">
+                      <div *ngIf="txtDni.invalid && (txtDni.dirty || txtDni.touched)" class="invalid-feedback">
                         <div *ngIf="txtDni.errors.required">
                           El campo DNI es requerido
                         </div>
@@ -196,7 +196,7 @@
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4" for="">Email</label>
                       <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtEmail="ngModel" [(ngModel)]="_afiliadoAuxiliar.email" />
-                      <div *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)" class="alert alert-danger">
+                      <div *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)"class="invalid-feedback">
                         <div *ngIf="txtEmail.errors.required">
                           El campo Email es requerido
                         </div>
@@ -210,7 +210,7 @@
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4" for="">Imagen</label>
                       <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" #txtImagen="ngModel" [(ngModel)]="_convertido" />
-                      <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="alert alert-danger">
+                      <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="invalid-feedback">
                         <div *ngIf="txtImagen.errors.required">
                           El campo Imagen es requerido
                         </div>
@@ -224,7 +224,7 @@
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4" for="">Tel&eacute;fono</label>
                       <input class="form-control col-sm-12 col-md-8" type="text" name="txtTelefono" required minlength="7" pattern="[0-9]{7,20}" #txtTelefono="ngModel" [(ngModel)]="_afiliadoAuxiliar.telefono" />
-                      <div *ngIf="txtTelefono.invalid && (txtTelefono.dirty || txtTelefono.touched)" class="alert alert-danger">
+                      <div *ngIf="txtTelefono.invalid && (txtTelefono.dirty || txtTelefono.touched)" class="invalid-feedback">
                         <div *ngIf="txtTelefono.errors.required">
                           El campo Tel&eacute;ono es requerido
                         </div>
