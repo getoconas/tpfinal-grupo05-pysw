@@ -5,3 +5,12 @@
 #navbarNavDropdown li a:hover{
     background-color: #eeeeee;
     color: black !important;}
+
+
+.registrar{
+    background: linear-gradient(to bottom, #ff9966 0%, #ccff99 100%);
+    border-radius: 80px;
+    width: 200px;
+  
+}
+
