@@ -6,7 +6,7 @@ import { Afiliado } from 'src/app/models/afiliado';
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
-
+import * as printJS from 'print-js';
 
 @Component({
   selector: 'app-servicio',
@@ -22,6 +22,8 @@ export class ServicioComponent implements OnInit {
   afiliados: Array<Afiliado>;
   afiliadoslista: Array<Afiliado>;
   afiliadoaux:Afiliado;
+  _servicioExtra: Array<any>;
+  
 
   constructor(private _servicioService: ServicioService,private toastr:ToastrService,private afiliadoService: AfiliadoService, private router:Router, private loginService: LoginService) { 
      //validacion por ruta
@@ -33,6 +35,7 @@ export class ServicioComponent implements OnInit {
     this._servicio.activo=true;
     this._servicioAuxiliar = new Servicio();
     this._servicios = new Array<Servicio>();
+    this._servicioExtra = [];
     this.obtenerServicios();
     this.refrescarAfiliados();
   }
@@ -44,7 +47,6 @@ export class ServicioComponent implements OnInit {
     this._servicioService.getServicios().subscribe(
       (result)=>{(
         result.forEach(element => {
-          console.log(result);
           Object.assign(servicio, element);
           this._servicios.push(servicio);
           servicio = new Servicio();
@@ -184,25 +186,58 @@ luego llama a modificarServicioService para completar la accion*/
   /*Controla que no hayan repetidos y Asigna el afiliado seleccionado 
   a la lista de afiliados de dicho servicio */
   agregarAfiliado(afiliadoaux){
-
     var _banderaControl: boolean = false;
-      for (var i in this._servicio.afiliadosInsc) {
-        if (this._servicio.afiliadosInsc[i].dni == this.afiliadoaux.dni) {
-          _banderaControl = true;
-        }
+    for (var i in this._servicio.afiliadosInsc) {
+      if (this._servicio.afiliadosInsc[i].dni == this.afiliadoaux.dni) {
+        _banderaControl = true;
       }
-      if (_banderaControl) {
-        this.toastr.error("El afiliado ya cuenta con el servicio");
-      } else {
-        this._servicio.afiliadosInsc.push(this.afiliadoaux);     
-      }
+    }
+    if (_banderaControl) {
+      this.toastr.error("El afiliado ya cuenta con el servicio");
+    } else {
+      this._servicio.afiliadosInsc.push(this.afiliadoaux);     
+    }
   }
-
- 
 
   borrarAfiliado(afiliado:Afiliado){
     var indice = this._servicio.afiliadosInsc.findIndex((element)=> element._id == afiliado._id);
     this._servicio.afiliadosInsc.splice(indice, 1);
   }
 
+  /* Imprime una lista de afiliados en servicios */
+  public imprimirServicios() {
+    this._servicioExtra = [];
+    //console.log(this._servicios);
+    for (var i in this._servicios) {
+      for (var j in this._servicios[i].afiliadosInsc){
+        //var servicio : string = this._servicios[i].nombre;
+        //var afiliado: number = this._servicios[i].afiliadosInsc[j].dni;
+        /*this._servicioExtra = [
+          { nombre: this._servicios[i].nombre },
+          { dni: this._servicios[i].afiliadosInsc[j].dni }
+        ];*/
+        //console.log(this._servicios[i].afiliadosInsc[j].dni);
+        //this._servicioExtra.push(servicio, afiliado);
+
+        this._servicioExtra.push({ 
+          'nombre': this._servicios[i].nombre,
+          'dni': this._servicios[i].afiliadosInsc[j].dni,
+          'apellido': this._servicios[i].afiliadosInsc[j].apellido,
+          'nombreAfiliado': this._servicios[i].afiliadosInsc[j].nombres
+        });
+      }
+    }
+    //console.log(this._servicioExtra);
+    printJS({
+      printable: this._servicioExtra, 
+      properties: [
+        { field: 'nombre', displayName: 'Servicio' },
+        { field: 'dni', displayName: 'DNI' },
+        { field: 'apellido', displayName: 'Apellido' },
+        { field: 'nombreAfiliado', displayName: 'Nombres' }
+      ],
+      header: '<h3 class="text-center">Listado de Servicios con Afiliados</h3>',
+      type: 'json'
+    });
+  }
 }
