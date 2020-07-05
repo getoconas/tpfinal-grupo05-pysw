@@ -70,6 +70,7 @@
       <tr>
         <th scope="col">Titulo</th>
         <th scope="col">Descripcion</th>
+        <th scope="col">Fb</th>
         <th scope="col">Fecha</th>
         <th scope="col">Usuario</th>
         <th scope="col">Imagen</th>
@@ -81,6 +82,7 @@
       <tr *ngFor="let _noticia of _noticias" >
         <td>{{ _noticia.titulo }}</td>
         <td>{{ _noticia.descripcion }}</td>
+        <td ><button class="btn btn-primary" (click)="postFb(_noticia)"><i tooltip="postear noticia en facebook" class="fab fa-facebook-square"></i></button></td>
         <td>{{ _noticia.fecha }}</td>
         <td>{{ _noticia.usuario.usuario }}</td>
         <td><img src="{{ _noticia.imagen }}" alt="" width="50px" height="50px"></td>

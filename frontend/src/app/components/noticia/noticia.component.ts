@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { Usuario } from 'src/app/models/usuario';
+import { FacebookService, InitParams, LoginResponse } from 'ngx-fb'; 
+import { ApiMethod } from 'ngx-fb/dist/esm/providers/facebook';     
 
 @Component({
   selector: 'app-noticia',
@@ -16,8 +18,9 @@ export class NoticiaComponent implements OnInit {
   _noticias: Array<Noticia>;
   editMode:boolean=false;
   _convertido: string;
+  mensaje: string = "";
 
-  constructor(private _noticiaService: NoticiaService, private toastr:ToastrService, private router:Router, private loginService: LoginService) { 
+  constructor(private _noticiaService: NoticiaService, private toastr:ToastrService, private router:Router, private loginService: LoginService, private fb: FacebookService) { 
     //validacion por ruta
     if (!loginService.userLoggedIn) {
       this.router.navigateByUrl('/login');
@@ -25,6 +28,7 @@ export class NoticiaComponent implements OnInit {
     this._noticia = new Noticia();
     this._noticia.vigente=true;
     this._noticias = new Array<Noticia>();
+    this.iniciarFb();
     this.obtenerNoticias();
   }
 
@@ -118,4 +122,28 @@ export class NoticiaComponent implements OnInit {
       console.log("error");
     }
   }
+
+  /*metodo de facebook*/
+  postFb(_noticia:Noticia){
+
+    this.mensaje = _noticia.titulo + ":  " + _noticia.descripcion + "  Escrito por:  " + _noticia.usuario.usuario;
+    var apiMethod: ApiMethod = "post";
+    this.fb.api('/110749894034738/feed', apiMethod,
+    {
+      "message": this.mensaje,
+      "access_token":"EAAC5pDAv8wABADCkVwAO5xNHLEFTBPkQzdCp1cJJvHdC89XxjEJM9ZCYJuDCa1CgFKhHBgJ1J7yzWA0qozIRGn6DR2dYo5PchEgDoPXyxGUVXDaQOZCMSKJ1FaVLE3sn9esCiUZBg5VoFOR3A3fF1UmjE2CX5WHwzEAivGt2FBorj0Onr3udM5zShaAAigZD"
+    });
+    this.toastr.info('Noticia Posteada Exitosamente en Pagina de Facebook')
+    }
+
+    iniciarFb(){
+        let initParams: InitParams = {
+        appId: '204114834223872',
+        autoLogAppEvents : true,
+        xfbml : true,
+        version : 'v7.0'
+        };
+        this.fb.init(initParams);
+        }
+      
 }

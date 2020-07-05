@@ -21,7 +21,7 @@ import { LoginService } from './services/login.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { TooltipModule } from 'ng2-tooltip-directive';
-
+import { FacebookModule } from 'ngx-fb';
 
 
 @NgModule({
@@ -53,7 +53,9 @@ import { TooltipModule } from 'ng2-tooltip-directive';
       positionClass: 'toast-top-center',
       preventDuplicates: true,
     }),//ToastrModule added
-    TooltipModule
+    TooltipModule,
+    FacebookModule.forRoot()
+
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]
