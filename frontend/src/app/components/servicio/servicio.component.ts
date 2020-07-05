@@ -59,8 +59,8 @@ export class ServicioComponent implements OnInit {
     console.log(this._servicio.afiliadosInsc);
   }
 
-/*asigna la imagen procesada y la asigna al servicio 
-luego llama a modificarServicioService para completar la accion*/
+  /*asigna la imagen procesada y la asigna al servicio 
+  luego llama a modificarServicioService para completar la accion*/
   public modificarServicio(servicio) {
     if (this._convertido != "") {
       servicio.imagen = this._convertido;
@@ -70,22 +70,21 @@ luego llama a modificarServicioService para completar la accion*/
     }
   }
 
-    /* Verifica que el servicio a agregar no tenga el mismo nombre de uno ya existente */
-    public agregarServicio() {
-      var _banderaControl: boolean = false;
-      for (var i in this._servicios) {
-        if (this._servicios[i].nombre == this._servicio.nombre) {
-          _banderaControl = true;
-        }
-      }
-      if (_banderaControl) {
-        this.toastr.error("Nombre del servicio repetido");
-      } else {
-        this.agregarServicioService(); 
+  /* Verifica que el servicio a agregar no tenga el mismo nombre de uno ya existente */
+  public agregarServicio() {
+    var _banderaControl: boolean = false;
+    for (var i in this._servicios) {
+      if (this._servicios[i].nombre == this._servicio.nombre) {
+        _banderaControl = true;
       }
     }
+    if (_banderaControl) {
+      this.toastr.error("Nombre del servicio repetido");
+    } else {
+      this.agregarServicioService(); 
+    }
+  }
     
-
   /* Agrega el nuevo servicio  */
   public agregarServicioService() {
     this._servicio.imagen = this._convertido;
@@ -154,9 +153,6 @@ luego llama a modificarServicioService para completar la accion*/
     this._servicioAuxiliar = servicio;
   }
 
-  ngOnInit(): void {
-  }
-
   public seleccionarServicio(servicio: Servicio) {
     var tservicio = new Servicio();
     Object.assign(tservicio,servicio);
@@ -208,18 +204,8 @@ luego llama a modificarServicioService para completar la accion*/
   /* Imprime una lista de afiliados en servicios */
   public imprimirServicios() {
     this._servicioExtra = [];
-    //console.log(this._servicios);
     for (var i in this._servicios) {
-      for (var j in this._servicios[i].afiliadosInsc){
-        //var servicio : string = this._servicios[i].nombre;
-        //var afiliado: number = this._servicios[i].afiliadosInsc[j].dni;
-        /*this._servicioExtra = [
-          { nombre: this._servicios[i].nombre },
-          { dni: this._servicios[i].afiliadosInsc[j].dni }
-        ];*/
-        //console.log(this._servicios[i].afiliadosInsc[j].dni);
-        //this._servicioExtra.push(servicio, afiliado);
-
+      for (var j in this._servicios[i].afiliadosInsc) {
         this._servicioExtra.push({ 
           'nombre': this._servicios[i].nombre,
           'dni': this._servicios[i].afiliadosInsc[j].dni,
@@ -228,7 +214,6 @@ luego llama a modificarServicioService para completar la accion*/
         });
       }
     }
-    //console.log(this._servicioExtra);
     printJS({
       printable: this._servicioExtra, 
       properties: [
@@ -249,5 +234,8 @@ luego llama a modificarServicioService para completar la accion*/
     else{
       return "Inactivo"
     }
+  }
+
+  ngOnInit(): void {
   }
 }

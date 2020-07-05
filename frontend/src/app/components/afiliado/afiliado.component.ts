@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+// Models
 import { Afiliado } from 'src/app/models/afiliado';
+import { Servicio } from 'src/app/models/servicio';
+import { Pago } from 'src/app/models/pago';
+// Services
 import { AfiliadoService } from 'src/app/services/afiliado.service';
-import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { PagoService } from 'src/app/services/pago.service';
-import { Pago } from 'src/app/models/pago';
 import { ServicioService } from 'src/app/services/servicio.service';
-import { Servicio } from 'src/app/models/servicio';
+
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 import * as printJS from 'print-js';
 
 @Component({
@@ -22,6 +25,7 @@ export class AfiliadoComponent implements OnInit {
   _afiliados: Array<Afiliado>;
   _pagos: Array<Pago>;
   _servicios: Array<Servicio>;
+  _pagosPrint: Array<any>;
 
   _convertido: string;
   _dniModificarOriginal: number;
@@ -36,6 +40,7 @@ export class AfiliadoComponent implements OnInit {
     this._afiliado = new Afiliado();
     this._afiliadoAuxiliar = new Afiliado();
     this._afiliados = new Array<Afiliado>();
+    this._pagosPrint = [];
     this._convertido = "";
     this.obtenerAfiliados();
     this.listarPagos();
@@ -215,20 +220,47 @@ export class AfiliadoComponent implements OnInit {
     )
   }
 
-  /* Imprime una lista de afiliados */
-  public imprimirAfiliados() {
-    console.log(this._afiliados);
+  /* Imprime un listado afiliados de acuerdo a los pagos realizados */
+  public imprimirPagosPorAfiliado(afiliado) {
+    this._pagosPrint = [];
+    for (var i in this._pagos) {
+      if (this._pagos[i].afiliado._id == afiliado._id) {
+        this._pagosPrint.push({
+          'fechaPago': this.convertirFecha(this._pagos[i].fecha),
+          'mes': this._pagos[i].mes,
+          'anio': this._pagos[i].anio,
+          'monto': '$ '+ this._pagos[i].monto
+        });
+      }
+    }
+    if (this._pagosPrint.length > 0) {
+      this.imprimirPagosPrint(afiliado.apellido, afiliado.nombres, afiliado.dni);
+    } else {
+      this._toastr.error("El afiliado no tiene pagos realizados");
+    }
+  }
+
+  /* Obtiene el PDF con el listado de afiliados segun los pagos realizados */
+  public imprimirPagosPrint(apellido, nombre, dni) {
     printJS({
-      printable: this._afiliados, 
+      printable: this._pagosPrint, 
       properties: [
-        { field: 'dni', displayName: 'DNI' },
-        { field: 'apellido', displayName: 'Apellido' },
-        { field: 'nombres', displayName: 'Nombre' }, 
-        { field: 'telefono', displayName: 'Telefono' }
+        { field: 'fechaPago', displayName: 'Fecha de Pago' },
+        { field: 'mes', displayName: 'Mes' },
+        { field: 'anio', displayName: 'Año' },
+        { field: 'monto', displayName: 'Monto' }
       ],
-      header: '<h3 class="text-center">Listado de Afiliados</h3>',
+      header: '<h3 class="text-center">Listado de Pagos del Afiliado: '+ apellido + ', ' + nombre + ' - DNI: '+ dni +'</h3>',
       type: 'json'
     });
+  }
+
+  /* Convierte una fecha en formato ISO a dd/mm/yyyy */
+  public convertirFecha(fecha) {
+    var date = new Date(fecha);
+    if (!isNaN(date.getTime())) {
+      return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    }
   }
 
   public limpiarCampos() {

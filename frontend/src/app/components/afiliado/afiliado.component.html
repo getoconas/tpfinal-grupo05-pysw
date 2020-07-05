@@ -115,6 +115,7 @@
           <th>Imagen</th>
           <th>Tel&eacute;fono</th>
           <th>Acciones</th>
+          <th>Ver Pagos</th>
         </tr>
       </thead>
       <tbody>
@@ -269,11 +270,11 @@
               </div>
             </div>
           </td>
+          <td>
+            <button type="button" class="btn btn-secondary" (click)="imprimirPagosPorAfiliado(_afiliado)"><i class="far fa-file-pdf"></i></button>
+          </td>
         </tr>
       </tbody>
     </table>
-    <div class="text-center">
-      <button class="btn btn-primary" (click)="imprimirAfiliados()">Imprimir Afiliados</button>
-    </div>
   </div>
 </div>
