@@ -1,5 +1,5 @@
 <div class="container mt-3">
-    <form class="card" #novedad1Form="ngForm" *ngIf="loginService.userLoggedIn && loginService.userLogged.perfil=='Socio'">
+    <form class="card" #novedad1Form="ngForm" *ngIf="loginService.userLoggedIn && loginService.userLogged.perfil=='Socio'" class="was-validated">
       <div class="card-header text-center h3">ENVIAR NOVEDAD</div>
         <div class="card-body">
         <!-- descripcion -->
@@ -7,11 +7,11 @@
             <label for="iddescripcion" class="col-md-4">Descripcion</label>
             <input id="iddescripcion" class="form-control form-control-sm col-md-8" required 
             type="text" name="descripcion" #txtDescripcion="ngModel"
-            [(ngModel)]="_novedad.texto"/>                
-            <div *ngIf="txtDescripcion.invalid && (txtDescripcion.dirty || txtDescripcion.touched)" class="alert alert-danger">
-            <div *ngIf="txtDescripcion.errors.required">
-                El campo Descripcion es requerido
-            </div>
+            [(ngModel)]="_novedad.texto" />                
+            <div *ngIf="txtDescripcion.invalid && (txtDescripcion.dirty || txtDescripcion.touched)" class="invalid-feedback">
+              <div *ngIf="txtDescripcion.errors.required">
+                  El campo Descripcion es requerido
+              </div>
             </div>								  		
         </div>      
         
@@ -39,7 +39,7 @@
           <tr *ngFor="let novedad of _novedades" >
             <td>{{ novedad.usuario.usuario }}</td>
             <td>{{ novedad.texto }}</td>            
-            <td>{{ novedad.estado }}</td>
+            <td>{{ mostrarEstado(novedad.estado) }}</td>
             <td><input type="checkbox" [(ngModel)]="novedad.estado"/> </td>
             <td> 
               <!--<button class="btn btn-primary" (click)="seleccionarNovedad(novedad)" >Seleccionar</button> -->         
