@@ -17,14 +17,13 @@ export class NovedadComponent implements OnInit {
   _novedades: Array<Novedad>;
   primeringreso: boolean = true;
 
-  constructor( private _novedadService: NovedadService, private toastr:ToastrService, private router:Router, private loginService: LoginService) {
+  constructor( private _novedadService: NovedadService, private toastr:ToastrService, private router:Router, public loginService: LoginService) {
     //validacion por ruta
     if (!loginService.userLoggedIn) {
       this.router.navigateByUrl('/login');
     }
 
     this._novedad = new Novedad();
-    this._novedad.estado=false;
     this._novedades = new Array<Novedad>();
     this.obtenerNovedades();
    }
@@ -35,9 +34,11 @@ export class NovedadComponent implements OnInit {
   obtenerNovedades(){
     this._novedadService.getNovedades().subscribe(
       (result) => {
+        console.log(result);
         this._novedades = new Array<Novedad>();
         result.forEach(element => {
           var _nov: Novedad = new Novedad();
+          console.log(element);
           Object.assign(_nov, element);
           this._novedades.push(_nov);
         })
@@ -46,12 +47,13 @@ export class NovedadComponent implements OnInit {
   }
 
   public agregarNovedad() {
-    if(this.primeringreso==true){
+    this._novedad.estado = false;
+    //if(this.primeringreso==true){
       this._novedad.usuario = new Usuario();
       this._novedad.usuario._id= this.loginService.userLogged._id; //captura el perfil del usuario logueado
-      this.primeringreso = false;
-    }
-    if(this.primeringreso==false){
+      //this.primeringreso = false;
+    //}
+    //if(this.primeringreso==false){
       this._novedadService.addNovedad(this._novedad).subscribe(
         (result) => {
           this.obtenerNovedades();
@@ -62,7 +64,7 @@ export class NovedadComponent implements OnInit {
           console.log(error);
           }
         )    
-    }
+    //}
      
   }
 

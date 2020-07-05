@@ -127,7 +127,7 @@
           <td>{{ _afiliado.telefono }}</td>
           <td>
             <!-- Modificar -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificarModal" (click)="auxiliarAfiliado(_afiliado)">Modificar</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificarModal" (click)="auxiliarAfiliado(_afiliado)"><i class="far fa-edit"></i></button>
             <!-- Modificar Modal -->
             <div class="modal fade" id="modificarModal" tabindex="-1" role="dialog"
               aria-labelledby="modificarModalLabel" aria-hidden="true">
@@ -247,7 +247,7 @@
             </div>
 
             <!-- Eliminar -->
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarAfiliado(_afiliado)">Borrar</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarAfiliado(_afiliado)"><i class="far fa-trash-alt"></i></button>
             <!-- Eliminar Modal -->
             <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">

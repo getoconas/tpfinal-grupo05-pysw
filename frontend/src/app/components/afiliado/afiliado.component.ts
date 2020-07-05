@@ -227,7 +227,8 @@ export class AfiliadoComponent implements OnInit {
         { field: 'telefono', displayName: 'Telefono' }
       ],
       header: '<h3 class="text-center">Listado de Afiliados</h3>',
-      type: 'json'});
+      type: 'json'
+    });
   }
 
   public limpiarCampos() {
