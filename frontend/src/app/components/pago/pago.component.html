@@ -1,5 +1,5 @@
 <div class="container mt-3">
-  <form class="card" #pagoForm="ngForm">
+  <form class="card" #pagoForm="ngForm" class="was-validated">
     <div class="card-header text-center h3">Gesti&oacute;n de Pagos</div>
     <div class="card-body">
       <!-- Afiliado -->
@@ -14,7 +14,7 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Monto</label>
         <input class="form-control col-sm-12 col-md-8" type="text" name="txtMonto" [(ngModel)]="_pago.monto" required pattern="(^[1-9][0-9]*.[0-9][0-9]|^[1-9][0-9]*$|^[1-9][0-9]*.[0-9])" #txtMonto="ngModel" />
-        <div *ngIf="txtMonto.invalid && (txtMonto.dirty || txtMonto.touched)" class="alert alert-danger">
+        <div *ngIf="txtMonto.invalid && (txtMonto.dirty || txtMonto.touched)" class="invalid-feedback">
           <div *ngIf="txtMonto.errors.required">
             El campo Monto es requerido
           </div>
@@ -27,25 +27,25 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Mes</label>
         <select name="cmbMes" class="form-control col-sm-12 col-md-8" required [(ngModel)]="_pago.mes">
-          <option value="1">Enero</option>
-          <option value="2">Febrero</option>
-          <option value="3">Marzo</option>
-          <option value="4">Abril</option>
-          <option value="5">Mayo</option>
-          <option value="6">Junio</option>
-          <option value="7">Julio</option>
-          <option value="8">Agosto</option>
-          <option value="9">Septiembre</option>
-          <option value="10">Octubre</option>
-          <option value="11">Noviembre</option>
-          <option value="12">Diciembre</option>
+          <option value="Enero">Enero</option>
+          <option value="Febrero">Febrero</option>
+          <option value="Marzo">Marzo</option>
+          <option value="Abril">Abril</option>
+          <option value="Mayo">Mayo</option>
+          <option value="Junio">Junio</option>
+          <option value="Julio">Julio</option>
+          <option value="Agosto">Agosto</option>
+          <option value="Septiembre">Septiembre</option>
+          <option value="Octubre">Octubre</option>
+          <option value="Noviembre">Noviembre</option>
+          <option value="Diciembre">Diciembre</option>
         </select>
       </div>
       <!-- Año -->
       <div class="row form-group">
         <label class="col-sm-12 col-md 4">Año</label>
         <input class="form-control col-sm-12 col-md-8" type="text" name="txtAnio" [(ngModel)]="_pago.anio" required pattern="[2-9][0-9][0-9][0-9]" minlength="4" maxlength="4" #txtAnio="ngModel" />
-        <div *ngIf="txtAnio.invalid && (txtAnio.dirty || txtAnio.touched)" class="alert alert-danger">
+        <div *ngIf="txtAnio.invalid && (txtAnio.dirty || txtAnio.touched)" class="invalid-feedback">
           <div *ngIf="txtAnio.errors.required">
             El campo Año es requerido
           </div>
@@ -59,7 +59,7 @@
       </div>
       <!-- Botones -->
       <div class="form-group text-center">
-        <button type="button" class="btn btn-success" [disabled]="!pagoForm.form.valid" (click)="agregarPago()">Agregar</button>
+        <button type="button" class="btn btn-success" [disabled]="!pagoForm.form.valid" (click)="agregarPago()"><i class="fas fa-save fal"></i>&nbsp;Agregar Pago</button>
       </div>
     </div>
   </form>

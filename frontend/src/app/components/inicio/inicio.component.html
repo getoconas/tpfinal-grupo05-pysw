@@ -1,10 +1,32 @@
-<div class="card-deck">
-    <div class="card"  *ngFor="let _noticia of _noticias">
-      <img [src]="_noticia.imagen" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">{{_noticia.titulo}}</h5>
-        <p class="card-text">{{_noticia.descripcion}}</p>
-        <p class="card-text"><small class="text-muted">{{_noticia.fecha}}</small></p>
+<div class="bodyinicio">
+  <!--========Cards========-->
+  <div class="container-fluid main-cont">
+      <div class="row news-row">
+          <div class="container-fluid col-md-12 col-sm-6 justify-content-center news-block">
+            <!--=Bloque se mostrara cuando no hay noticias==-->
+            <div class="bg-dark text-white" *ngIf="_noticias.length == 0">
+              <img class="card-img" src="../../../assets/image/fondobackground.jpg" alt="Card image">
+              <div class="card-img-overlay">
+                <h1 class="card-title" style="color:cornflowerblue;">Bienvenido !!!</h1>
+                <p class=" h3" style="color:black;">Te pedimos disculpas, todavia no se han publicado noticias, pero las podrás visualizar en ésta página apenas se publiquen.</p>
+                <p class=" " style="color:black">Siguenos en nuestras redes ;-)</p>
+              </div>
+            </div>
+            <!--=====Card(noticias)=====-->
+              <div class="card-group">
+                  <div class="underlay" *ngFor="let _noticia of _noticias">
+                    <div class="card" *ngIf="_noticia.vigente">
+                        <div class="card-img-top"><img [src]="_noticia.imagen" class="card-img-top" alt="..."></div>
+                        <div class="card-block" >
+                        <h5 class="card-title" style="font-family: 'Anton', sans-serif">{{_noticia.titulo}}<hr></h5>
+                        <p class="card-text" >{{_noticia.descripcion}}</p>
+                        <p class="card-text"><small class="text-muted">{{ _noticia.fecha | date:"dd-MM-yyyy" }}</small></p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
       </div>
-    </div>
   </div>
+  <!------------------------>
+</div>

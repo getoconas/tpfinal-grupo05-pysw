@@ -33,8 +33,24 @@ export class PagoComponent implements OnInit {
 
   /* Agregar Pago */
   public agregarPago() {
+    var _existePago: boolean = false;
+    for (var i in this._pagos) {
+      var id: any = this._pago.afiliado;
+      //console.log(id);
+      if (this._pagos[i].afiliado._id == id && this._pagos[i].mes == this._pago.mes && this._pagos[i].anio == this._pago.anio) {
+        _existePago = true;
+      }
+    }
+    if (_existePago) {
+      this._toastr.error("Ya existe pago realizado");
+    } else {
+      this.agregarPagoService();
+    }
+  }
+
+  /* Service de Agregar Pago */
+  public agregarPagoService() {
     this._pago.fecha = new Date();
-    console.log(this._pago);
     this._pagoService.addPago(this._pago).subscribe(
       (result) => {
         this.listarPagos();

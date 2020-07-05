@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as $ from 'jquery';
 import { NoticiaService } from 'src/app/services/noticia.service';
 import { Noticia } from 'src/app/models/noticia';
 
@@ -15,6 +16,19 @@ export class InicioComponent implements OnInit {
    }
 
   ngOnInit(): void {
+      //funcion que muestra la descripcion de la card
+    $(document).ready(function(){ 
+      $('[class^="card"]').on('mouseenter', function() {
+        $(this).find('.card-text').slideDown(300);
+      });
+      //funcion q oculta la descripcion de la card
+      $('[class^="card"]').on('mouseleave', function(event) {
+        $(this).find('.card-text').css({
+          'display': 'none'
+        });
+      });
+    })
+
   }
 
   public obtenerNoticias() {
