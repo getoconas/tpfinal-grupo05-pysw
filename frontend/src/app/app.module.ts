@@ -20,6 +20,8 @@ import { NoticiaComponent } from './components/noticia/noticia.component';
 import { LoginService } from './services/login.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { TooltipModule } from 'ng2-tooltip-directive';
+
 
 
 @NgModule({
@@ -50,7 +52,8 @@ import { ToastrModule } from 'ngx-toastr';
       timeOut: 3000,
       positionClass: 'toast-top-center',
       preventDuplicates: true,
-    })//ToastrModule added
+    }),//ToastrModule added
+    TooltipModule
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]

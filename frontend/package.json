@@ -23,6 +23,7 @@
     "alife-file-to-base64": "0.0.4",
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
+    "ng2-tooltip-directive": "^2.9.20",
     "ngx-toastr": "^12.1.0",
     "node.js": "0.0.1-security",
     "popper.js": "^1.16.1",
