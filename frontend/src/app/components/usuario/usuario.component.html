@@ -3,19 +3,22 @@
       <div class="card-header text-center h3">Gesti&oacute;n de Usuarios</div>
       <div class="card-body">
   
-      <!-- Usuario -->
+          <!-- Usuario NUEVO-->
       <div class="form-group row">
-          <label for="idusuario" class="col-md-4">Usuario</label>
-          <input id="idusuario" class="form-control form-control-sm col-md-8" required pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="text" name="usuario" #txtUsuario="ngModel" placeholder="email@dominio.com" [(ngModel)]="_usuario.usuario"/>
-          <div *ngIf="txtUsuario.invalid && (txtUsuario.dirty || txtUsuario.touched)" class="invalid-feedback">
-            <div *ngIf="txtUsuario.errors.required">
-              El campo Usuario es requerido
-            </div>
-            <div *ngIf="txtUsuario.errors.pattern">
-              El Usuario debe ser un email
-            </div>
-          </div>								  		
-      </div>
+        <label for="idusuario" class="col-md-4" >Usuario <i style="color:dodgerblue" tooltip="Para crear un usuario a partir de un Afiliado haga clic en el campo y para buscarlo ingrese parte del texto del afiliado o sino puede ingresar un nuevo usuario." placement="right" class="far fa-question-circle"></i></label> 
+        <input id="idusuario"  list="afiliados" name="usuario" class="form-control form-control-sm col-md-8" required pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtUsuario="ngModel" [(ngModel)]="_usuario.usuario" placeholder="email@dominio.com" autocomplete="off">
+          <datalist id="afiliados">
+              <option *ngFor="let _afiliado of _afiliados" value="{{_afiliado.email}}">{{_afiliado.dni}} - {{_afiliado.apellido}}, {{_afiliado.nombres}}</option>                  
+          </datalist>
+        <div *ngIf="txtUsuario.invalid && (txtUsuario.dirty || txtUsuario.touched)" class="invalid-feedback">
+          <div *ngIf="txtUsuario.errors.required">
+            El campo Usuario es requerido
+          </div>
+          <div *ngIf="txtUsuario.errors.pattern">
+            El Usuario debe ser un email
+          </div>
+        </div>								  		
+    </div>
 
       <!-- Password -->
       <div class="form-group row">
@@ -77,7 +80,7 @@
           <td>{{ _usuario.perfil }}</td>
           <td> 
             <button class="btn btn-primary" (click)="seleccionarUsuario(_usuario)" >Seleccionar</button>          
-            <button class="btn btn-danger" (click)="eliminarUsuario(_usuario)" >Borrar</button>
+            <button class="btn btn-danger" [disabled]="_usuarioLogueado.usuario==_usuario.usuario" (click)="eliminarUsuario(_usuario)" >Borrar</button>
           </td>
         </tr>
       </tbody>

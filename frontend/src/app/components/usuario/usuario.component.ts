@@ -4,6 +4,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { Afiliado } from 'src/app/models/afiliado';
+import { AfiliadoService } from 'src/app/services/afiliado.service';
 
 @Component({
   selector: 'app-usuario',
@@ -13,9 +15,11 @@ import { LoginService } from 'src/app/services/login.service';
 export class UsuarioComponent implements OnInit {
   _usuario: Usuario;
   _usuarios: Array<Usuario>;
+  _usuarioLogueado: Usuario;
+  _afiliados: Array<Afiliado>;
   editMode:boolean=false;
 
-  constructor(private _usuarioService: UsuarioService, private toastr:ToastrService, private router:Router, private loginService: LoginService) { 
+  constructor(private _usuarioService: UsuarioService, private toastr:ToastrService, private router:Router, private loginService: LoginService, private _afiliadoService: AfiliadoService) { 
     //validacio por ruta
     if (!loginService.userLoggedIn) {
       this.router.navigateByUrl('/login');
@@ -23,6 +27,8 @@ export class UsuarioComponent implements OnInit {
     this._usuario = new Usuario();
     this._usuario.activo=true;
     this._usuarios = new Array<Usuario>();
+    this._usuarioLogueado = loginService.userLogged;
+    this.obtenerAfiliados();
     this.obtenerUsuarios();
   }
 
@@ -105,6 +111,24 @@ export class UsuarioComponent implements OnInit {
       }
     );
     this.limpiarCampos();
+  }
+  
+  /*Obtiene todos los afiliados */
+  obtenerAfiliados(){
+    var afiliado:Afiliado = new Afiliado();
+    this._afiliados = new Array<Afiliado>();
+    this._afiliadoService.getAfiliados().subscribe(
+      (result)=>{(
+        result.forEach(element => {
+          Object.assign(afiliado, element);
+          this._afiliados.push(afiliado);
+          afiliado = new Afiliado();
+        })
+      )},
+      (error)=>{
+        console.log(error);
+      }
+    )
   }
 
 }
