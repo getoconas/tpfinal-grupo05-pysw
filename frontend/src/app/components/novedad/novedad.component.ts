@@ -15,6 +15,7 @@ export class NovedadComponent implements OnInit {
 
   _novedad: Novedad;
   _novedades: Array<Novedad>;
+  primeringreso: boolean = true;
 
   constructor( private _novedadService: NovedadService, private toastr:ToastrService, private router:Router, private loginService: LoginService) {
     //validacion por ruta
@@ -45,21 +46,24 @@ export class NovedadComponent implements OnInit {
   }
 
   public agregarNovedad() {
-    this._novedad.usuario = new Usuario();
-    this._novedad.usuario= this.loginService.userLogged; //captura el perfil del usuario logueado
-    
-    if (this._novedad.usuario.perfil=="socio") {
-          this._novedadService.addNovedad(this._novedad).subscribe(
-            (result) => {
-              this.obtenerNovedades();
-              this.toastr.success('Novedad Agregada Exitosamente');
-            },
-            (error) => {
-              console.log(error);
-            }
-          )
+    if(this.primeringreso==true){
+      this._novedad.usuario = new Usuario();
+      this._novedad.usuario._id= this.loginService.userLogged._id; //captura el perfil del usuario logueado
+      this.primeringreso = false;
+    }
+    if(this.primeringreso==false){
+      this._novedadService.addNovedad(this._novedad).subscribe(
+        (result) => {
+          this.obtenerNovedades();
+          this.toastr.success('Novedad Agregada Exitosamente');
           this.limpiarCampos();
-    } 
+        },
+        (error) => {
+          console.log(error);
+          }
+        )    
+    }
+     
   }
 
   public limpiarCampos() {
@@ -84,6 +88,19 @@ export class NovedadComponent implements OnInit {
     );
   }
 
+
+  public modificarNovedad(novedad:Novedad){
+   this._novedadService.updateNovedad(novedad).subscribe(
+      (result)=>{
+        this.obtenerNovedades();
+        this.toastr.success('Estado Actualizado Exitosamente');
+      },
+      (error)=>{
+        console.log(error);
+      }
+    );
+    this.limpiarCampos();
+  }
 
   
 

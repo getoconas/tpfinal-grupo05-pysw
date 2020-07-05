@@ -30,7 +30,7 @@ export class NovedadService {
   }
 
   /* Modificacion de Novedad */
-  public updateNoticia(_novedad: Novedad) :Observable<any>{
+  public updateNovedad(_novedad: Novedad) :Observable<any>{
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json"

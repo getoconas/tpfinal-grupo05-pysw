@@ -10,8 +10,8 @@ novedadCtrl.getNovedades = async(req, res) => {
 
 // Obtener Novedad por ID
 novedadCtrl.getNovedad = async(req, res) => {
-  const novedades = await Novedad.findById(req.params.id).populate("usuario");
-  res.json(novedades);
+  const novedad = await Novedad.findById(req.params.id).populate("usuario");
+  res.json(novedad);
 }
 
 // Alta de Novedad
@@ -26,7 +26,7 @@ novedadCtrl.createNovedad = async(req, res) => {
 // Modificación de Novedad
 novedadCtrl.editNovedad = async(req, res) => {
   const vNovedad = new Novedad(req.body);
-  await Novedad.findByIdAndUpdate(req.params.id, { $set: vNoticia }, { new: true });
+  await Novedad.findByIdAndUpdate(req.params.id, { $set: vNovedad }, { new: true });
   res.json({
     'status': 'Novedad Updated'
   });

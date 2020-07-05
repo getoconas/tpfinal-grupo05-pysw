@@ -1,23 +1,52 @@
 <div class="container mt-3">
     <form class="card" #novedad1Form="ngForm">
-        <div class="card-header text-center h3">GESTION DE NOVEDAD</div>
+        <div class="card-header text-center h3">ENVIAR NOVEDAD</div>
             <div class="card-body">
             <!-- descripcion -->
             <div class="form-group row">
                 <label for="iddescripcion" class="col-md-4">Descripcion</label>
                 <input id="iddescripcion" class="form-control form-control-sm col-md-8" required 
-                    type="text" name="descripcion" #txtDescripcion="ngModel"
-                    [(ngModel)]="_novedad.texto"/>
+                type="text" name="descripcion" #txtDescripcion="ngModel"
+                [(ngModel)]="_novedad.texto"/>                
                 <div *ngIf="txtDescripcion.invalid && (txtDescripcion.dirty || txtDescripcion.touched)" class="alert alert-danger">
                 <div *ngIf="txtDescripcion.errors.required">
                     El campo Descripcion es requerido
                 </div>
                 </div>								  		
-            </div>      						  		
+            </div>      
+            
             <!-- Botones -->
             <div class="form-group text-center">
                 <button class="btn btn-success ml-2 mr-2" [disabled]="!novedad1Form.form.valid" (click)="agregarNovedad()"><i class="fas fa-save fal"></i> Enviar </button>
+                <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
             </div>
         </div>
     </form>
+
+
+    <h2 class="text-center mt-3">Novedades Pendientes</h2>
+    <!-- Tabla -->
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Usuario</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Estado</th>
+            <th >Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let novedad of _novedades" >
+            <td>{{ novedad.usuario.usuario }}</td>
+            <td>{{ novedad.texto }}</td>            
+            <td>{{ novedad.estado }}</td>
+            <td><input type="checkbox" [(ngModel)]="novedad.estado"/> </td>
+            <td> 
+              <button class="btn btn-primary" (click)="seleccionarNovedad(novedad)" >Seleccionar</button>          
+              <button class="btn btn-danger" (click)="eliminarNovedad(novedad)" >Borrar</button>
+              <button class="btn btn-secondary" (click)="modificarNovedad(novedad)" >Modificar</button>              
+            </td>
+          </tr>
+        </tbody>
+    </table>
   </div>
