@@ -104,6 +104,14 @@ export class NovedadComponent implements OnInit {
     this.limpiarCampos();
   }
 
+  mostrarEstado(estado:Boolean){
+    if(estado==true){
+      return "Procesado"
+    }
+    else{
+      return "Pendiente"
+    }
+  }
   
 
 }

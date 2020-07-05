@@ -195,7 +195,8 @@ luego llama a modificarServicioService para completar la accion*/
     if (_banderaControl) {
       this.toastr.error("El afiliado ya cuenta con el servicio");
     } else {
-      this._servicio.afiliadosInsc.push(this.afiliadoaux);     
+      this._servicio.afiliadosInsc.push(this.afiliadoaux);
+      this.toastr.error("Haga click en *Modificar para registrar los nuevos afiliados al servicio");     
     }
   }
 
@@ -239,5 +240,14 @@ luego llama a modificarServicioService para completar la accion*/
       header: '<h3 class="text-center">Listado de Servicios con Afiliados</h3>',
       type: 'json'
     });
+  }
+
+  mostrarEstado(estado:Boolean){
+    if(estado==true){
+      return "Activo"
+    }
+    else{
+      return "Inactivo"
+    }
   }
 }
