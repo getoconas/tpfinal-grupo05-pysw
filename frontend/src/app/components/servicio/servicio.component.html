@@ -7,7 +7,7 @@
         <tr>
           <th>Nombre</th>
           <th>Imagen</th>
-          <th>Activo</th>
+          <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -15,7 +15,7 @@
         <tr *ngFor="let _servicio of _servicios" >
           <th>{{ _servicio.nombre }}</th>
           <td><img src="{{ _servicio.imagen }}" alt="" width="50px" height="50px"></td>
-          <td>{{ _servicio.activo }}</td>
+          <td>{{ mostrarEstado(_servicio.activo)}}</td>
           <td> 
             <button class="btn btn-primary" (click)="seleccionarServicio(_servicio)" >Seleccionar</button>          
             <button class="btn btn-danger" (click)="eliminarServicio(_servicio)" >Borrar</button>
@@ -26,7 +26,7 @@
   </div>
   <br><br>
 
-    <form class="card" #servicioForm="ngForm">
+    <form class="card" #servicioForm="ngForm" class="was-validated">
       <div class="card-header text-center titulo h3">Gestionar Servicios</div>
       <br>
       <div class="card-body">
@@ -35,8 +35,8 @@
         <div class="row form-group">
           <label class="col-sm-12 col-md-4">Nombre</label>
           <input class="form-control col-sm-12 col-md-8" type="text" id="nombre" name="txtNombre" required
-            minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtNombre="ngModel" [(ngModel)]="_servicio.nombre" />
-          <div *ngIf="txtNombre.invalid && (txtNombre.dirty || txtNombre.touched)" class="alert alert-danger">
+            minlength="3" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" #txtNombre="ngModel" [(ngModel)]="_servicio.nombre"/>
+          <div *ngIf="txtNombre.invalid && (txtNombre.dirty || txtNombre.touched)" class="invalid-feedback">
             <div *ngIf="txtNombre.errors.required">
               El campo Nombre es requerido
             </div>
@@ -58,10 +58,10 @@
           <div class="col-sm-12 col-md-7">
           <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64
             (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel"
-            [(ngModel)]="_convertido" />
+            [(ngModel)]="_convertido"/>
           </div>        
           
-          <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="alert alert-danger">
+          <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="invalid-feedback">
             <div *ngIf="txtImagen.errors.required">
               El campo Imagen es requerido
             </div>
@@ -70,7 +70,7 @@
   
         <!-- Activo -->
         <div class="form-group row">
-          <label class="col-sm-12 col-md-4" for="idoption">Activo</label>
+          <label class="col-sm-12 col-md-4" for="idoption">Estado</label>
           <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption"  [(ngModel)]="_servicio.activo" value="true"> Si
           <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption"  [(ngModel)]="_servicio.activo" value="false"> No
         </div>
