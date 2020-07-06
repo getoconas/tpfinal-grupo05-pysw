@@ -1,25 +1,11 @@
 <header>
-  <div class="row bg-dark">
-    <div class="col-md-12 bg-dark text-white text-center" >
-      <h5 >
-        Obra Social
-      </h5>
-    </div>
-    <!--<div class="col-8"></div>-->
-    <div class="col-md-12 col-sm-12 bg-dark offset-10 ">
-      
-      <a *ngIf="!loginService.userLoggedIn" [routerLink]="['login']" > <button class="registrar ">Registrarse(Login)</button> </a>
-      <a *ngIf="loginService.userLoggedIn" [routerLink]="['login']" (click)="logout()" class="registrar">
-          {{loginService.userLogged.usuario}} (logout)
-      </a>    
-    </div>
-  </div>
-  <div class="row bg-dark ">
+  <div class="row bg-dark naveg">
+    <div class="col-1"><img src="./assets/image/logo.png" class="logo "></div>
     <nav class="navbar navbar-expand-lg navbar-light bg-info col-xs-12 ">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse " id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link text-white" [routerLink]="['inicio']"> Inicio <span class="sr-only">(current)</span></a>
@@ -52,6 +38,16 @@
           </ul>
         </div>
       </nav>
+      <div class=" bg-dark offset-6">
+      
+        <a *ngIf="!loginService.userLoggedIn" [routerLink]="['login']" > <button class="registrar ">Registrarse(Login)</button> </a>
+      </div>
+      <div class="bg-dark offset-7">  
+        <a *ngIf="loginService.userLoggedIn" [routerLink]="['login']" (click)="logout()" class="registrar">Nombre de Usuario: 
+            {{loginService.userLogged.usuario}} (logout)
+        </a>    
+      </div>
+    
   </div>   
 </header>
  

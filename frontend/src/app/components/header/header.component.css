@@ -2,9 +2,19 @@
  background-color: burlywood;
  text-align: right;
 }
+.naveg{
+    margin-top: 20px;
+}
+.logo{
+    width: 60px;
+    right: 60px;
+    border-radius: 20px;
+}
 #navbarNavDropdown li a:hover{
     background-color: #eeeeee;
-    color: black !important;}
+    color: black !important;
+  
+}
 
 
 .registrar{
