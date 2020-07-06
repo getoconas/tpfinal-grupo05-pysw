@@ -95,7 +95,7 @@ export class ServicioComponent implements OnInit {
       (result) => {
         this.obtenerServicios();
         this._convertido = "";
-        this.toastr.info('Servicio Agregado Exitosamente');
+        this.toastr.success('Servicio Agregado Correctamente');
       },
       (error) => {
         console.log(error);
@@ -144,15 +144,14 @@ export class ServicioComponent implements OnInit {
       this._servicioService.deleteServicio(servicio._id).subscribe(
         (result) => {
           this.obtenerServicios();
-          this.toastr.info('Servicio Eliminado Exitosamente');
+          this.toastr.info('Servicio Eliminado Correctamente');
         },
         (error) => {
           console.log(error);
         }
       )
-    }
-    else{
-      this.toastr.error('El Servicio se encuentra Activo');
+    } else {
+      this.toastr.error('No se puede eliminar porque el servicio esta activo');
     }
     
   }
