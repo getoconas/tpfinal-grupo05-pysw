@@ -1,27 +1,26 @@
-.dregistrar{
+.dregistrar {
  background-color: burlywood;
  text-align: right;
 }
-.naveg{
-    margin-top: 20px;
+
+.naveg {
+  margin-top: 20px;
 }
 
-.logo{
-    width: 80px;
-    right: 60px;
-    border-radius: 20px;
+.logo {
+  width: 80px;
+  right: 60px;
+  border-radius: 20px;
 }
-#navbarNavDropdown li a:hover{
-    background-color: #eeeeee;
-    color: black !important;
+
+#navbarNavDropdown li a:hover {
+  background-color: #eeeeee;
+  color: black !important;
   
 }
 
-
-.registrar{
-    background: linear-gradient(to bottom, #ff9966 0%, #ccff99 100%);
-    border-radius: 80px;
-    width: 200px;
-  
+.registrar {
+  background: linear-gradient(to bottom, #ff9966 0%, #ccff99 100%);
+  border-radius: 80px;
+  width: 200px;
 }
-
