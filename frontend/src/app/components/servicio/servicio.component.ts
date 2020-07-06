@@ -192,7 +192,7 @@ export class ServicioComponent implements OnInit {
       this.toastr.error("El afiliado ya cuenta con el servicio");
     } else {
       this._servicio.afiliadosInsc.push(this.afiliadoaux);
-      this.toastr.error("Haga click en *Modificar para registrar los nuevos afiliados al servicio");     
+      this.toastr.info("Haga click en *Modificar para registrar los nuevos afiliados al servicio");     
     }
   }
 
