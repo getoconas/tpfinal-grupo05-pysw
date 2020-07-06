@@ -105,7 +105,7 @@
 
   <h2 class="text-center mt-3">Informaci&oacute;n de Afiliados</h2>
   <div class="table-responsive">
-    <table class="table">
+    <table class="table"  [mfData]="_afiliados" #mf="mfDataTable" [mfRowsOnPage]="3">
       <thead>
         <tr>
           <th>Apellido</th>
@@ -119,7 +119,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let _afiliado of _afiliados">
+        <tr *ngFor="let _afiliado of mf.data ">
           <td>{{ _afiliado.apellido }}</td>
           <td>{{ _afiliado.nombres }}</td>
           <td>{{ _afiliado.dni }}</td>
@@ -275,6 +275,13 @@
           </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+            <td colspan="3">
+               <mfBootstrapPaginator [rowsOnPageSet]="[3,10,25]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>

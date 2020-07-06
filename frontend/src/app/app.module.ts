@@ -22,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { FacebookModule } from 'ngx-fb';
-
+import { NgxDataTableModule} from "angular-9-datatable";
 
 @NgModule({
   declarations: [
@@ -38,12 +38,14 @@ import { FacebookModule } from 'ngx-fb';
     HeaderComponent,
     FooterComponent,
     UsuarioComponent,
-    NoticiaComponent
+    NoticiaComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgxDataTableModule,
     FormsModule,
     AlifeFileToBase64Module,
     HttpClientModule,

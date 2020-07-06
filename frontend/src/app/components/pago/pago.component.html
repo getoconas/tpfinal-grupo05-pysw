@@ -66,7 +66,7 @@
 
   <h2 class="text-center mt-3">Informaci&oacute;n de Pagos</h2>
   <div class="table-responsive">
-    <table class="table">
+    <table class="table" [mfData]="_pagos" #mf="mfDataTable" [mfRowsOnPage]="3">
       <thead>
         <tr>
           <th>Afiliado</th>
@@ -77,7 +77,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let pago of _pagos">
+        <tr *ngFor="let pago of mf.data">
           <td>{{ pago.afiliado.dni }} - {{ pago.afiliado.apellido }}, {{ pago.afiliado.nombres }}</td>
           <td>{{ pago.fecha | date:"dd-MM-yyyy" }}</td>
           <td>{{ pago.monto }}</td>
@@ -85,6 +85,13 @@
           <td>{{ pago.anio }}</td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+            <td colspan="3">
+                <mfBootstrapPaginator [rowsOnPageSet]="[3,10,25]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </div>

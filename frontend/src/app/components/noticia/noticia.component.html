@@ -65,7 +65,7 @@
     
   <h2 class="text-center mt-3">Informaci&oacute;n de Noticias</h2>
   <!-- Tabla -->
-  <table class="table">
+  <table class="table" [mfData]="_noticias" #mf="mfDataTable" [mfRowsOnPage]="3">
     <thead>
       <tr>
         <th scope="col">Titulo</th>
@@ -79,7 +79,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let _noticia of _noticias" >
+      <tr *ngFor="let _noticia of mf.data" >
         <td>{{ _noticia.titulo }}</td>
         <td>{{ _noticia.descripcion }}</td>
         <td ><button class="btn btn-primary" (click)="postFb(_noticia)"><i tooltip="postear noticia en facebook" class="fab fa-facebook-square"></i></button></td>
@@ -93,5 +93,12 @@
         </td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+         <td colspan="3">
+            <mfBootstrapPaginator [rowsOnPageSet]="[3,10,25]"></mfBootstrapPaginator>
+          </td>
+      </tr>
+    </tfoot>
   </table>
 </div>

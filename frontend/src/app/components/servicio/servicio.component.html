@@ -1,8 +1,8 @@
 <div class="container mt-3">
   <div class="card-header titulo text-center h3">Servicios</div>
   <br>
-  <div id="div1" class="table-responsive">
-    <table class="table text-center">
+  <div  class="table-responsive">
+    <table class="table text-center" [mfData]="_servicios" #mf="mfDataTable" [mfRowsOnPage]="3">
       <thead>
         <tr>
           <th>Nombre</th>
@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let _servicio of _servicios" >
+        <tr *ngFor="let _servicio of mf.data" >
           <th>{{ _servicio.nombre }}</th>
           <td><img src="{{ _servicio.imagen }}" alt="" width="50px" height="50px"></td>
           <td>{{ mostrarEstado(_servicio.activo)}}</td>
@@ -22,6 +22,13 @@
           </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+           <td colspan="3">
+              <mfBootstrapPaginator [rowsOnPageSet]="[3,10,25]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+      </tfoot>
     </table>
   </div>
   <br><br>
@@ -103,8 +110,8 @@
         
         <div class="card-subtitle subtitulo text-center h4">Afiliados del Servicio</div>
         <br>
-        <div id="div2" class="table-responsive">
-          <table class="table text-center">
+        <div  class="table-responsive">
+          <table class="table text-center" [mfData]="_servicio.afiliadosInsc" #mf="mfDataTable" [mfRowsOnPage]="3">
             <thead>
               <tr>
                 <th>DNI</th>
@@ -114,7 +121,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let af of _servicio.afiliadosInsc">
+              <tr *ngFor="let af of mf.data">
                 <th>{{af.dni}}</th>
                 <td>{{af.nombres}}</td>
                 <td>{{af.apellido}}</td>
@@ -123,6 +130,13 @@
                 </td>
               </tr>
             </tbody>
+            <tfoot>
+              <tr>
+                  <td colspan="3">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[3,10,25]"></mfBootstrapPaginator>
+                  </td>
+              </tr>
+            </tfoot>
           </table>
       </div>
       </div>
