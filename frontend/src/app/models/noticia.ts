@@ -4,12 +4,12 @@ export class Noticia {
     _id: string;
     titulo: string;
     descripcion: string;
-    fecha: Date;
+    fecha: string;
     usuario: Usuario;
     vigente: boolean;
     imagen: string;
 
-    Noticia(_id?: string, titulo?: string, descripcion?: string, fecha?: Date, usuario?: Usuario, vigente?: boolean, imagen?: string){
+    Noticia(_id?: string, titulo?: string, descripcion?: string, fecha?: string, usuario?: Usuario, vigente?: boolean, imagen?: string){
         this._id = _id;
         this.titulo = titulo;
         this.descripcion = descripcion;

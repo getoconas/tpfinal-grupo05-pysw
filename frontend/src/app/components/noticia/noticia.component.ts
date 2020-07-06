@@ -18,7 +18,8 @@ export class NoticiaComponent implements OnInit {
   _noticias: Array<Noticia>;
   editMode:boolean=false;
   _convertido: string;
-  mensaje: string = "";
+  mensaje:string;
+  _auxNoticia:Noticia=new Noticia();
 
   constructor(private _noticiaService: NoticiaService, private toastr:ToastrService, private router:Router, private loginService: LoginService, private fb: FacebookService) { 
     //validacion por ruta
@@ -28,6 +29,7 @@ export class NoticiaComponent implements OnInit {
     this._noticia = new Noticia();
     this._noticia.vigente=true;
     this._noticias = new Array<Noticia>();
+    this._convertido="";
     this.iniciarFb();
     this.obtenerNoticias();
   }
@@ -85,7 +87,7 @@ export class NoticiaComponent implements OnInit {
     var tnoticia = new Noticia();
     Object.assign(tnoticia,noticia);
     this._noticia = tnoticia;
-  }
+    this._noticia.fecha = this._noticia.fecha.substring(0,10)+"T"+new Date(this._noticia.fecha).toLocaleTimeString()}
 
   public eliminarNoticia(noticia: Noticia){
     this._noticiaService.deleteNoticia(noticia).subscribe(
@@ -123,7 +125,11 @@ export class NoticiaComponent implements OnInit {
     }
   }
 
-  /*metodo de facebook*/
+  auxiliarNoticia(_noticia:Noticia){
+    this._auxNoticia=_noticia;
+  }
+
+  //metodo de facebook/
   postFb(_noticia:Noticia){
 
     this.mensaje = _noticia.titulo + ":  " + _noticia.descripcion + "  Escrito por:  " + _noticia.usuario.usuario;
@@ -145,5 +151,7 @@ export class NoticiaComponent implements OnInit {
         };
         this.fb.init(initParams);
         }
-      
+      mostrarfecha(){
+        console.log(this._noticia.fecha);
+      }
 }

@@ -46,6 +46,9 @@
             El campo Imagen es requerido
           </div>
         </div>
+        <div class="rounded mx-auto d-block mt-2" *ngIf="editMode">
+          Imagen Actual  <img  src="{{ _noticia.imagen }}" alt="" width="50px" height="50px">
+        </div>
       </div>
 
       <!-- Vigente -->
@@ -63,19 +66,19 @@
     </div>
   </form>
     
-  <h2 class="text-center mt-3">Informaci&oacute;n de Noticias</h2>
-  <!-- Tabla -->
-  <table class="table" [mfData]="_noticias" #mf="mfDataTable" [mfRowsOnPage]="3">
+  <h2 class="mt-3">Listado de Noticias</h2>
+  <!-- Tabla DATATABLE-->
+  <table class="table table-striped" [mfData]="_noticias" #mf="mfDataTable" [mfRowsOnPage]="4">
     <thead>
       <tr>
-        <th scope="col">Titulo</th>
-        <th scope="col">Descripcion</th>
-        <th scope="col">Fb</th>
-        <th scope="col">Fecha</th>
-        <th scope="col">Usuario</th>
-        <th scope="col">Imagen</th>
-        <th scope="col">Vigente</th>
-        <th >Acciones</th>
+        <th><mfDefaultSorter by="titulo">Titulo</mfDefaultSorter></th>
+        <th  style="width: 10%"><mfDefaultSorter by="descripcion">Descripcion</mfDefaultSorter></th>
+        <th>Fb</th>
+        <th><mfDefaultSorter by="fecha">Fecha</mfDefaultSorter></th>
+        <th><mfDefaultSorter by="usuario">Usuario</mfDefaultSorter></th>
+        <th>Imagen</th>
+        <th><mfDefaultSorter by="vigente">Vigente</mfDefaultSorter></th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -83,22 +86,43 @@
         <td>{{ _noticia.titulo }}</td>
         <td>{{ _noticia.descripcion }}</td>
         <td ><button class="btn btn-primary" (click)="postFb(_noticia)"><i tooltip="postear noticia en facebook" class="fab fa-facebook-square"></i></button></td>
-        <td>{{ _noticia.fecha }}</td>
+        <td>{{ _noticia.fecha | date:'dd/MM/yyyy HH:mm'}}</td>
         <td>{{ _noticia.usuario.usuario }}</td>
         <td><img src="{{ _noticia.imagen }}" alt="" width="50px" height="50px"></td>
-        <td><input type="checkbox" [checked]="_noticia.vigente"/> </td>
+        <td><input type="checkbox" [checked]="_noticia.vigente" onclick="return false;"/> </td>
         <td> 
           <button class="btn btn-primary" (click)="seleccionarNoticia(_noticia)" >Seleccionar</button>          
-          <button class="btn btn-danger" (click)="eliminarNoticia(_noticia)" >Borrar</button>
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarNoticia(_noticia)"><i class="far fa-trash-alt"></i></button>
         </td>
       </tr>
     </tbody>
-    <tfoot>
-      <tr>
-         <td colspan="3">
-            <mfBootstrapPaginator [rowsOnPageSet]="[3,10,25]"></mfBootstrapPaginator>
-          </td>
-      </tr>
+    <tfoot>     
+      <tr>         
+        <td colspan="4">             
+          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>         
+        </td>     
+        </tr>     
     </tfoot>
   </table>
+  <!-- Modal Eliminar-->
+  <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarModalLabel">¿Desea eliminar esta noticia?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h6><b><u>Titulo:</u></b> {{ _auxNoticia.titulo }}</h6>
+          <h6><b><u>Descripción:</u></b> {{ _auxNoticia.descripcion }}</h6>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="eliminarNoticia(_auxNoticia)" >Si</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
