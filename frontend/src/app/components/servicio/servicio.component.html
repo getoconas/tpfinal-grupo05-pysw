@@ -21,15 +21,11 @@
             <button class="btn btn-danger" (click)="eliminarServicio(_servicio)" >Borrar</button>
           </td>
         </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-           <td colspan="3">
-              <mfBootstrapPaginator [rowsOnPageSet]="[3,10,25]"></mfBootstrapPaginator>
-            </td>
-        </tr>
-      </tfoot>
+      </tbody>      
     </table>
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="imprimirServicios()">Imprimir Servicios</button>
+    </div>
   </div>
   <br><br>
 
@@ -91,23 +87,26 @@
         </div>
         <br><br>
         <!-- Afiliados -->
+        <div *ngIf="seleccion==true">
         <div class="card-subtitle subtitulo text-center h4">Agregar Afiliado</div>
         <br><br>
+        
         <div class="form-group row" >
               <select id="idafiliado" class=" row form-control form-control-sm col-md-8"
                 name="afiliado" #afiliado="ngModel"
-                [(ngModel)] = "afiliadoaux">
+                [(ngModel)] = "afiliadoaux" required >
                 <option *ngFor="let afiliado of afiliados" [ngValue]="afiliado">{{afiliado.dni}}-{{afiliado.nombres}}-{{afiliado.apellido}}</option> 
-              </select>
-              <br>
+              </select>             
         </div>
         <div class="col text-center" >
           <button  [disabled]="!afiliado.dirty" class="btn btn-secondary ml-2 mr-2 col-md-4" (click)="agregarAfiliado(afiliadoaux)" >Agregar</button>
         </div>
+       </div>
         
        <br><br>
         <!-- Afiliados del servicio -->
         
+        <div *ngIf="seleccion==true">
         <div class="card-subtitle subtitulo text-center h4">Afiliados del Servicio</div>
         <br>
         <div  class="table-responsive">
@@ -140,8 +139,7 @@
           </table>
       </div>
       </div>
+      </div>
     </form> 
-    <div class="text-center">
-      <button class="btn btn-primary" (click)="imprimirServicios()">Imprimir Servicios</button>
-    </div>
+    
   </div>
