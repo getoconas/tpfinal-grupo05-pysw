@@ -267,7 +267,7 @@ Cards
   }
 }
 
-/*Estilo de Carrousel*/
+/*Estilo de Carousel*/
 .content-all{
   width: 210px;
   margin: auto;
@@ -291,7 +291,7 @@ Cards
 
 .content-carrousel figure{
   width: 100%;
-  height: 120px;
+  height: 90px;
   overflow: hidden;
   position: absolute;
   box-shadow: 0px 0px 20px 0px black;
@@ -317,6 +317,7 @@ Cards
 
 .content-carrousel img{
   width: 100%;
+
   transition: all 300ms;
 }
 
