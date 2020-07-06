@@ -2,15 +2,20 @@
   <!--========Cards========-->
   <div class="container-fluid main-cont">
       <div class="row news-row">
-          <div class="container-fluid col-md-12 col-sm-6 justify-content-center news-block">
+          <div class="container-fluid col-md-12 col-sm-6 justify-content-center ">
             <!--=Bloque se mostrara cuando no hay noticias==-->
             <div class="bg-dark text-white" *ngIf="_noticias.length == 0">
-              <img class="card-img" src="../../../assets/image/fondobackground.jpg" alt="Card image">
-              <div class="card-img-overlay">
-                <h1 class="card-title" style="color:cornflowerblue;">Bienvenido !!!</h1>
-                <p class=" h3" style="color:black;">Te pedimos disculpas, todavia no se han publicado noticias, pero las podrás visualizar en ésta página apenas se publiquen.</p>
-                <p class=" " style="color:black">Siguenos en nuestras redes ;-)</p>
-              </div>
+             
+              <div class="content-all">
+                <div class="content-carrousel">
+                    <figure><img src="../../../assets/image/fondobackground.jpg"></figure>
+                    <figure><img src="../../../assets/image/slider2.png"></figure>
+                    <figure><img src="../../../assets/image/slider3.png"></figure>
+                    <figure><img src="../../../assets/image/slider4.jpg"></figure>
+                    <figure><img src="../../../assets/image/slider5.jpg"></figure>
+                    
+                </div>
+            </div>
             </div>
             <!--=====Card(noticias)=====-->
               <div class="card-group">
@@ -30,3 +35,9 @@
   </div>
   <!------------------------>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
