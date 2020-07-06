@@ -23,6 +23,7 @@ export class ServicioComponent implements OnInit {
   afiliadoslista: Array<Afiliado>;
   afiliadoaux:Afiliado;
   _servicioExtra: Array<any>;
+  seleccion:boolean = false;
   
 
   constructor(private _servicioService: ServicioService,private toastr:ToastrService,private afiliadoService: AfiliadoService, private router:Router, private loginService: LoginService) { 
@@ -33,6 +34,7 @@ export class ServicioComponent implements OnInit {
     
     this._servicio = new Servicio();
     this._servicio.activo=true;
+    
     this._servicioAuxiliar = new Servicio();
     this._servicios = new Array<Servicio>();
     this._servicioExtra = [];
@@ -104,8 +106,9 @@ export class ServicioComponent implements OnInit {
 
   /*limpia los campos del formulario */
   public limpiarCampos() {
+    this.seleccion = false;
     this._servicio = new Servicio();
-    this.afiliadoaux = new Afiliado();
+    
   }
 
   /* Convierte una imagen a string */
@@ -137,16 +140,21 @@ export class ServicioComponent implements OnInit {
 
   /* Elimina un servicio */
   public eliminarServicio(servicio) {
-    console.log(servicio);
-    this._servicioService.deleteServicio(servicio._id).subscribe(
-      (result) => {
-        this.obtenerServicios();
-        this.toastr.info('Servicio Eliminado Exitosamente');
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+    if(servicio.activo==false){
+      this._servicioService.deleteServicio(servicio._id).subscribe(
+        (result) => {
+          this.obtenerServicios();
+          this.toastr.info('Servicio Eliminado Exitosamente');
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
+    else{
+      this.toastr.error('El Servicio se encuentra Activo');
+    }
+    
   }
 
   public auxiliarServicio(servicio) {
@@ -154,6 +162,7 @@ export class ServicioComponent implements OnInit {
   }
 
   public seleccionarServicio(servicio: Servicio) {
+    this.seleccion = true;
     var tservicio = new Servicio();
     Object.assign(tservicio,servicio);
     this._servicio = tservicio;
@@ -193,6 +202,7 @@ export class ServicioComponent implements OnInit {
     } else {
       this._servicio.afiliadosInsc.push(this.afiliadoaux);
       this.toastr.info("Haga click en *Modificar para registrar los nuevos afiliados al servicio");     
+      this.afiliadoaux = new Afiliado();
     }
   }
 
