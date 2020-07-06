@@ -16,18 +16,18 @@ import { HeaderComponent } from './components/header/header.component';
 
 const routes: Routes = [
   { path: 'header', component: HeaderComponent },
-  {path: 'footer', component: FooterComponent },
+  { path: 'footer', component: FooterComponent },
   { path: 'afiliado', component: AfiliadoComponent },
- { path: 'contacto', component: ContactoComponent },
- { path: 'inicio', component: InicioComponent },
- { path: 'login', component: LoginComponent },
- { path: 'nosotros', component: NosotrosComponent },
- { path: 'noticia', component: NoticiaComponent },
- { path: 'novedad', component: NovedadComponent },
- { path: 'pago', component: PagoComponent },
- { path: 'servicio', component: ServicioComponent },
- { path: 'usuario', component: UsuarioComponent },
- { path: '**', pathMatch:'full',redirectTo:'inicio' } 
+  { path: 'contacto', component: ContactoComponent },
+  { path: 'inicio', component: InicioComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'nosotros', component: NosotrosComponent },
+  { path: 'noticia', component: NoticiaComponent },
+  { path: 'novedad', component: NovedadComponent },
+  { path: 'pago', component: PagoComponent },
+  { path: 'servicio', component: ServicioComponent },
+  { path: 'usuario', component: UsuarioComponent },
+  { path: '**', pathMatch:'full', redirectTo:'inicio' } 
 ];
 
 @NgModule({
