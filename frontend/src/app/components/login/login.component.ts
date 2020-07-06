@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   _msglogin: string;
 
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -22,7 +21,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inicio';
   }
-
 
   login() {
     this.loginService.login(this.userform.usuario, this.userform.password)

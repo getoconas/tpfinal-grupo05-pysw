@@ -14,6 +14,7 @@ import { AfiliadoService } from 'src/app/services/afiliado.service';
 })
 export class UsuarioComponent implements OnInit {
   _usuario: Usuario;
+  _auxiliarUsuario: Usuario;
   _usuarios: Array<Usuario>;
   _usuarioLogueado: Usuario;
   _afiliados: Array<Afiliado>;
@@ -25,14 +26,12 @@ export class UsuarioComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     this._usuario = new Usuario();
+    this._auxiliarUsuario = new Usuario();
     this._usuario.activo=true;
     this._usuarios = new Array<Usuario>();
     this._usuarioLogueado = loginService.userLogged;
     this.obtenerAfiliados();
     this.obtenerUsuarios();
-  }
-
-  ngOnInit(): void {
   }
 
   /* Obtiene una lista de usuarios */
@@ -129,6 +128,13 @@ export class UsuarioComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  public auxiliarUsuario(usuario) {
+    this._auxiliarUsuario = usuario;
+  }
+
+  ngOnInit(): void {
   }
 
 }
