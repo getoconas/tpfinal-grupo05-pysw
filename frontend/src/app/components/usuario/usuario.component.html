@@ -1,15 +1,15 @@
 <div class="container mt-3">
   <form class="card" #usuarioForm="ngForm" class="was-validated">
-      <div class="card-header text-center h3">Gesti&oacute;n de Usuarios</div>
-      <div class="card-body">
+    <div class="card-header text-center h3">Gesti&oacute;n de Usuarios</div>
+    <div class="card-body">
   
-          <!-- Usuario NUEVO-->
+      <!-- Usuario NUEVO-->
       <div class="form-group row">
         <label for="idusuario" class="col-md-4" >Usuario <i style="color:dodgerblue" tooltip="Para crear un usuario a partir de un Afiliado haga clic en el campo y para buscarlo ingrese parte del texto del afiliado o sino puede ingresar un nuevo usuario." placement="right" class="far fa-question-circle"></i></label> 
         <input id="idusuario"  list="afiliados" name="usuario" class="form-control form-control-sm col-md-8" required pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtUsuario="ngModel" [(ngModel)]="_usuario.usuario" placeholder="email@dominio.com" autocomplete="off">
-          <datalist id="afiliados">
-              <option *ngFor="let _afiliado of _afiliados" value="{{_afiliado.email}}">{{_afiliado.dni}} - {{_afiliado.apellido}}, {{_afiliado.nombres}}</option>                  
-          </datalist>
+        <datalist id="afiliados">
+          <option *ngFor="let _afiliado of _afiliados" value="{{_afiliado.email}}">{{_afiliado.dni}} - {{_afiliado.apellido}}, {{_afiliado.nombres}}</option>                  
+        </datalist>
         <div *ngIf="txtUsuario.invalid && (txtUsuario.dirty || txtUsuario.touched)" class="invalid-feedback">
           <div *ngIf="txtUsuario.errors.required">
             El campo Usuario es requerido
@@ -18,26 +18,26 @@
             El Usuario debe ser un email
           </div>
         </div>								  		
-    </div>
+      </div>
 
       <!-- Password -->
       <div class="form-group row">
-          <label for="idpassword" class="col-md-4">Contraseña</label>
-          <input id="idpassword" class="form-control form-control-sm col-md-8" required type="password" name="password" #txtPassword="ngModel" [(ngModel)]="_usuario.password"/>
-          <div *ngIf="txtPassword.invalid && (txtPassword.dirty || txtPassword.touched)" class="invalid-feedback">
-            <div *ngIf="txtPassword.errors.required">
-            El campo Contraseña es requerido
-            </div>
+        <label for="idpassword" class="col-md-4">Contraseña</label>
+        <input id="idpassword" class="form-control form-control-sm col-md-8" required type="password" name="password" #txtPassword="ngModel" [(ngModel)]="_usuario.password"/>
+        <div *ngIf="txtPassword.invalid && (txtPassword.dirty || txtPassword.touched)" class="invalid-feedback">
+          <div *ngIf="txtPassword.errors.required">
+          El campo Contraseña es requerido
           </div>
+        </div>
       </div>
 
       <!-- Perfil -->
       <div class="form-group row">
         <label for="idperfil" class="col-md-4">Perfil</label>
         <select id="idperfil" class="form-control form-control-sm col-md-8" required name="perfil" #txtPerfil="ngModel" [(ngModel)]="_usuario.perfil">
-           <option >Administrador</option>
-           <option >Administrativo</option>
-           <option >Socio</option>
+          <option >Administrador</option>
+          <option >Administrativo</option>
+          <option >Socio</option>
         </select>
         <div *ngIf="txtPerfil.invalid && (txtPerfil.dirty || txtPerfil.touched)" class="invalid-feedback">
           <div *ngIf="txtPerfil.errors.required">
@@ -48,14 +48,15 @@
     
       <!-- Activo -->
       <div class="form-group row">
-          <label for="idactivo" class="col-md-4">Activo</label>
-          <input id="idactivo" class="form-control form-control-sm col-md-8" type="checkbox" name="activo" [(ngModel)]="_usuario.activo"/> 
+        <label for="idactivo" class="col-md-4">Activo</label>
+        <input id="idactivo" class="form-control form-control-sm col-md-8" type="checkbox" name="activo" [(ngModel)]="_usuario.activo"/> 
       </div>
+
       <!-- Botones -->
       <div class="form-group text-center">
-          <button class="btn btn-success ml-2 mr-2" [disabled]="!usuarioForm.form.valid || editMode" (click)="agregarUsuario()"><i class="fas fa-save fal"></i> Guardar</button>
-          <button class="btn btn-secondary ml-2 mr-2" [disabled]="!editMode" (click)="modificarUsuario()" ><i class="fas fa-save fal"></i> Modificar</button>            
-          <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
+        <button class="btn btn-success ml-2 mr-2" [disabled]="!usuarioForm.form.valid || editMode" (click)="agregarUsuario()"><i class="fas fa-save fal"></i> Guardar</button>
+        <button class="btn btn-secondary ml-2 mr-2" [disabled]="!editMode" (click)="modificarUsuario()" ><i class="fas fa-save fal"></i> Modificar</button>            
+        <button class="btn btn-secondary ml-2 mr-2" (click)="limpiarCampos()" ><i class="fas fa-brush"></i> Limpiar</button>
       </div>
   </div>
   </form>
@@ -63,26 +64,48 @@
   <h2 class="text-center mt-3">Informaci&oacute;n de Usuarios</h2>
   <!-- Tabla -->
   <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Usuario</th>
-          <th scope="col">Contraseña</th>
-          <th scope="col">Activo</th>
-          <th scope="col">Perfil</th>
-          <th >Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let _usuario of _usuarios" >
-          <th>{{ _usuario.usuario }}</th>
-          <td>*</td>
-          <td><input type="checkbox" [checked]="_usuario.activo"/> </td>
-          <td>{{ _usuario.perfil }}</td>
-          <td> 
-            <button class="btn btn-primary" (click)="seleccionarUsuario(_usuario)" >Seleccionar</button>          
-            <button class="btn btn-danger" [disabled]="_usuarioLogueado.usuario==_usuario.usuario" (click)="eliminarUsuario(_usuario)" >Borrar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <thead>
+      <tr>
+        <th scope="col">Usuario</th>
+        <th scope="col">Contraseña</th>
+        <th scope="col">Activo</th>
+        <th scope="col">Perfil</th>
+        <th >Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let _usuario of _usuarios" >
+        <th>{{ _usuario.usuario }}</th>
+        <td>*</td>
+        <td><input type="checkbox" [checked]="_usuario.activo"/> </td>
+        <td>{{ _usuario.perfil }}</td>
+        <td> 
+          <button class="btn btn-primary" (click)="seleccionarUsuario(_usuario)">Seleccionar</button>
+
+          <!-- Eliminar -->
+          <button type="button" class="btn btn-danger" data-toggle="modal" [disabled]="_usuarioLogueado.usuario==_usuario.usuario" data-target="#eliminarModal" (click)="auxiliarUsuario(_usuario)"><i class="far fa-trash-alt"></i></button>
+          <!-- Eliminar Modal -->
+          <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="eliminarModalLabel">¿Desea eliminar este usuario?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h6>{{ _auxiliarUsuario.usuario }} - Tipo: {{ _auxiliarUsuario.perfil }}</h6>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="eliminarUsuario(_auxiliarUsuario)">Si</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

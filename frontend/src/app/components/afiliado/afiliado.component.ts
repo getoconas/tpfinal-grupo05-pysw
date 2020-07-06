@@ -3,11 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { Afiliado } from 'src/app/models/afiliado';
 import { Servicio } from 'src/app/models/servicio';
 import { Pago } from 'src/app/models/pago';
+import { Usuario } from 'src/app/models/usuario';
 // Services
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { LoginService } from 'src/app/services/login.service';
 import { PagoService } from 'src/app/services/pago.service';
 import { ServicioService } from 'src/app/services/servicio.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -23,6 +25,7 @@ export class AfiliadoComponent implements OnInit {
   _afiliado: Afiliado;
   _afiliadoAuxiliar: Afiliado;
   _afiliados: Array<Afiliado>;
+  _usuarios: Array<Usuario>;
   _pagos: Array<Pago>;
   _servicios: Array<Servicio>;
   _pagosPrint: Array<any>;
@@ -31,7 +34,7 @@ export class AfiliadoComponent implements OnInit {
   _dniModificarOriginal: number;
   _dniModificar: number;
 
-  constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _servicioService: ServicioService, private _toastr: ToastrService, private _router: Router, private _loginService: LoginService) {
+  constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _servicioService: ServicioService, private _toastr: ToastrService, private _router: Router, private _loginService: LoginService, private _usuarioService: UsuarioService) {
     // Validacion por ruta
     if (!_loginService.userLoggedIn) {
       this._router.navigateByUrl('/login');
@@ -40,11 +43,11 @@ export class AfiliadoComponent implements OnInit {
     this._afiliado = new Afiliado();
     this._afiliadoAuxiliar = new Afiliado();
     this._afiliados = new Array<Afiliado>();
-    this._pagosPrint = [];
     this._convertido = "";
     this.obtenerAfiliados();
     this.listarPagos();
     this.obtenerServicios();
+    this.obtenerUsuarios();
   }
 
   /* Obtiene una lista de afiliados */
@@ -152,6 +155,11 @@ export class AfiliadoComponent implements OnInit {
   public eliminarAfiliado(afiliado) {
     var _existePago = false;
     var _existeServicio = false;
+    var _existeUsuario = false;
+
+    console.log(afiliado._id);
+    console.log(afiliado.email);
+    console.log(this._usuarios);
 
     for (var i in this._pagos) {
       if (this._pagos[i].afiliado._id == afiliado._id) {
@@ -165,8 +173,33 @@ export class AfiliadoComponent implements OnInit {
         }
       }
     }
-    if (_existePago || _existeServicio) {
-      this._toastr.error("NO se puede eliminar el afiliado");
+    for (var l in this._usuarios) {
+      if (this._usuarios[l].usuario == afiliado.email) {
+        _existeUsuario = true;
+      }
+    }
+    this.existeRelacionConAfiliado(_existePago, _existeServicio, _existeUsuario, afiliado)
+  }
+
+  /* 
+    Muestra diferentes tipos de mensajes de acuerdo si el afiliado tiene pago, servicio y/o usuario
+    También llama al método de borrar un afiliado sino no cumple con las condiciones anteriores
+  */
+  public existeRelacionConAfiliado(_existePago, _existeServicio, _existeUsuario, afiliado) {
+    if (_existePago && _existeServicio && _existeUsuario) {
+      this._toastr.error("NO se puede eliminar el afiliado porque tiene pago realizado, servicio asignado y usuario creado");
+    } else if (_existePago && _existeServicio) {
+      this._toastr.error("NO se puede eliminar el afiliado porque tiene pago realizado y servicio asignado");
+    } else if (_existePago && _existeUsuario) {
+      this._toastr.error("NO se puede eliminar el afiliado porque tiene pago realizado y usuario creado");
+    } else if (_existeServicio && _existeUsuario) {
+      this._toastr.error("NO se puede eliminar el afiliado porque tiene servicio asignado y usuario creado");
+    } else if (_existePago) {
+      this._toastr.error("NO se puede eliminar el afiliado porque tiene pago realizado");
+    } else if (_existeServicio) {
+      this._toastr.error("NO se puede eliminar el afiliado porque tiene servicio asignado");
+    } else if (_existeUsuario) {
+      this._toastr.error("NO se puede eliminar el afiliado porque tiene usuario creado"); 
     } else {
       this.eliminarServiceAfiliado(afiliado);
     }
@@ -216,6 +249,20 @@ export class AfiliadoComponent implements OnInit {
       },
       (error)=>{
         console.log(error);
+      }
+    )
+  }
+
+  /* Obtiene lista de usuarios */
+  public obtenerUsuarios() {
+    this._usuarioService.getUsuarios().subscribe(
+      (result) => {
+        this._usuarios = new Array<Usuario>();
+        result.forEach(element => {
+          var _usu: Usuario = new Usuario();
+          Object.assign(_usu, element);
+          this._usuarios.push(_usu);
+        })
       }
     )
   }
