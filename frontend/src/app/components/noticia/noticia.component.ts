@@ -137,7 +137,7 @@ export class NoticiaComponent implements OnInit {
 
     this.mensaje = _noticia.titulo + ":  " + _noticia.descripcion + "  Escrito por:  " + _noticia.usuario.usuario;
     var apiMethod: ApiMethod = "post";
-    this.fb.api('/110749894034738/feed', apiMethod,
+    this.fb.api('/110749894034738/feed', apiMethod,  //id pagina de face
     {
       "message": this.mensaje,
       "access_token":"EAAC5pDAv8wABACpYqnMnrdUpxTnd3RITwpLjg7DcjLJXjNev1MVCxThuyw7YROFlL5h9dH0EJ4ldmtF2RFZChO607BZB262DZAMI0hlEHCC3RZCMwpUj6qxpOMzQTn7diiXMSTaHtZAU36tG5ePFIx4DsJqyplRZCpiYZBaAsfIltZCb3LPy2wetzvdI2gH3ZCb0ZD"
@@ -147,7 +147,7 @@ export class NoticiaComponent implements OnInit {
 
     iniciarFb(){
         let initParams: InitParams = {
-        appId: '204114834223872',
+        appId: '204114834223872',   //id de la app Obrasocial
         autoLogAppEvents : true,
         xfbml : true,
         version : 'v7.0'

@@ -9,7 +9,8 @@
         <input id="idusuario"  list="afiliados" name="usuario" class="form-control form-control-sm col-md-8" [disabled]="_usuarioLogueado.usuario==_usuario.usuario" required pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtUsuario="ngModel" [(ngModel)]="_usuario.usuario" placeholder="email@dominio.com" autocomplete="off">
         <datalist id="afiliados">
           <option *ngFor="let _afiliado of _afiliados" value="{{_afiliado.email}}">{{_afiliado.dni}} - {{_afiliado.apellido}}, {{_afiliado.nombres}}</option>                  
-        </datalist>
+        </datalist> 
+        <!--validaciones personalizadas-->
         <div *ngIf="txtUsuario.invalid && (txtUsuario.dirty || txtUsuario.touched)" class="invalid-feedback">
           <div *ngIf="txtUsuario.errors.required">
             El campo Usuario es requerido
