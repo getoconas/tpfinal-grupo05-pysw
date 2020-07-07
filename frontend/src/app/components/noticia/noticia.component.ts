@@ -137,7 +137,7 @@ export class NoticiaComponent implements OnInit {
     this.fb.api('/110749894034738/feed', apiMethod,
     {
       "message": this.mensaje,
-      "access_token":"EAAC5pDAv8wABADCkVwAO5xNHLEFTBPkQzdCp1cJJvHdC89XxjEJM9ZCYJuDCa1CgFKhHBgJ1J7yzWA0qozIRGn6DR2dYo5PchEgDoPXyxGUVXDaQOZCMSKJ1FaVLE3sn9esCiUZBg5VoFOR3A3fF1UmjE2CX5WHwzEAivGt2FBorj0Onr3udM5zShaAAigZD"
+      "access_token":"EAAC5pDAv8wABACpYqnMnrdUpxTnd3RITwpLjg7DcjLJXjNev1MVCxThuyw7YROFlL5h9dH0EJ4ldmtF2RFZChO607BZB262DZAMI0hlEHCC3RZCMwpUj6qxpOMzQTn7diiXMSTaHtZAU36tG5ePFIx4DsJqyplRZCpiYZBaAsfIltZCb3LPy2wetzvdI2gH3ZCb0ZD"
     });
     this.toastr.info('Noticia Posteada Exitosamente en Pagina de Facebook')
     }
