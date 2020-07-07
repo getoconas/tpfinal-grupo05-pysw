@@ -58,7 +58,6 @@ export class ServicioComponent implements OnInit {
         console.log(error);
       }
     )
-    console.log(this._servicio.afiliadosInsc);
   }
 
   /*asigna la imagen procesada y la asigna al servicio 
@@ -90,7 +89,6 @@ export class ServicioComponent implements OnInit {
   /* Agrega el nuevo servicio  */
   public agregarServicioService() {
     this._servicio.imagen = this._convertido;
-    console.log(this._servicio);
     this._servicioService.addServicio(this._servicio).subscribe(
       (result) => {
         this.obtenerServicios();
@@ -108,7 +106,6 @@ export class ServicioComponent implements OnInit {
   public limpiarCampos() {
     this.seleccion = false;
     this._servicio = new Servicio();
-    
   }
 
   /* Convierte una imagen a string */
@@ -129,7 +126,6 @@ export class ServicioComponent implements OnInit {
         this._servicioAuxiliar = new Servicio();
         this._convertido = "";
         this.toastr.info('Servicio Modificado Exitosamente');
-
       },
       (error)=>{
         console.log(error);
@@ -169,7 +165,7 @@ export class ServicioComponent implements OnInit {
 
   /*En caso de que se haya agregado un nuevo afiliado va a actualizar su lista para 
   permitirme agregar si asi fuere a un servicio */
-  refrescarAfiliados(){
+  refrescarAfiliados() {
     var afiliado:Afiliado = new Afiliado();
     this.afiliados = new Array<Afiliado>();
     this.afiliadoService.getAfiliados().subscribe(
@@ -184,7 +180,6 @@ export class ServicioComponent implements OnInit {
         console.log(error);
       }
     )
-
   }
 
   /*Controla que no hayan repetidos y Asigna el afiliado seleccionado 
@@ -212,35 +207,38 @@ export class ServicioComponent implements OnInit {
 
   /* Imprime una lista de afiliados en servicios */
   public imprimirServicios() {
-    this._servicioExtra = [];
-    for (var i in this._servicios) {
-      for (var j in this._servicios[i].afiliadosInsc) {
-        this._servicioExtra.push({ 
-          'nombre': this._servicios[i].nombre,
-          'dni': this._servicios[i].afiliadosInsc[j].dni,
-          'apellido': this._servicios[i].afiliadosInsc[j].apellido,
-          'nombreAfiliado': this._servicios[i].afiliadosInsc[j].nombres
-        });
+    if (this._servicios.length > 0) {
+      this._servicioExtra = [];
+      for (var i in this._servicios) {
+        for (var j in this._servicios[i].afiliadosInsc) {
+          this._servicioExtra.push({ 
+            'nombre': this._servicios[i].nombre,
+            'dni': this._servicios[i].afiliadosInsc[j].dni,
+            'apellido': this._servicios[i].afiliadosInsc[j].apellido,
+            'nombreAfiliado': this._servicios[i].afiliadosInsc[j].nombres
+          });
+        }
       }
+      printJS({
+        printable: this._servicioExtra, 
+        properties: [
+          { field: 'nombre', displayName: 'Servicio' },
+          { field: 'dni', displayName: 'DNI' },
+          { field: 'apellido', displayName: 'Apellido' },
+          { field: 'nombreAfiliado', displayName: 'Nombres' }
+        ],
+        header: '<h3 class="text-center">Listado de Servicios con Afiliados</h3>',
+        type: 'json'
+      });
+    } else {
+      this.toastr.error("No hay servicios disponibles para imprimir");
     }
-    printJS({
-      printable: this._servicioExtra, 
-      properties: [
-        { field: 'nombre', displayName: 'Servicio' },
-        { field: 'dni', displayName: 'DNI' },
-        { field: 'apellido', displayName: 'Apellido' },
-        { field: 'nombreAfiliado', displayName: 'Nombres' }
-      ],
-      header: '<h3 class="text-center">Listado de Servicios con Afiliados</h3>',
-      type: 'json'
-    });
   }
 
-  mostrarEstado(estado:Boolean){
-    if(estado==true){
+  mostrarEstado(estado:Boolean) {
+    if(estado == true) {
       return "Activo"
-    }
-    else{
+    } else {
       return "Inactivo"
     }
   }

@@ -54,20 +54,6 @@ export class AfiliadoComponent implements OnInit {
     this.obtenerUsuarios();
   }
 
-  /* Obtiene una lista de afiliados */
-  public obtenerAfiliados() {
-    this._afiliadoService.getAfiliados().subscribe(
-      (result) => {
-        this._afiliados = new Array<Afiliado>();
-        result.forEach(element => {
-          var _afi: Afiliado = new Afiliado();
-          Object.assign(_afi, element);
-          this._afiliados.push(_afi);
-        })
-      }
-    )
-  }
-
   /* Agrega un afiliado */
   public agregarAfiliado() {
     var _existeDni: boolean = false;
@@ -87,7 +73,7 @@ export class AfiliadoComponent implements OnInit {
   public agregarAfiliadoService(_afiliado) {
     this._afiliado.imagen = this._convertido;
     this._afiliadoService.addAfiliado(this._afiliado).subscribe(
-      (result) => {
+      (result) => { 
         this.obtenerAfiliados();
         this._convertido = "";
         this._toastr.success("Afiliado Agregado Correctamente");
@@ -111,26 +97,31 @@ export class AfiliadoComponent implements OnInit {
 
   /* Modifica un afiliado */
   public modificarAfiliado(afiliado) {
-    if (this._tieneUsuario) {
-      if (this._dniModificar == this._dniModificarOriginal) {
-        afiliado.dni = this._dniModificar;
-        this._usuario.usuario = afiliado.email;
-        this.validarImagen(afiliado);
-      } else {
-        var _existeDni: boolean = false;
-        for (var i in this._afiliados) {
-          if (this._afiliados[i].dni == this._dniModificar) {
-            _existeDni = true;
-          }
-        }
-        if (_existeDni) {
-          this._toastr.error("DNI repetido. No se pudo realizar la operación.");
-        } else {
-          this._usuario.usuario = afiliado.email;
-          afiliado.dni = this._dniModificar;
-          this.validarImagen(afiliado);
+    this.validarAfiliadoUsuario(afiliado);
+    if (this._dniModificar == this._dniModificarOriginal) {
+      afiliado.dni = this._dniModificar;
+      this.validarImagen(afiliado);
+    } else {
+      var _existeDni: boolean = false;
+      for (var i in this._afiliados) {
+        if (this._afiliados[i].dni == this._dniModificar) {
+          _existeDni = true;
         }
       }
+      if (_existeDni) {
+        this._toastr.error("DNI repetido. No se pudo realizar la operación.");
+      } else {
+        afiliado.dni = this._dniModificar;
+        this.validarImagen(afiliado);
+      }
+    }
+  }
+
+  /* Verifica si el afiliado tiene usuario */
+  public validarAfiliadoUsuario(afiliado) {
+    if (this._tieneUsuario) {
+      this._usuario.usuario = afiliado.email;
+      this.modificarUsuario();
     }
   }
 
@@ -140,7 +131,6 @@ export class AfiliadoComponent implements OnInit {
       if (this._usuarios[i].usuario == email) {
         this._usuario = this._usuarios[i];
         this._tieneUsuario = true;
-        console.log(this._usuario);
       }
     }
   }
@@ -149,10 +139,8 @@ export class AfiliadoComponent implements OnInit {
   public validarImagen(afiliado) {
     if (this._convertido != "") {
       afiliado.imagen = this._convertido
-      this.modificarUsuario();
       this.modificarAfiliadoService(afiliado);
     } else {
-      this.modificarUsuario();
       this.modificarAfiliadoService(afiliado);
     }
   }
@@ -241,6 +229,34 @@ export class AfiliadoComponent implements OnInit {
     )
   }
 
+  /* --- Inicio - Listas de Afiliados, Usuarios, Pagos y Servicios --- */
+  /* Obtiene una lista de afiliados */
+  public obtenerAfiliados() {
+    this._afiliadoService.getAfiliados().subscribe(
+      (result) => {
+        this._afiliados = new Array<Afiliado>();
+        result.forEach(element => {
+          var _afi: Afiliado = new Afiliado();
+          Object.assign(_afi, element);
+          this._afiliados.push(_afi);
+        })
+      }
+    )
+  }
+
+  /* Modifica un usuario */
+  public modificarUsuario(){
+    this._usuarioService.updateUsuario(this._usuario).subscribe(
+      (result) => {
+        this._usuario = new Usuario();
+        this.obtenerUsuarios();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   /* Obtiene lista de pagos */
   public listarPagos() {
     this._pagoService.getPagos().subscribe(
@@ -279,7 +295,6 @@ export class AfiliadoComponent implements OnInit {
   public obtenerUsuarios() {
     this._usuarioService.getUsuarios().subscribe(
       (result) => {
-        console.log(result);
         this._usuarios = new Array<Usuario>();
         result.forEach(element => {
           var _usu: Usuario = new Usuario();
@@ -289,19 +304,7 @@ export class AfiliadoComponent implements OnInit {
       }
     )
   }
-
-  /* Modifica un usuario */
-  public modificarUsuario(){
-    this._usuarioService.updateUsuario(this._usuario).subscribe(
-      (result) => {
-        this._usuario = new Usuario();
-        this.obtenerUsuarios();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+  /* --- Fin - Listas de Afiliados, Usuarios, Pagos y Servicios --- */
 
   /* Imprime un listado afiliados de acuerdo a los pagos realizados */
   public imprimirPagosPorAfiliado(afiliado) {
