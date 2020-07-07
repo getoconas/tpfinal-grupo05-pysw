@@ -24,12 +24,14 @@ export class AfiliadoComponent implements OnInit {
 
   _afiliado: Afiliado;
   _afiliadoAuxiliar: Afiliado;
+  _usuario: Usuario;
   _afiliados: Array<Afiliado>;
   _usuarios: Array<Usuario>;
   _pagos: Array<Pago>;
   _servicios: Array<Servicio>;
   _pagosPrint: Array<any>;
 
+  _tieneUsuario: boolean = false;
   _convertido: string;
   _dniModificarOriginal: number;
   _dniModificar: number;
@@ -43,6 +45,7 @@ export class AfiliadoComponent implements OnInit {
     
     this._afiliado = new Afiliado();
     this._afiliadoAuxiliar = new Afiliado();
+    this._usuario = new Usuario();
     this._afiliados = new Array<Afiliado>();
     this._convertido = "";
     this.obtenerAfiliados();
@@ -108,21 +111,36 @@ export class AfiliadoComponent implements OnInit {
 
   /* Modifica un afiliado */
   public modificarAfiliado(afiliado) {
-    if (this._dniModificar == this._dniModificarOriginal) {
-      afiliado.dni = this._dniModificar;
-      this.validarImagen(afiliado);
-    } else {
-      var _existeDni: boolean = false;
-      for (var i in this._afiliados) {
-        if (this._afiliados[i].dni == this._dniModificar) {
-          _existeDni = true;
+    if (this._tieneUsuario) {
+      if (this._dniModificar == this._dniModificarOriginal) {
+        afiliado.dni = this._dniModificar;
+        this._usuario.usuario = afiliado.email;
+        this.validarImagen(afiliado);
+      } else {
+        var _existeDni: boolean = false;
+        for (var i in this._afiliados) {
+          if (this._afiliados[i].dni == this._dniModificar) {
+            _existeDni = true;
+          }
+        }
+        if (_existeDni) {
+          this._toastr.error("DNI repetido. No se pudo realizar la operación.");
+        } else {
+          this._usuario.usuario = afiliado.email;
+          afiliado.dni = this._dniModificar;
+          this.validarImagen(afiliado);
         }
       }
-      if (_existeDni) {
-        this._toastr.error("DNI repetido. No se pudo realizar la operación.");
-      } else {
-        afiliado.dni = this._dniModificar;
-        this.validarImagen(afiliado);
+    }
+  }
+
+  /* Busca si el afiliado tiene usuario */
+  public buscarUsuario(email) {
+    for (var i in this._usuarios) {
+      if (this._usuarios[i].usuario == email) {
+        this._usuario = this._usuarios[i];
+        this._tieneUsuario = true;
+        console.log(this._usuario);
       }
     }
   }
@@ -131,8 +149,10 @@ export class AfiliadoComponent implements OnInit {
   public validarImagen(afiliado) {
     if (this._convertido != "") {
       afiliado.imagen = this._convertido
+      this.modificarUsuario();
       this.modificarAfiliadoService(afiliado);
     } else {
+      this.modificarUsuario();
       this.modificarAfiliadoService(afiliado);
     }
   }
@@ -145,6 +165,7 @@ export class AfiliadoComponent implements OnInit {
         this._afiliadoAuxiliar = new Afiliado();
         this._convertido = "";
         this._toastr.info("Afiliado Modificado Correctamente");
+        this.limpiarCampos();
       },
       (error) => {
         console.log(error);
@@ -258,6 +279,7 @@ export class AfiliadoComponent implements OnInit {
   public obtenerUsuarios() {
     this._usuarioService.getUsuarios().subscribe(
       (result) => {
+        console.log(result);
         this._usuarios = new Array<Usuario>();
         result.forEach(element => {
           var _usu: Usuario = new Usuario();
@@ -266,6 +288,19 @@ export class AfiliadoComponent implements OnInit {
         })
       }
     )
+  }
+
+  /* Modifica un usuario */
+  public modificarUsuario(){
+    this._usuarioService.updateUsuario(this._usuario).subscribe(
+      (result) => {
+        this._usuario = new Usuario();
+        this.obtenerUsuarios();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   /* Imprime un listado afiliados de acuerdo a los pagos realizados */
@@ -319,6 +354,7 @@ export class AfiliadoComponent implements OnInit {
     this._dniModificarOriginal = afiliado.dni;
     this._dniModificar = afiliado.dni;
     this._afiliadoAuxiliar = afiliado;
+    this.buscarUsuario(afiliado.email);
   }
 
   ngOnInit(): void {
