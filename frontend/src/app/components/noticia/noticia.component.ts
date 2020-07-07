@@ -103,7 +103,10 @@ export class NoticiaComponent implements OnInit {
 
   public modificarNoticia(){
     if (this._convertido != "") {
-      this._noticia.imagen = this._convertido;}
+      this._noticia.imagen = this._convertido;
+    }
+      this._noticia.usuario = new Usuario();
+      this._noticia.usuario._id = this.loginService.userLogged._id;
    this._noticiaService.updateNoticia(this._noticia).subscribe(
       (result)=>{
         this.obtenerNoticias();

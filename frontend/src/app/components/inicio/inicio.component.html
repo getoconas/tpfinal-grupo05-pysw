@@ -26,8 +26,10 @@
                       <div class="card-block" >
                       <h5 class="card-title" style="font-family: 'Anton', sans-serif">{{_noticia.titulo}}<hr></h5>
                       <p class="card-text" >{{_noticia.descripcion}}</p>
-                      <p class="card-text"><small class="text-muted">{{ _noticia.fecha | date:"dd-MM-yyyy" }}</small></p>
-                      </div>
+                      <p class="card-text"><small class="text-muted">Publicado el: {{ _noticia.fecha | date:"dd/MM/yyyy HH:mm" }}hs.</small>
+                      <br><small class="text-muted">Por: {{ _noticia.usuario.usuario }}</small>
+                      </p>  
+                    </div>
                   </div>
                 </div>
               </div>
@@ -39,6 +41,3 @@
   <br><br>
   <br><br>
 </div>
-
-
-
