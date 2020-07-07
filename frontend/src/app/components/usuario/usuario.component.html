@@ -6,7 +6,7 @@
       <!-- Usuario NUEVO-->
       <div class="form-group row">
         <label for="idusuario" class="col-md-4" >Usuario <i style="color:dodgerblue" tooltip="Para crear un usuario a partir de un Afiliado haga clic en el campo y para buscarlo ingrese parte del texto del afiliado o sino puede ingresar un nuevo usuario." placement="right" class="far fa-question-circle"></i></label> 
-        <input id="idusuario"  list="afiliados" name="usuario" class="form-control form-control-sm col-md-8" required pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtUsuario="ngModel" [(ngModel)]="_usuario.usuario" placeholder="email@dominio.com" autocomplete="off">
+        <input id="idusuario"  list="afiliados" name="usuario" class="form-control form-control-sm col-md-8" [disabled]="_usuarioLogueado.usuario==_usuario.usuario" required pattern= "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtUsuario="ngModel" [(ngModel)]="_usuario.usuario" placeholder="email@dominio.com" autocomplete="off">
         <datalist id="afiliados">
           <option *ngFor="let _afiliado of _afiliados" value="{{_afiliado.email}}">{{_afiliado.dni}} - {{_afiliado.apellido}}, {{_afiliado.nombres}}</option>                  
         </datalist>
@@ -77,7 +77,7 @@
       <tr *ngFor="let _usuario of _usuarios" >
         <th>{{ _usuario.usuario }}</th>
         <td>*</td>
-        <td><input type="checkbox" [checked]="_usuario.activo"/> </td>
+        <td><input type="checkbox" onclick="return false;" [checked]="_usuario.activo"/> </td>
         <td>{{ _usuario.perfil }}</td>
         <td> 
           <button class="btn btn-primary" (click)="seleccionarUsuario(_usuario)">Seleccionar</button>
