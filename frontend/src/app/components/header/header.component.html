@@ -41,7 +41,7 @@
   </nav>
   <div>
     <div class="bg-dark col-12 text-center">
-      <a *ngIf="!loginService.userLoggedIn" [routerLink]="['login']" > <button class="registrar ">Registrarse(Login)</button> </a>
+      <a *ngIf="!loginService.userLoggedIn" [routerLink]="['login']" > <button class="registrar ">Iniciar sesión(Login)</button> </a>
     </div>
     <div class="bg-dark col-12 text-center">  
       <a *ngIf="loginService.userLoggedIn" [routerLink]="['login']" (click)="logout()" class="registrar">Nombre de Usuario: {{loginService.userLogged.usuario}} (logout)
