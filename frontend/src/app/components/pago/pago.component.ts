@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AfiliadoService } from 'src/app/services/afiliado.service';
-import { Afiliado } from 'src/app/models/afiliado';
+// Models
 import { Pago } from 'src/app/models/pago';
+import { Afiliado } from 'src/app/models/afiliado';
+
+// Services
+import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { PagoService } from 'src/app/services/pago.service';
+import { LoginService } from 'src/app/services/login.service';
+
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/services/login.service';
+import * as printJS from 'print-js';
 
 @Component({
   selector: 'app-pago',
@@ -32,11 +37,10 @@ export class PagoComponent implements OnInit {
   }
 
   /* Agregar Pago */
-  public agregarPago() {
+  public agregarPago(contentPrint) {
     var _existePago: boolean = false;
     for (var i in this._pagos) {
       var id: any = this._pago.afiliado;
-      //console.log(id);
       if (this._pagos[i].afiliado._id == id && this._pagos[i].mes == this._pago.mes && this._pagos[i].anio == this._pago.anio) {
         _existePago = true;
       }
@@ -44,23 +48,32 @@ export class PagoComponent implements OnInit {
     if (_existePago) {
       this._toastr.error("Ya existe pago realizado");
     } else {
-      this.agregarPagoService();
+      this.agregarPagoService(contentPrint);
     }
   }
 
   /* Service de Agregar Pago */
-  public agregarPagoService() {
+  public agregarPagoService(contentPrint) {
     this._pago.fecha = new Date();
     this._pagoService.addPago(this._pago).subscribe(
       (result) => {
         this.listarPagos();
         this.limpiarPago();
         this._toastr.success("Pago Realizado Correctamente");
+        this.imprimirComprobantePago(contentPrint);
       },
       (error) => {
         console.log(error);
       }
     )
+  }
+
+  public imprimirComprobantePago(contentPrint) {
+    printJS({
+      printable: contentPrint, 
+      type: 'html',
+      header: '<h3 class="text-center">Comprobante de Pago</h3>'
+    });
   }
 
   /* Obtiene lista de afiliados */

@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <form class="card" #pagoForm="ngForm" class="was-validated">
     <div class="card-header text-center h3">Gesti&oacute;n de Pagos</div>
-    <div class="card-body">
+    <div class="card-body" id="printJS-form">
       <!-- Afiliado -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">Afiliado</label>
@@ -12,7 +12,7 @@
       </div>
       <!-- Monto -->
       <div class="row form-group">
-        <label class="col-sm-12 col-md-4">Monto</label>
+        <label class="col-sm-12 col-md-4">Monto - $</label>
         <input class="form-control col-sm-12 col-md-8" type="text" name="txtMonto" [(ngModel)]="_pago.monto" required pattern="(^[1-9][0-9]*.[0-9][0-9]|^[1-9][0-9]*$|^[1-9][0-9]*.[0-9])" #txtMonto="ngModel" />
         <div *ngIf="txtMonto.invalid && (txtMonto.dirty || txtMonto.touched)" class="invalid-feedback">
           <div *ngIf="txtMonto.errors.required">
@@ -57,9 +57,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="card-footer">
       <!-- Botones -->
       <div class="form-group text-center">
-        <button type="button" class="btn btn-success" [disabled]="!pagoForm.form.valid" (click)="agregarPago()"><i class="fas fa-save fal"></i>&nbsp;Agregar Pago</button>
+        <button type="button" class="btn btn-success" [disabled]="!pagoForm.form.valid" (click)="agregarPago('printJS-form')"><i class="fas fa-save fal"></i>&nbsp;Agregar Pago</button>
       </div>
     </div>
   </form>
