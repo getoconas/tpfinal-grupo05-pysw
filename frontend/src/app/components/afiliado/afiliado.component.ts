@@ -33,6 +33,7 @@ export class AfiliadoComponent implements OnInit {
   _convertido: string;
   _dniModificarOriginal: number;
   _dniModificar: number;
+  _correoModificar: string;
 
   constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _servicioService: ServicioService, private _toastr: ToastrService, private _router: Router, private _loginService: LoginService, private _usuarioService: UsuarioService) {
     // Validacion por ruta

@@ -80,9 +80,7 @@
           <img  src="{{ _servicio.imagen }}" alt="" width="50px" height="50px">          
         </div>
         <div class="col-sm-12 col-md-7">
-        <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64
-          (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel"
-          [(ngModel)]="_convertido"/>
+        <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel" [(ngModel)]="_convertido" accept="image/x-png,image/gif,image/jpeg" />
         </div>        
         
         <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="invalid-feedback">
@@ -95,8 +93,8 @@
       <!-- Activo -->
       <div class="form-group row">
         <label class="col-sm-12 col-md-4" for="idoption">Estado</label>
-        <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption"  [(ngModel)]="_servicio.activo" value="true"> Si
-        <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption"  [(ngModel)]="_servicio.activo" value="false"> No
+        <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption" [(ngModel)]="_servicio.activo" value="true"> Si
+        <input type="radio" class="form-control form-control-sm col-md-2" name="option" #option="ngModel" id="idoption" [(ngModel)]="_servicio.activo" value="false"> No
       </div>
 
         <!-- Botones -->

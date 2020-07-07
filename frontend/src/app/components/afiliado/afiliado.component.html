@@ -40,7 +40,7 @@
       <div class="row form-group">
         <label class="col-sm-12 col-md-4">DNI</label>
         <input class="form-control col-sm-12 col-md-8" type="text" name="txtDni" required minlength="7"
-          pattern="[0-9]{7,20}" #txtDni="ngModel" [(ngModel)]="_afiliado.dni" />
+          pattern="[0-9]{7,9}" #txtDni="ngModel" [(ngModel)]="_afiliado.dni" />
         <div *ngIf="txtDni.invalid && (txtDni.dirty || txtDni.touched)" class="invalid-feedback">
           <div *ngIf="txtDni.errors.required">
             El campo DNI es requerido
@@ -71,7 +71,7 @@
       <!-- Imagen -->
       <div class="row form-group">
         <label class="col-sm-12 col-md-4" for="">Imagen</label>
-        <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel" [(ngModel)]="_convertido" />
+        <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" required #txtImagen="ngModel" [(ngModel)]="_convertido" accept="image/x-png,image/gif,image/jpeg" />
         <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="invalid-feedback">
           <div *ngIf="txtImagen.errors.required">
             El campo Imagen es requerido
@@ -196,7 +196,7 @@
                     <!-- Email -->
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4" for="">Email</label>
-                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtEmail="ngModel" [(ngModel)]="_afiliadoAuxiliar.email" />
+                      <input class="form-control col-sm-12 col-md-8" type="text" name="txtEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" #txtEmail="ngModel" [(ngModel)]="_afiliadoAuxiliar.email"  /> <!-- _correoModificar -->
                       <div *ngIf="txtEmail.invalid && (txtEmail.dirty || txtEmail.touched)"class="invalid-feedback">
                         <div *ngIf="txtEmail.errors.required">
                           El campo Email es requerido
@@ -210,7 +210,7 @@
                     <!-- Imagen -->
                     <div class="row form-group">
                       <label class="col-sm-12 col-md-4" for="">Imagen</label>
-                      <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" #txtImagen="ngModel" [(ngModel)]="_convertido" />
+                      <input class="form-control col-sm-12 col-md-8" type="file" alife-file-to-base64 (onFileChanged)="convertirArchivo($event)" name="txtImagen" #txtImagen="ngModel" [(ngModel)]="_convertido" accept="image/x-png,image/gif,image/jpeg" />
                       <div *ngIf="txtImagen.invalid && (txtImagen.dirty || txtImagen.touched)" class="invalid-feedback">
                         <div *ngIf="txtImagen.errors.required">
                           El campo Imagen es requerido
