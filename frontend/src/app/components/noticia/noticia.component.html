@@ -28,7 +28,7 @@
         <!-- Fecha -->
       <div class="form-group row">
         <label for="idfecha" class="col-md-4">Fecha</label>
-        <input id="idfecha" class="form-control form-control-sm col-md-8" required           
+        <input id="idfecha" class="form-control form-control-sm col-md-8" required [min]="hoy"       
         type="datetime-local" name="fecha" #txtFecha="ngModel" [(ngModel)]="_noticia.fecha"/>
         <div *ngIf="txtFecha.invalid && (txtFecha.dirty || txtFecha.touched)" class="invalid-feedback">
           <div *ngIf="txtFecha.errors.required">

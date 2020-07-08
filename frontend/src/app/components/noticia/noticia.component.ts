@@ -19,6 +19,7 @@ export class NoticiaComponent implements OnInit {
   editMode:boolean=false;
   _convertido: string;
   mensaje:string;
+  hoy : string;
   _auxNoticia:Noticia=new Noticia();
 
   constructor(private _noticiaService: NoticiaService, private toastr:ToastrService, private router:Router, private loginService: LoginService, private fb: FacebookService) { 
@@ -30,12 +31,16 @@ export class NoticiaComponent implements OnInit {
     this._noticia.vigente=true;
     this._noticias = new Array<Noticia>();
     this._convertido="";
+    this.hoy = this.getFechaMin();
+    console.log(this.hoy);
     this.iniciarFb();
     this.obtenerNoticias();
   }
 
   ngOnInit(): void {
   }
+
+
   public obtenerNoticias() {
     this._noticiaService.getNoticias().subscribe(
       (result) => {
@@ -157,4 +162,14 @@ export class NoticiaComponent implements OnInit {
       mostrarfecha(){
         console.log(this._noticia.fecha);
       }
+
+      //armo la fecha de hoy en el formato que espera el atributo min del imput fecha(yyyy-MM-ddT00:00)
+      getFechaMin(){
+        const hoy = new Date();
+        const day = hoy.getDate().toString().padStart(2, '0');
+        const month = (hoy.getMonth() + 1).toString().padStart(2, '0');
+        const year = hoy.getFullYear().toString();
+    
+        return year + "-"+ month + "-" + day + "T00:00";
+    }
 }
