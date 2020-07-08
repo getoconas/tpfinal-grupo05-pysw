@@ -120,8 +120,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let _afiliado of mf.data ">
-          <td>{{ _afiliado.apellido }}</td>
-          <td>{{ _afiliado.nombres }}</td>
+          <td>{{ _afiliado.apellido | uppercase }}</td>
+          <td>{{ _afiliado.nombres | uppercase }}</td>
           <td>{{ _afiliado.dni }}</td>
           <td>{{ _afiliado.email }}</td>
           <td><img src="{{ _afiliado.imagen }}" alt="" width="50px" height="50px"></td>

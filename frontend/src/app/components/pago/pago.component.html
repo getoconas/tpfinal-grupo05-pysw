@@ -80,7 +80,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let pago of mf.data">
-          <td>{{ pago.afiliado.dni }} - {{ pago.afiliado.apellido }}, {{ pago.afiliado.nombres }}</td>
+          <td>{{ pago.afiliado.dni }} - {{ pago.afiliado.apellido | uppercase }}, {{ pago.afiliado.nombres | uppercase }}</td>
           <td>{{ pago.fecha | date:"dd-MM-yyyy" }}</td>
           <td>{{ pago.monto }}</td>
           <td>{{ pago.mes }}</td>
