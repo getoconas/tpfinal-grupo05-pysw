@@ -17,7 +17,7 @@ export class NovedadComponent implements OnInit {
   _novedades: Array<Novedad>;
   primeringreso: boolean = true;
 
-  constructor( private _novedadService: NovedadService, private toastr:ToastrService, private router:Router, public loginService: LoginService) {
+  constructor(private _novedadService: NovedadService, private _toastr: ToastrService, private router:Router, public loginService: LoginService) {
     //validacion por ruta
     if (!loginService.userLoggedIn) {
       this.router.navigateByUrl('/login');
@@ -34,11 +34,9 @@ export class NovedadComponent implements OnInit {
   obtenerNovedades(){
     this._novedadService.getNovedades().subscribe(
       (result) => {
-        console.log(result);
         this._novedades = new Array<Novedad>();
         result.forEach(element => {
           var _nov: Novedad = new Novedad();
-          console.log(element);
           Object.assign(_nov, element);
           this._novedades.push(_nov);
         })
@@ -48,24 +46,18 @@ export class NovedadComponent implements OnInit {
 
   public agregarNovedad() {
     this._novedad.estado = false;
-    //if(this.primeringreso==true){
-      this._novedad.usuario = new Usuario();
-      this._novedad.usuario._id= this.loginService.userLogged._id; //captura el perfil del usuario logueado
-      //this.primeringreso = false;
-    //}
-    //if(this.primeringreso==false){
-      this._novedadService.addNovedad(this._novedad).subscribe(
-        (result) => {
-          this.obtenerNovedades();
-          this.toastr.success('Novedad Agregada Exitosamente');
-          this.limpiarCampos();
-        },
-        (error) => {
-          console.log(error);
-          }
-        )    
-    //}
-     
+    this._novedad.usuario = new Usuario();
+    this._novedad.usuario._id= this.loginService.userLogged._id; //captura el perfil del usuario logueado
+    this._novedadService.addNovedad(this._novedad).subscribe(
+      (result) => {
+        this.obtenerNovedades();
+        this.msgSuccess('Enviada correctamente');
+        this.limpiarCampos();
+      },
+      (error) => {
+        console.log(error);
+      }
+    ) 
   }
 
   public limpiarCampos() {
@@ -82,7 +74,7 @@ export class NovedadComponent implements OnInit {
     this._novedadService.deleteNovedad(novedad).subscribe(
       (result)=>{
         this.obtenerNovedades();
-        this.toastr.info('Novedad Eliminada Exitosamente');
+        this.msgInfo('Eliminada correctamente.');
       }, 
       (error)=>{
         console.log(error);
@@ -90,12 +82,11 @@ export class NovedadComponent implements OnInit {
     );
   }
 
-
   public modificarNovedad(novedad:Novedad){
    this._novedadService.updateNovedad(novedad).subscribe(
       (result)=>{
         this.obtenerNovedades();
-        this.toastr.success('Estado Actualizado Exitosamente');
+        this.msgInfo('Actualizada correctamente.');
       },
       (error)=>{
         console.log(error);
@@ -112,6 +103,19 @@ export class NovedadComponent implements OnInit {
       return "Pendiente"
     }
   }
+
+  /* --- Inicio - Toastr - Mensajes que se muestran en pantalla ---*/
+  private msgSuccess(_msg) {
+    this._toastr.success('Novedad: ' + _msg, 'Éxito');
+  }
   
+  private msgError(_msg) {
+    this._toastr.error('Novedad: ' + _msg, 'Error');
+  }
+
+  private msgInfo(_msg) {
+    this._toastr.info('Novedad: ' + _msg, 'Info');
+  }  
+  /* --- Fin - Toastr - Mensajes que se muestran en pantalla ---*/
 
 }

@@ -199,7 +199,7 @@ export class AfiliadoComponent implements OnInit {
     Muestra diferentes tipos de mensajes de acuerdo si el afiliado tiene pago, servicio y/o usuario
     También llama al método de borrar un afiliado sino no cumple con las condiciones anteriores
   */
- public existeRelacionConAfiliado(_existePago, _existeServicio, _existeUsuario, afiliado) {
+  public existeRelacionConAfiliado(_existePago, _existeServicio, _existeUsuario, afiliado) {
   if (_existePago && _existeServicio && _existeUsuario) {
     this.msgError('Posee pago, servicio y usuario.');
   } else if (_existePago && _existeServicio) {
@@ -217,7 +217,7 @@ export class AfiliadoComponent implements OnInit {
   } else {
     this.eliminarServiceAfiliado(afiliado);
   }
-}
+  }
 
   /* Modifica un usuario */
   public modificarUsuario(){
@@ -312,7 +312,7 @@ export class AfiliadoComponent implements OnInit {
     if (this._pagosPrint.length > 0) {
       this.imprimirPagosPrint(afiliado.apellido, afiliado.nombres, afiliado.dni);
     } else {
-      this.msgError('No tiene pagos realizados');
+      this.msgError('No tiene pagos realizados.');
     }
   }
 

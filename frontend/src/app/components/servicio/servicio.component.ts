@@ -27,7 +27,7 @@ export class ServicioComponent implements OnInit {
   seleccion:boolean = false;
   
 
-  constructor(private _servicioService: ServicioService,private toastr:ToastrService,private afiliadoService: AfiliadoService, private router:Router, private loginService: LoginService) { 
+  constructor(private _servicioService: ServicioService, private _toastr: ToastrService, private afiliadoService: AfiliadoService, private router:Router, private loginService: LoginService) { 
      //validacion por ruta
      if (!loginService.userLoggedIn) {
       this.router.navigateByUrl('/login');
@@ -81,7 +81,7 @@ export class ServicioComponent implements OnInit {
       }
     }
     if (_banderaControl) {
-      this.toastr.error("Nombre del servicio repetido");
+      this.msgError('El servicio ingresado ya existe.');
     } else {
       this.agregarServicioService(); 
     }
@@ -94,7 +94,7 @@ export class ServicioComponent implements OnInit {
       (result) => {
         this.obtenerServicios();
         this._convertido = "";
-        this.toastr.success('Servicio Agregado Correctamente');
+        this.msgSuccess('Agregado correctamente.');
       },
       (error) => {
         console.log(error);
@@ -126,7 +126,7 @@ export class ServicioComponent implements OnInit {
         this.obtenerServicios();
         this._servicioAuxiliar = new Servicio();
         this._convertido = "";
-        this.toastr.info('Servicio Modificado Exitosamente');
+        this.msgInfo('Modificado correctamente.');
       },
       (error)=>{
         console.log(error);
@@ -141,16 +141,15 @@ export class ServicioComponent implements OnInit {
       this._servicioService.deleteServicio(servicio._id).subscribe(
         (result) => {
           this.obtenerServicios();
-          this.toastr.info('Servicio Eliminado Correctamente');
+          this.msgInfo('Eliminado correctamente.');
         },
         (error) => {
           console.log(error);
         }
       )
     } else {
-      this.toastr.error('No se puede eliminar porque el servicio esta activo');
+      this.msgError('Existe servicio activo.');
     }
-    
   }
 
   public auxiliarServicio(servicio) {
@@ -193,10 +192,10 @@ export class ServicioComponent implements OnInit {
       }
     }
     if (_banderaControl) {
-      this.toastr.error("El afiliado ya cuenta con el servicio");
+      this.msgError('El afiliado ya cuenta con el servicio.');
     } else {
       this._servicio.afiliadosInsc.push(this.afiliadoaux);
-      this.toastr.info("Haga click en *Modificar para registrar los nuevos afiliados al servicio");     
+      this.msgInfo('Haga click en *Modificar para registrar los nuevos afiliados al servicio.');    
       this.afiliadoaux = new Afiliado();
     }
   }
@@ -209,18 +208,17 @@ export class ServicioComponent implements OnInit {
   public imprimirServicio(servicio: Servicio) {
     this._afiliadosPrint = [];
     for (var i in servicio.afiliadosInsc) {      
-        this._afiliadosPrint.push({
-          'apellido': servicio.afiliadosInsc[i].apellido,
-          'nombres': servicio.afiliadosInsc[i].nombres,
-          'dni': servicio.afiliadosInsc[i].dni,
-          'telefono': servicio.afiliadosInsc[i].telefono
-        });
-      
+      this._afiliadosPrint.push({
+        'apellido': servicio.afiliadosInsc[i].apellido,
+        'nombres': servicio.afiliadosInsc[i].nombres,
+        'dni': servicio.afiliadosInsc[i].dni,
+        'telefono': servicio.afiliadosInsc[i].telefono
+      });
     }
     if (this._afiliadosPrint.length > 0) {
       this.imprimirAfiliadosPrint(servicio.nombre);
     } else {
-      this.toastr.error("El servicio no tiene afiliados");
+      this.msgError('No tiene afiliados asignados.');
     }
   }
 
@@ -264,7 +262,7 @@ export class ServicioComponent implements OnInit {
         type: 'json'
       });
     } else {
-      this.toastr.error("No hay servicios disponibles para imprimir");
+      this.msgError('No posee servicios para imprimir.');
     }
   }
 
@@ -275,6 +273,20 @@ export class ServicioComponent implements OnInit {
       return "Inactivo"
     }
   }
+
+  /* --- Inicio - Toastr - Mensajes que se muestran en pantalla ---*/
+  private msgSuccess(_msg) {
+    this._toastr.success('Servicio: ' + _msg, 'Éxito');
+  }
+  
+  private msgError(_msg) {
+    this._toastr.error('Servicio: ' + _msg, 'Error');
+  }
+
+  private msgInfo(_msg) {
+    this._toastr.info('Servicio: ' + _msg, 'Info');
+  }  
+  /* --- Fin - Toastr - Mensajes que se muestran en pantalla ---*/
 
   ngOnInit(): void {
   }
