@@ -32,6 +32,8 @@ export class AfiliadoComponent implements OnInit {
   _pagosPrint: Array<any>;
 
   _tieneUsuario: boolean = false;
+  _existeDni: boolean = false;
+
   _convertido: string;
   _dniModificarOriginal: number;
   _dniModificar: number;
@@ -54,16 +56,12 @@ export class AfiliadoComponent implements OnInit {
     this.obtenerUsuarios();
   }
 
+  /* --- Inicio - Metodos de ABM --- */
   /* Agrega un afiliado */
   public agregarAfiliado() {
-    var _existeDni: boolean = false;
-    for (var i in this._afiliados) {
-      if (this._afiliados[i].dni == this._afiliado.dni) {
-        _existeDni = true;
-      }
-    }
-    if (_existeDni) {
-      this._toastr.error("DNI repetido");
+    this.existeDniIngresado(this._afiliado.dni);
+    if (this._existeDni) {
+      this.msgError('El DNI ingresado ya esta existe.');
     } else {
       this.agregarAfiliadoService(this._afiliado);
     }
@@ -76,23 +74,13 @@ export class AfiliadoComponent implements OnInit {
       (result) => { 
         this.obtenerAfiliados();
         this._convertido = "";
-        this._toastr.success("Afiliado Agregado Correctamente");
+        this.msgSuccess('Agregado correctamente.');
+        this.limpiarCampos();
       },
       (error) => {
         console.log(error);
       }
     );
-    this.limpiarCampos();
-  }
-
-  /* Convierte una imagen a string */
-  public convertirArchivo(file) {
-    if (file != null) {
-      console.log("Archivo cambiado..", file);
-      this._convertido = file[0].base64;
-    } else {
-      console.log("error");
-    }
   }
 
   /* Modifica un afiliado */
@@ -102,20 +90,72 @@ export class AfiliadoComponent implements OnInit {
       afiliado.dni = this._dniModificar;
       this.validarImagen(afiliado);
     } else {
-      var _existeDni: boolean = false;
-      for (var i in this._afiliados) {
-        if (this._afiliados[i].dni == this._dniModificar) {
-          _existeDni = true;
-        }
-      }
-      if (_existeDni) {
-        this._toastr.error("DNI repetido. No se pudo realizar la operación.");
+      this.existeDniIngresado(this._dniModificar);
+      if (this._existeDni) {
+        this.msgError('El DNI ingresado ya esta existe.');
       } else {
         afiliado.dni = this._dniModificar;
         this.validarImagen(afiliado);
       }
     }
   }
+
+  /* Service de Modificar Afiliado */
+  public modificarAfiliadoService(afiliado) {
+    this._afiliadoService.updateAfiliado(afiliado).subscribe(
+      (result) => {
+        this.obtenerAfiliados();
+        this._afiliadoAuxiliar = new Afiliado();
+        this._convertido = "";
+        this.msgInfo('Modificado correctamente.');
+        this.limpiarCampos();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  
+  /* Elimina un afiliado */
+  public eliminarAfiliado(afiliado) {
+    var _existePago: boolean = false;
+    var _existeServicio: boolean = false;
+    var _existeUsuario: boolean = false;
+
+    for (var i in this._pagos) {
+      if (this._pagos[i].afiliado._id == afiliado._id) {
+        _existePago = true;
+      }
+    }
+    for(var j in this._servicios) {
+      for (var k in this._servicios[j].afiliadosInsc) {
+        if (this._servicios[j].afiliadosInsc[k]._id == afiliado._id) {
+          _existeServicio = true;
+        }
+      }
+    }
+    for (var l in this._usuarios) {
+      if (this._usuarios[l].usuario == afiliado.email) {
+        _existeUsuario = true;
+      }
+    }
+    this.existeRelacionConAfiliado(_existePago, _existeServicio, _existeUsuario, afiliado)
+  }
+
+  /* Service de Eliminar Afiliado */
+  public eliminarServiceAfiliado(afiliado) {
+    this._afiliadoService.deleteAfiliado(afiliado._id).subscribe(
+      (result) => {
+        this.obtenerAfiliados();
+        this._afiliadoAuxiliar = new Afiliado();
+        this.msgInfo('Eliminado correctamente');
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+  /* --- Fin - Metodos de ABM --- */
 
   /* Verifica si el afiliado tiene usuario */
   public validarAfiliadoUsuario(afiliado) {
@@ -145,88 +185,51 @@ export class AfiliadoComponent implements OnInit {
     }
   }
 
-  /* Service de Modificar Afiliado */
-  public modificarAfiliadoService(afiliado) {
-    this._afiliadoService.updateAfiliado(afiliado).subscribe(
-      (result) => {
-        this.obtenerAfiliados();
-        this._afiliadoAuxiliar = new Afiliado();
-        this._convertido = "";
-        this._toastr.info("Afiliado Modificado Correctamente");
-        this.limpiarCampos();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  /* Elimina un afiliado */
-  public eliminarAfiliado(afiliado) {
-    var _existePago = false;
-    var _existeServicio = false;
-    var _existeUsuario = false;
-
-    console.log(afiliado._id);
-    console.log(afiliado.email);
-    console.log(this._usuarios);
-
-    for (var i in this._pagos) {
-      if (this._pagos[i].afiliado._id == afiliado._id) {
-        _existePago = true;
+  /* Verifica si ya existe el DNI ingresado */
+  public existeDniIngresado(dniBuscado) {
+    this._existeDni = false;
+    for (var i in this._afiliados) {
+      if (this._afiliados[i].dni == dniBuscado) {
+        this._existeDni = true;
       }
     }
-    for(var j in this._servicios) {
-      for (var k in this._servicios[j].afiliadosInsc) {
-        if (this._servicios[j].afiliadosInsc[k]._id == afiliado._id) {
-          _existeServicio = true;
-        }
-      }
-    }
-    for (var l in this._usuarios) {
-      if (this._usuarios[l].usuario == afiliado.email) {
-        _existeUsuario = true;
-      }
-    }
-    this.existeRelacionConAfiliado(_existePago, _existeServicio, _existeUsuario, afiliado)
   }
 
   /* 
     Muestra diferentes tipos de mensajes de acuerdo si el afiliado tiene pago, servicio y/o usuario
     También llama al método de borrar un afiliado sino no cumple con las condiciones anteriores
   */
-  public existeRelacionConAfiliado(_existePago, _existeServicio, _existeUsuario, afiliado) {
-    if (_existePago && _existeServicio && _existeUsuario) {
-      this._toastr.error("NO se puede eliminar el afiliado porque tiene pago realizado, servicio asignado y usuario creado");
-    } else if (_existePago && _existeServicio) {
-      this._toastr.error("NO se puede eliminar el afiliado porque tiene pago realizado y servicio asignado");
-    } else if (_existePago && _existeUsuario) {
-      this._toastr.error("NO se puede eliminar el afiliado porque tiene pago realizado y usuario creado");
-    } else if (_existeServicio && _existeUsuario) {
-      this._toastr.error("NO se puede eliminar el afiliado porque tiene servicio asignado y usuario creado");
-    } else if (_existePago) {
-      this._toastr.error("NO se puede eliminar el afiliado porque tiene pago realizado");
-    } else if (_existeServicio) {
-      this._toastr.error("NO se puede eliminar el afiliado porque tiene servicio asignado");
-    } else if (_existeUsuario) {
-      this._toastr.error("NO se puede eliminar el afiliado porque tiene usuario creado"); 
-    } else {
-      this.eliminarServiceAfiliado(afiliado);
-    }
+ public existeRelacionConAfiliado(_existePago, _existeServicio, _existeUsuario, afiliado) {
+  if (_existePago && _existeServicio && _existeUsuario) {
+    this.msgError('Posee pago, servicio y usuario.');
+  } else if (_existePago && _existeServicio) {
+    this.msgError('Posee pago y servicio.');
+  } else if (_existePago && _existeUsuario) {
+    this.msgError('Posee pago y usuario.');
+  } else if (_existeServicio && _existeUsuario) {
+    this.msgError('Posee servicio y usuario.');
+  } else if (_existePago) {
+    this.msgError('Posee pago.');
+  } else if (_existeServicio) {
+    this.msgError('Posee servicio.');
+  } else if (_existeUsuario) {
+    this.msgError('Posee usuario');
+  } else {
+    this.eliminarServiceAfiliado(afiliado);
   }
+}
 
-  /* Service de Eliminar Afiliado */
-  public eliminarServiceAfiliado(afiliado) {
-    this._afiliadoService.deleteAfiliado(afiliado._id).subscribe(
+  /* Modifica un usuario */
+  public modificarUsuario(){
+    this._usuarioService.updateUsuario(this._usuario).subscribe(
       (result) => {
-        this.obtenerAfiliados();
-        this._afiliadoAuxiliar = new Afiliado();
-        this._toastr.info("Afiliado Eliminado Correctamente");
+        this._usuario = new Usuario();
+        this.obtenerUsuarios();
       },
       (error) => {
         console.log(error);
       }
-    )
+    );
   }
 
   /* --- Inicio - Listas de Afiliados, Usuarios, Pagos y Servicios --- */
@@ -242,19 +245,6 @@ export class AfiliadoComponent implements OnInit {
         })
       }
     )
-  }
-
-  /* Modifica un usuario */
-  public modificarUsuario(){
-    this._usuarioService.updateUsuario(this._usuario).subscribe(
-      (result) => {
-        this._usuario = new Usuario();
-        this.obtenerUsuarios();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 
   /* Obtiene lista de pagos */
@@ -322,7 +312,7 @@ export class AfiliadoComponent implements OnInit {
     if (this._pagosPrint.length > 0) {
       this.imprimirPagosPrint(afiliado.apellido, afiliado.nombres, afiliado.dni);
     } else {
-      this._toastr.error("El afiliado no tiene pagos realizados");
+      this.msgError('No tiene pagos realizados');
     }
   }
 
@@ -341,6 +331,16 @@ export class AfiliadoComponent implements OnInit {
     });
   }
 
+  /* Convierte una imagen a string */
+  public convertirArchivo(file) {
+    if (file != null) {
+      console.log("Archivo cambiado..", file);
+      this._convertido = file[0].base64;
+    } else {
+      console.log("error");
+    }
+  }
+
   /* Convierte una fecha en formato ISO a dd/mm/yyyy */
   public convertirFecha(fecha) {
     var date = new Date(fecha);
@@ -348,6 +348,20 @@ export class AfiliadoComponent implements OnInit {
       return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
     }
   }
+
+  /* --- Inicio - Toastr - Mensajes que se muestran en pantalla ---*/
+  private msgSuccess(_msg) {
+    this._toastr.success('Afiliado: ' + _msg, 'Éxito');
+  }
+  
+  private msgError(_msg) {
+    this._toastr.error('Afiliado: ' + _msg, 'Error');
+  }
+
+  private msgInfo(_msg) {
+    this._toastr.info('Afiliado: ' + _msg, 'Info');
+  }  
+  /* --- Fin - Toastr - Mensajes que se muestran en pantalla ---*/
 
   public limpiarCampos() {
     this._afiliado = new Afiliado();
