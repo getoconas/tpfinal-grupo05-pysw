@@ -64,19 +64,19 @@
   
   <h2 class="text-center mt-3">Informaci&oacute;n de Usuarios</h2>
   <!-- Tabla -->
-  <table class="table">
+  <table class="table" [mfData]="_usuarios" #mf="mfDataTable" [mfRowsOnPage]="4">
     <thead>
       <tr>
-        <th scope="col">Usuario</th>
-        <th scope="col">Contraseña</th>
-        <th scope="col">Activo</th>
-        <th scope="col">Perfil</th>
+        <th><mfDefaultSorter by="usuario">Usuario</mfDefaultSorter></th>
+        <th>Contraseña</th>
+        <th><mfDefaultSorter by="activo">Activo</mfDefaultSorter></th>
+        <th><mfDefaultSorter by="perfil">Perfil</mfDefaultSorter></th>
         <th >Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let _usuario of _usuarios" >
-        <th>{{ _usuario.usuario }}</th>
+      <tr *ngFor="let _usuario of mf.data" >
+        <td>{{ _usuario.usuario }}</td>
         <td>*</td>
         <td><input type="checkbox" onclick="return false;" [checked]="_usuario.activo"/> </td>
         <td>{{ _usuario.perfil }}</td>
@@ -108,5 +108,12 @@
         </td>
       </tr>
     </tbody>
+    <tfoot>     
+      <tr>         
+        <td colspan="4">             
+          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>         
+        </td>     
+        </tr>     
+    </tfoot>
   </table>
 </div>
