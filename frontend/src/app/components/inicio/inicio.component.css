@@ -319,7 +319,7 @@ transition: all 300ms;
 .content-carrousel figure:nth-child(10){transform: rotateY(360deg) translateZ(300px);}
 
 .content-carrousel img{
-width: 100%;
+width: 193px;
 
 transition: all 300ms;
 }
