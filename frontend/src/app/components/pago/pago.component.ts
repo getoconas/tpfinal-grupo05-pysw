@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 // Models
 import { Pago } from 'src/app/models/pago';
 import { Afiliado } from 'src/app/models/afiliado';
-
 // Services
 import { AfiliadoService } from 'src/app/services/afiliado.service';
 import { PagoService } from 'src/app/services/pago.service';
 import { LoginService } from 'src/app/services/login.service';
-
+// Libraries
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import * as printJS from 'print-js';
@@ -22,6 +21,8 @@ export class PagoComponent implements OnInit {
   _pago: Pago;
   _pagos: Array<Pago>;
   _afiliados: Array<Afiliado>;
+
+  _existePago: boolean = false;
 
   constructor(private _afiliadoService: AfiliadoService, private _pagoService: PagoService, private _toastr: ToastrService, private router:Router, private _loginService: LoginService) { 
     // Validacion por ruta  
@@ -38,15 +39,9 @@ export class PagoComponent implements OnInit {
 
   /* Agregar Pago */
   public agregarPago(contentPrint) {
-    var _existePago: boolean = false;
-    for (var i in this._pagos) {
-      var id: any = this._pago.afiliado;
-      if (this._pagos[i].afiliado._id == id && this._pagos[i].mes == this._pago.mes && this._pagos[i].anio == this._pago.anio) {
-        _existePago = true;
-      }
-    }
-    if (_existePago) {
-      this._toastr.error("Ya existe pago realizado");
+    this.existePagoRealizado();
+    if (this._existePago) {
+      this.msgError('Ya existe pago realizado.');
     } else {
       this.agregarPagoService(contentPrint);
     }
@@ -59,21 +54,13 @@ export class PagoComponent implements OnInit {
       (result) => {
         this.listarPagos();
         this.limpiarPago();
-        this._toastr.success("Pago Realizado Correctamente");
+        this.msgSuccess('Realizado correctamente');
         this.imprimirComprobantePago(contentPrint);
       },
       (error) => {
         console.log(error);
       }
     )
-  }
-
-  public imprimirComprobantePago(contentPrint) {
-    printJS({
-      printable: contentPrint, 
-      type: 'html',
-      header: '<h3 class="text-center">Comprobante de Pago</h3>'
-    });
   }
 
   /* Obtiene lista de afiliados */
@@ -110,11 +97,40 @@ export class PagoComponent implements OnInit {
     )
   }
 
+  /* Verifica si ya existe pago realizado */
+  public existePagoRealizado() {
+    this._existePago = false;
+    for (var i in this._pagos) {
+      var id: any = this._pago.afiliado;
+      if (this._pagos[i].afiliado._id == id && this._pagos[i].mes == this._pago.mes && this._pagos[i].anio == this._pago.anio) {
+        this._existePago = true;
+      }
+    }
+  }
+
+  public imprimirComprobantePago(contentPrint) {
+    printJS({
+      printable: contentPrint, 
+      type: 'html',
+      header: '<h3 class="text-center">Comprobante de Pago</h3>'
+    });
+  }
+
+  /* --- Inicio - Toastr - Mensajes que se muestran en pantalla ---*/
+  private msgSuccess(_msg) {
+    this._toastr.success('Pago: ' + _msg, 'Éxito');
+  }
+  
+  private msgError(_msg) {
+    this._toastr.error('Pago: ' + _msg, 'Error');
+  }
+
+  /* --- Fin - Toastr - Mensajes que se muestran en pantalla ---*/
+
   public limpiarPago() {
     this._pago = new Pago();
   }
 
   ngOnInit(): void {
   }
-
 }

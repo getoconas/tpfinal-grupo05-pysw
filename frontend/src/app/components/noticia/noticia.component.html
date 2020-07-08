@@ -68,42 +68,44 @@
     
   <h2 class="mt-3">Listado de Noticias</h2>
   <!-- Tabla DATATABLE-->
-  <table class="table table-striped" [mfData]="_noticias" #mf="mfDataTable" [mfRowsOnPage]="4">
-    <thead>
-      <tr>
-        <th><mfDefaultSorter by="titulo">Titulo</mfDefaultSorter></th>
-        <th  style="width: 10%"><mfDefaultSorter by="descripcion">Descripcion</mfDefaultSorter></th>
-        <th>Fb</th>
-        <th><mfDefaultSorter by="fecha">Fecha</mfDefaultSorter></th>
-        <th><mfDefaultSorter by="usuario">Usuario</mfDefaultSorter></th>
-        <th>Imagen</th>
-        <th><mfDefaultSorter by="vigente">Vigente</mfDefaultSorter></th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let _noticia of mf.data" >
-        <td>{{ _noticia.titulo }}</td>
-        <td>{{ _noticia.descripcion }}</td>
-        <td ><button class="btn btn-primary" [disabled]="!_noticia.vigente" (click)="postFb(_noticia)"><i tooltip="postear noticia en facebook" class="fab fa-facebook-square"></i></button></td>
-        <td>{{ _noticia.fecha | date:'dd/MM/yyyy HH:mm'}}</td>
-        <td>{{ _noticia.usuario.usuario }}</td>
-        <td><img src="{{ _noticia.imagen }}" alt="" width="50px" height="50px"></td>
-        <td><input type="checkbox" [checked]="_noticia.vigente" onclick="return false;"/> </td>
-        <td> 
-          <button class="btn btn-primary" (click)="seleccionarNoticia(_noticia)" >Seleccionar</button>          
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarNoticia(_noticia)"><i class="far fa-trash-alt"></i></button>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>     
-      <tr>         
-        <td colspan="4">             
-          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>         
-        </td>     
-        </tr>     
-    </tfoot>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-striped" [mfData]="_noticias" #mf="mfDataTable" [mfRowsOnPage]="4">
+      <thead>
+        <tr>
+          <th><mfDefaultSorter by="titulo">Titulo</mfDefaultSorter></th>
+          <th  style="width: 10%"><mfDefaultSorter by="descripcion">Descripcion</mfDefaultSorter></th>
+          <th>Fb</th>
+          <th><mfDefaultSorter by="fecha">Fecha</mfDefaultSorter></th>
+          <th><mfDefaultSorter by="usuario">Usuario</mfDefaultSorter></th>
+          <th>Imagen</th>
+          <th><mfDefaultSorter by="vigente">Vigente</mfDefaultSorter></th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let _noticia of mf.data" >
+          <td>{{ _noticia.titulo }}</td>
+          <td>{{ _noticia.descripcion }}</td>
+          <td ><button class="btn btn-primary" [disabled]="!_noticia.vigente" (click)="postFb(_noticia)"><i tooltip="postear noticia en facebook" class="fab fa-facebook-square"></i></button></td>
+          <td>{{ _noticia.fecha | date:'dd/MM/yyyy HH:mm'}}</td>
+          <td>{{ _noticia.usuario.usuario }}</td>
+          <td><img src="{{ _noticia.imagen }}" alt="" width="50px" height="50px"></td>
+          <td><input type="checkbox" [checked]="_noticia.vigente" onclick="return false;"/> </td>
+          <td> 
+            <button class="btn btn-primary" (click)="seleccionarNoticia(_noticia)" >Seleccionar</button>          
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarNoticia(_noticia)"><i class="far fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>     
+        <tr>         
+          <td colspan="4">             
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>         
+          </td>     
+          </tr>     
+      </tfoot>
+    </table>
+  </div>
   <!-- Modal Eliminar-->
   <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

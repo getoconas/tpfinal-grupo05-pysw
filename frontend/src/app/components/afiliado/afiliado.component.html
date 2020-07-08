@@ -108,9 +108,9 @@
     <table class="table" [mfData]="_afiliados" #mf="mfDataTable" [mfRowsOnPage]="3">
       <thead>
         <tr>
-          <th>Apellido</th>
-          <th>Nombre/s</th>
-          <th>DNI</th>
+          <th><mfDefaultSorter by="apellido">Apellido</mfDefaultSorter></th>
+          <th><mfDefaultSorter by="nombres">Nombre/s</mfDefaultSorter></th>
+          <th><mfDefaultSorter by="dni">DNI</mfDefaultSorter></th>
           <th>Email</th>
           <th>Imagen</th>
           <th>Tel&eacute;fono</th>

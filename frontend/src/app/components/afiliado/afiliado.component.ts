@@ -10,7 +10,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { PagoService } from 'src/app/services/pago.service';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-
+// Libraries
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import * as printJS from 'print-js';
@@ -213,7 +213,7 @@ export class AfiliadoComponent implements OnInit {
   } else if (_existeServicio) {
     this.msgError('Posee servicio.');
   } else if (_existeUsuario) {
-    this.msgError('Posee usuario');
+    this.msgError('Posee usuario.');
   } else {
     this.eliminarServiceAfiliado(afiliado);
   }
