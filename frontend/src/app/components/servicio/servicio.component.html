@@ -17,9 +17,11 @@
           <td><img src="{{ _servicio.imagen }}" alt="" width="50px" height="50px"></td>
           <td>{{ mostrarEstado(_servicio.activo)}}</td>
           <td> 
-            <button class="btn btn-primary" (click)="seleccionarServicio(_servicio)" >Seleccionar</button>  
+            <button class="btn btn-primary boton" (click)="seleccionarServicio(_servicio)" >Seleccionar</button> 
+            <!-- Imprimir por servicio -->        
+            <button class="btn btn-primary boton btn-info" (click)="imprimirServicio(_servicio)"><i class="far fa-file-pdf"></i></button>  
             <!-- Eliminar -->        
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarServicio(_servicio)" ><i class="far fa-trash-alt"></i></button>
+            <button type="button" class="btn btn-danger boton" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarServicio(_servicio)" ><i class="far fa-trash-alt"></i></button>
             <!-- Eliminar Modal -->
             <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
