@@ -15,6 +15,7 @@ import * as printJS from 'print-js';
 })
 export class ServicioComponent implements OnInit {
   
+  _afiliadosPrint : Array<any>;
   _servicio: Servicio;
   _servicioAuxiliar: Servicio;
   _servicios: Array<Servicio>;
@@ -203,6 +204,38 @@ export class ServicioComponent implements OnInit {
   borrarAfiliado(afiliado:Afiliado){
     var indice = this._servicio.afiliadosInsc.findIndex((element)=> element._id == afiliado._id);
     this._servicio.afiliadosInsc.splice(indice, 1);
+  }
+
+  public imprimirServicio(servicio: Servicio) {
+    this._afiliadosPrint = [];
+    for (var i in servicio.afiliadosInsc) {      
+        this._afiliadosPrint.push({
+          'apellido': servicio.afiliadosInsc[i].apellido,
+          'nombres': servicio.afiliadosInsc[i].nombres,
+          'dni': servicio.afiliadosInsc[i].dni,
+          'telefono': servicio.afiliadosInsc[i].telefono
+        });
+      
+    }
+    if (this._afiliadosPrint.length > 0) {
+      this.imprimirAfiliadosPrint(servicio.nombre);
+    } else {
+      this.toastr.error("El servicio no tiene afiliados");
+    }
+  }
+
+  public imprimirAfiliadosPrint(nombre) {
+    printJS({
+      printable: this._afiliadosPrint, 
+      properties: [
+        { field: 'apellido', displayName: 'Apellido' },
+        { field: 'nombres', displayName: 'Nombres' },
+        { field: 'dni', displayName: 'Dni' },
+        { field: 'telefono', displayName: 'Telefono' }
+      ],
+      header: '<h3 class="text-center">Listado de Afiliados al servicio: '+nombre+'</h3>',
+      type: 'json'
+    });
   }
 
   /* Imprime una lista de afiliados en servicios */
