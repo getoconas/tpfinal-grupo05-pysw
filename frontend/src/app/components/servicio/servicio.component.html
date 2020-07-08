@@ -19,7 +19,7 @@
           <td> 
             <button class="btn btn-primary boton" (click)="seleccionarServicio(_servicio)" >Seleccionar</button> 
             <!-- Imprimir por servicio -->        
-            <button class="btn btn-primary boton btn-info" (click)="imprimirServicio(_servicio)"><i class="far fa-file-pdf"></i></button>  
+            <button class="btn btn-primary boton btn-info" data-toggle="tooltip" title="Imprimir solo este servicio" (click)="imprimirServicio(_servicio)"><i class="far fa-file-pdf"></i></button>  
             <!-- Eliminar -->        
             <button type="button" class="btn btn-danger boton" data-toggle="modal" data-target="#eliminarModal" (click)="auxiliarServicio(_servicio)" ><i class="far fa-trash-alt"></i></button>
             <!-- Eliminar Modal -->
@@ -47,7 +47,7 @@
       </tbody>      
     </table>
     <div class="text-center">
-      <button class="btn btn-primary" (click)="imprimirServicios()">Imprimir Servicios</button>
+      <button class="btn btn-primary" data-toggle="tooltip" title="Imprimir todos los servicios" (click)="imprimirServicios()">Imprimir Servicios</button>
     </div>
   </div>
   <br><br>
